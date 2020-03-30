@@ -40,7 +40,6 @@ export class HttpService {
   ) {
     this.runtimeEnvService.getEnv$(never())
       .subscribe((env) => this.API_HOST = env.apiHost);
-    window['postReq'] = this.postReq.bind(this);
   }
 
   public postReq(req: Partial<AppHttpRequest>): Promise<Response> {
@@ -54,6 +53,7 @@ export class HttpService {
         {
           method: "POST",
           headers: reqHeaders,
+          mode: "cors",
         },
       )
     );
@@ -70,6 +70,7 @@ export class HttpService {
         {
           method: "GET",
           headers: reqHeaders,
+          mode: "cors",
         },
       )
     );

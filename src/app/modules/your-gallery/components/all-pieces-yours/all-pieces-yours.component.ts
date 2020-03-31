@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllPiecesYoursComponent implements OnInit {
 
+  public collectionIds: string[] = [ "a1", "b2", "c3" ]
+
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

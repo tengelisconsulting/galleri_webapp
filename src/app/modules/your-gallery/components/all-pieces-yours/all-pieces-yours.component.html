@@ -1,3 +1,8 @@
-<div>
-  A scrollable list of all your pieces
+<div class="flex">
+  <div *ngFor="let id of collectionIds"
+       class="mr4">
+    <app-collection-display
+      [id]="id">
+    </app-collection-display>
+  </div>
 </div>

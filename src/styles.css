@@ -4,14 +4,17 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+/* height */
 .topbar-height {
   height: var(--topbar-height);
 }
-
 .pane-height {
   height: calc(100% - var(--topbar-height));
 }
-
 .pane-min-height {
   min-height: calc(100% - var(--topbar-height));
+}
+
+.clickable {
+  cursor: pointer;
 }

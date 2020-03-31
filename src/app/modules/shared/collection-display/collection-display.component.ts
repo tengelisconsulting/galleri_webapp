@@ -1,18 +1,23 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ModalComponent } from 'src/app/types/ModalComponent';
+
+interface InitParams {
+  id: string;
+}
 
 @Component({
   selector: 'app-collection-display',
   templateUrl: './collection-display.component.html',
   styleUrls: ['./collection-display.component.css']
 })
-export class CollectionDisplayComponent implements OnInit {
+export class CollectionDisplayComponent implements ModalComponent<InitParams> {
 
-  @Input()
   public id: string;
 
   constructor() { }
 
-  ngOnInit() {
+  public init(params: InitParams): void {
+    this.id = params.id;
   }
 
 }

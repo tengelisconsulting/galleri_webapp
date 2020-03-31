@@ -16,6 +16,9 @@ import { CollectionThumbComponent } from './collection-thumb/collection-thumb.co
   exports: [
     CollectionDisplayComponent,
     CollectionThumbComponent
-  ]
+  ],
+  entryComponents: [
+    CollectionDisplayComponent,
+  ],
 })
 export class SharedModule { }

@@ -18,6 +18,17 @@ export class AppComponent {
   private async init(): Promise<void> {
     // all initialization logic should be triggered in this method
     await this.appLoadService.startupAttemptOnAppLoad();
+
+    setTimeout(() => this.turnOnDebugCss(), 1000);
+  }
+
+  public turnOnDebugCss(): void {
+    [].forEach.call(
+      document.querySelectorAll("*"),
+      function(a) {
+        a.style.outline="1px solid #" +
+          (~~(Math.random()*(1<<24))).toString(16)
+      });
   }
 
 }

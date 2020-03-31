@@ -1,23 +1,17 @@
-import { Component, Input } from '@angular/core';
-import { ModalComponent } from 'src/app/types/ModalComponent';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
-interface InitParams {
-  id: string;
-}
 
 @Component({
   selector: 'app-collection-display',
   templateUrl: './collection-display.component.html',
-  styleUrls: ['./collection-display.component.css']
+  styleUrls: ['./collection-display.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CollectionDisplayComponent implements ModalComponent<InitParams> {
+export class CollectionDisplayComponent {
 
+  @Input()
   public id: string;
 
   constructor() { }
-
-  public init(params: InitParams): void {
-    this.id = params.id;
-  }
 
 }

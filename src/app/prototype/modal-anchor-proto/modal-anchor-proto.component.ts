@@ -1,6 +1,5 @@
-import { Component, OnInit, ComponentFactoryResolver, ViewContainerRef, ViewChild, ComponentRef } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ViewContainerRef, ViewChild, ComponentRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ModalService } from 'src/app/ui/modal.service';
-import { CollectionDisplayComponent } from 'src/app/modules/shared/collection-display/collection-display.component';
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { ModalInit } from 'src/app/types/ModalInit';
 import { filter } from 'rxjs/operators';
@@ -8,7 +7,8 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-modal-anchor-proto',
   templateUrl: './modal-anchor-proto.component.html',
-  styleUrls: ['./modal-anchor-proto.component.css']
+  styleUrls: ['./modal-anchor-proto.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalAnchorProtoComponent extends BaseComponent {
 
@@ -21,6 +21,7 @@ export class ModalAnchorProtoComponent extends BaseComponent {
 
   constructor(
     private cfr: ComponentFactoryResolver,
+    private cdr: ChangeDetectorRef,
     private modalService: ModalService,
   ) {
     super();
@@ -42,6 +43,7 @@ export class ModalAnchorProtoComponent extends BaseComponent {
     if (modalInit.init) {
       modalInit.init(this.componentRef.instance);
     }
+    this.cdr.detectChanges();
   }
 
 }

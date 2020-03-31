@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppLoadService } from 'src/app/core/app-load.service';
 
@@ -6,7 +6,8 @@ import { AppLoadService } from 'src/app/core/app-load.service';
 @Component({
   selector: 'app-login-route',
   templateUrl: './login-route.component.html',
-  styleUrls: ['./login-route.component.css']
+  styleUrls: ['./login-route.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginRouteComponent {
 

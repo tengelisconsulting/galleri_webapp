@@ -13,7 +13,7 @@ export class AppLoadService {
 
   private readonly DEFAULT_ROUTE_PATH = [
     AppRoutePath.APP_PREFIX,
-    AppRoutePath.LANDING,
+    AppRoutePath.YOUR_GALLERY,
   ];
 
   constructor(

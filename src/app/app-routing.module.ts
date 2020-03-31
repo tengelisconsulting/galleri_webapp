@@ -11,11 +11,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: LayoutComponent,
     children: [
-      { path: '', redirectTo: AppRoutePath.LANDING, pathMatch: 'full' },
+      { path: '', redirectTo: AppRoutePath.YOUR_GALLERY, pathMatch: 'full' },
       {
-        path: AppRoutePath.LANDING,
-        loadChildren: () => import('./modules/landing/landing.module')
-          .then((m) => m.LandingModule)
+        path: AppRoutePath.YOUR_GALLERY,
+        loadChildren: () => import('./modules/your-gallery/your-gallery.module')
+          .then((m) => m.YourGalleryModule)
       },
     ]
   },

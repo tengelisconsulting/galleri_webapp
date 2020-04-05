@@ -1,4 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ModalService } from 'src/app/ui/modal.service';
+import { CreateCollectionModalComponent } from 'src/app/modules/shared/create-collection-modal/create-collection-modal.component';
+
 
 @Component({
   selector: 'app-topbar',
@@ -6,11 +9,16 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./topbar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TopbarComponent implements OnInit {
+export class TopbarComponent {
 
-  constructor() { }
+  constructor(
+    private modalService: ModalService,
+  ) { }
 
-  ngOnInit() {
+  public openCreateCollectionModal(): void {
+    this.modalService.showModal({
+      component: CreateCollectionModalComponent,
+    });
   }
 
 }

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CollectionDisplayComponent } from './collection-display/collection-display.component';
 import { CollectionThumbComponent } from './collection-thumb/collection-thumb.component';
 import { CollectionDisplayModalComponent } from './collection-display-modal/collection-display-modal.component';
+import { CreateCollectionComponent } from './create-collection/create-collection.component';
+import { CreateCollectionModalComponent } from './create-collection-modal/create-collection-modal.component';
 
 
 
@@ -11,6 +13,8 @@ import { CollectionDisplayModalComponent } from './collection-display-modal/coll
     CollectionDisplayComponent,
     CollectionThumbComponent,
     CollectionDisplayModalComponent,
+    CreateCollectionComponent,
+    CreateCollectionModalComponent,
   ],
   imports: [
     CommonModule
@@ -21,6 +25,7 @@ import { CollectionDisplayModalComponent } from './collection-display-modal/coll
   ],
   entryComponents: [
     CollectionDisplayModalComponent,
+    CreateCollectionModalComponent,
   ],
 })
 export class SharedModule { }

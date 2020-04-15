@@ -25,7 +25,8 @@ export class AuthService {
     if (!authRes.ok) {
       return null;
     }
-    const token = await authRes.json();
+    const tokenRes = await authRes.json();
+    const token = tokenRes["session_token"];
     console.log("authentication success, session token: ", token);
     return token;
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { never } from 'rxjs';
+import { never, Observable } from 'rxjs';
 import { v4 as uuidv4 } from "uuid";
 
 import { shallowMerge } from '../lib/fn';
@@ -88,17 +88,46 @@ export class HttpService {
     );
   }
 
-  public newImage(data: any): Promise<Response> {
+  public newImage(data: any): Observable<{
+    loaded: number,
+    total: number,
+  }> {
     const objId = uuidv4();
-    const req = shallowMerge(this.baseReqDefaults, {
-      method: "PUT",
-      path: `/obj/image/${objId}`,
-      data: data,
-      isRawData: true,
-      headers: this.getDefaultAuthedHeaders(),
-      mode: "cors",
+    return this.upload(`/obj/image/${objId}`, data);
+  }
+
+  private upload(
+    path: string,
+    file: File,
+  ): Observable<{
+    loaded: number,
+    total: number,
+  }> {
+    // 'fetch' API can't give upload progress
+    return new Observable((o) => {
+      const url = `${this.API_HOST}${path}`;
+      const xhr = new XMLHttpRequest();
+      xhr.open("PUT", url);
+      const headers = this.getDefaultAuthedHeaders();
+      Object.keys(headers).forEach((header) => {
+        xhr.setRequestHeader(header, headers[header]);
+      });
+      xhr.setRequestHeader("Content-Type", file.type);
+      const onProgress = (e: ProgressEvent) => o.next({
+        loaded: e.loaded,
+        total: e.total,
+      });
+      const onComplete = () => o.complete();
+      const onError = (e) => {
+        o.error(e);
+        xhr.abort();
+      }
+      xhr.upload.addEventListener("loadstart", onProgress, false);
+      xhr.upload.addEventListener("progress", onProgress , false);
+      xhr.upload.addEventListener("load", onComplete, false);
+      xhr.upload.addEventListener("error", onError, false);
+      xhr.send(file);
     });
-    return this.doRequest(req);
   }
 
   private getDefaultAuthedHeaders(): {[index: string]: string} {
@@ -108,26 +137,12 @@ export class HttpService {
   }
 
   private doRequest(req: AppHttpRequest): Promise<Response> {
-    // const getReqBody = () => {
-    //   if (!req.data) {
-    //     return {};
-    //   }
-    //   if (req.isRawData) {
-    //     return {
-    //       body: JSON.stringify(req.data),
-    //     };
-    //   }
-    //   return {
-    //     body: req.data,
-    //   };
-    // };
     const reqParams = shallowMerge<RequestInit>({
       method: req.method,
       headers: new Headers(req.headers),
     }, req.data ? {
       body: req.isRawData ? req.data : JSON.stringify(req.data)
     } : {});
-    console.log("request params: ", reqParams);
     const request = new Request(`${this.API_HOST}${req.path}`, reqParams);
     const requestInit: RequestInit = {
       cache: req.cache,

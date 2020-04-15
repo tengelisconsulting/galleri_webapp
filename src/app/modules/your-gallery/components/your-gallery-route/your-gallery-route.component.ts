@@ -22,14 +22,13 @@ export class YourGalleryRouteComponent {
       return;
     }
     const file = fileList[0];
-    const data = new FormData();
-    data.append("file_data", file);
     this.doUpload(file);
   }
 
   private async doUpload(data): Promise<void> {
-    const result = await this.httpService.newImage(data);
-    console.log("result: ", result);
+    this.httpService.newImage(data).subscribe((progress) => {
+      console.log("progress: ", progress);
+    })
   }
 
 }

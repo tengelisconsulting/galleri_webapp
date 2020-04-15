@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { never, Observable } from 'rxjs';
-import { v4 as uuidv4 } from "uuid";
 
 import { shallowMerge } from '../lib/fn';
 import { RunTimeEnvService } from './run-time-env.service';
@@ -8,7 +7,7 @@ import { SessionService } from './session.service';
 
 
 interface AppHttpRequest {
-  method: "GET" | "POST" | "PUT";
+  method: "GET" | "POST" | "PUT" | "DELETE";
   path: string;
   data?: any;
   headers: {
@@ -78,6 +77,23 @@ export class HttpService {
     );
   }
 
+  public deleteReq(req: Partial<AppHttpRequest>): Promise<Response> {
+    const reqHeaders = shallowMerge(
+      req.headers || {}, this.getDefaultAuthedHeaders()
+    );
+    return this.doRequest(
+      shallowMerge(
+        this.baseReqDefaults,
+        req,
+        {
+          method: "DELETE",
+          headers: reqHeaders,
+          mode: "cors",
+        },
+      )
+    );
+  }
+
   public postNoAuth(req: Partial<AppHttpRequest>): Promise<Response> {
     return this.doRequest(
       shallowMerge(
@@ -88,15 +104,7 @@ export class HttpService {
     );
   }
 
-  public newImage(data: any): Observable<{
-    loaded: number,
-    total: number,
-  }> {
-    const objId = uuidv4();
-    return this.upload(`/obj/image/${objId}`, data);
-  }
-
-  private upload(
+  public upload(
     path: string,
     file: File,
   ): Observable<{

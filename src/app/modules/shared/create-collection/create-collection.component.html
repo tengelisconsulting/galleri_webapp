@@ -1,1 +1,32 @@
-<p>create-collection works!</p>
+<div>
+  <form
+    class="container"
+    [formGroup]="collectionForm">
+
+    <label>Collection Name:</label>
+    <input
+      matInput
+      type="text"
+      formControlName="collectionName"/>
+
+  </form>
+
+  <div class="pt4">
+    <app-file-upload-info
+      *ngFor="let f of files; index as i"
+      [file]="f"
+      (onDelete)="fileDeleted(i)">
+    </app-file-upload-info>
+  </div>
+
+  <label for="file-input">
+    <div class="clickable pt4">
+      Add a file
+    </div>
+  </label>
+  <input id="file-input"
+         type="file"
+         style="position: fixed; top: -100em"
+         (change)="onFile($event)">
+
+</div>

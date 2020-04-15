@@ -5,6 +5,8 @@ import { CollectionThumbComponent } from './collection-thumb/collection-thumb.co
 import { CollectionDisplayModalComponent } from './collection-display-modal/collection-display-modal.component';
 import { CreateCollectionComponent } from './create-collection/create-collection.component';
 import { CreateCollectionModalComponent } from './create-collection-modal/create-collection-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FileUploadInfoComponent } from './file-upload-info/file-upload-info.component';
 
 
 
@@ -15,9 +17,11 @@ import { CreateCollectionModalComponent } from './create-collection-modal/create
     CollectionDisplayModalComponent,
     CreateCollectionComponent,
     CreateCollectionModalComponent,
+    FileUploadInfoComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
   ],
   exports: [
     CollectionDisplayComponent,

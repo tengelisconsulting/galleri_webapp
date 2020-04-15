@@ -1,0 +1,14 @@
+<div class="flex justify-between" *ngIf="file">
+  <div>
+    {{ file.name }}
+  </div>
+
+  <div>
+    {{ percentDone }}%
+  </div>
+
+  <div class="clickable"
+       (click)="deleteImage()">
+    DELETE
+  </div>
+</div>

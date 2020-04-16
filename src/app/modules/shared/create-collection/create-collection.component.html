@@ -1,32 +1,39 @@
-<div>
-  <form
-    class="container"
-    [formGroup]="collectionForm">
+<div class="flex flex-column justify-between h-100">
+  <div>
+    <form
+      class="container"
+      [formGroup]="collectionForm">
 
-    <label>Collection Name:</label>
-    <input
-      matInput
-      type="text"
-      formControlName="collectionName"/>
+      <label>Collection Name:</label>
+      <input
+        matInput
+        type="text"
+        formControlName="collectionName"/>
 
-  </form>
+    </form>
 
-  <div class="pt4">
-    <app-file-upload-info
-      *ngFor="let f of files; index as i"
-      [file]="f"
-      (onDelete)="fileDeleted(i)">
-    </app-file-upload-info>
+    <div class="pt4">
+      <app-file-upload-info
+        *ngFor="let f of files; index as i"
+        [file]="f"
+        (onCreate)="imageAdded($event)"
+        (onDelete)="fileDeleted(i)">
+      </app-file-upload-info>
+
+      <label for="file-input">
+        <div class="clickable pt4">
+          Add a file
+        </div>
+      </label>
+      <input id="file-input"
+             type="file"
+             style="position: fixed; top: -100em"
+             (change)="onFile($event)">
+    </div>
   </div>
 
-  <label for="file-input">
-    <div class="clickable pt4">
-      Add a file
+    <div class="flex justify-end">
+      <div class="clickable"
+           (click)="submit()">SUBMIT</div>
     </div>
-  </label>
-  <input id="file-input"
-         type="file"
-         style="position: fixed; top: -100em"
-         (change)="onFile($event)">
-
 </div>

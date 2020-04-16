@@ -1,5 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { v4 as uuidv4 } from "uuid";
+import { HttpService } from 'src/app/core/http.service';
 
 @Component({
   selector: 'app-create-collection',
@@ -9,6 +12,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class CreateCollectionComponent {
 
+  @Output()
+  public onComplete: EventEmitter<boolean> = new EventEmitter(); // true on success
+
   public collectionForm: FormGroup = new FormGroup({
     collectionName: new FormControl("", [
       Validators.required,
@@ -17,7 +23,11 @@ export class CreateCollectionComponent {
 
   public files: File[] = [];
 
-  constructor() { }
+  private imageIds: string[] = [];
+
+  constructor(
+    private httpService: HttpService,
+  ) { }
 
   public onFile(e: any): void {
     if (!e || !e.target || !e.target.files || !e.target.files[0]) {
@@ -28,10 +38,30 @@ export class CreateCollectionComponent {
   }
 
   public fileDeleted(index: number): void {
-    this.files = Array.prototype.concat(
-      this.files.slice(0, index),
-      this.files.slice(index + 1),
-    )
+    const removeAtIndex = (list) => Array.prototype.concat(
+      list.slice(0, index),
+      list.slice(index + 1)
+    );
+    this.files = removeAtIndex(this.files);
+    this.imageIds = removeAtIndex(this.imageIds);
+  }
+
+  public imageAdded(imageId: string): void {
+    this.imageIds = this.imageIds.concat(imageId);
+  }
+
+  public async submit(): Promise<void> {
+    const res = await this.httpService.postReq({
+      path: "/db/rpc/init_collection",
+      data: {
+        "p_obj_id": uuidv4(),
+        "p_collection_name": this.collectionForm.value.collectionName,
+        "p_image_ids": this.imageIds,
+      },
+    });
+    if (res.ok) {
+      this.onComplete.emit(true);
+    }
   }
 
 }

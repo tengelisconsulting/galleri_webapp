@@ -22,6 +22,12 @@ export class ModalService {
     elem.showModal();
   }
 
+  public hideModal(): void {
+    this.modalInit$.next(null);
+    const elem: any = document.getElementById("modal-prototype")
+    elem.close();
+  }
+
   public getActiveModal$(
     until: Observable<any>
   ): Observable<ModalInit> {

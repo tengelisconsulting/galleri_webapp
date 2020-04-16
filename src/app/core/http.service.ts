@@ -26,9 +26,6 @@ interface AppHttpRequest {
 export class HttpService {
 
   private readonly baseReqDefaults: Partial<AppHttpRequest> = {
-    headers: {
-      "Content-Type": "application/json",
-    },
     cache: "default",
     credentials: "include",
   };
@@ -138,10 +135,16 @@ export class HttpService {
     });
   }
 
-  private getDefaultAuthedHeaders(): {[index: string]: string} {
+  private getDefaultHeaders(): {[index: string]: string} {
     return {
-      'Authorization': `Bearer: ${this.sessionService.getSessionToken()}`
+      "Content-Type": "application/json",
     };
+  }
+
+  private getDefaultAuthedHeaders(): {[index: string]: string} {
+    return shallowMerge(this.getDefaultHeaders(), {
+      'Authorization': `Bearer: ${this.sessionService.getSessionToken()}`
+    });
   }
 
   private doRequest(req: AppHttpRequest): Promise<Response> {

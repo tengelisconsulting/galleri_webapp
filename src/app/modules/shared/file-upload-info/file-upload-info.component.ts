@@ -15,7 +15,10 @@ export class FileUploadInfoComponent implements OnInit {
   public file: File;
 
   @Output()
-  public onDelete = new EventEmitter();
+  public onCreate: EventEmitter<string> = new EventEmitter();
+
+  @Output()
+  public onDelete: EventEmitter<boolean> = new EventEmitter();
 
   public percentDone: number = 0;
 
@@ -28,6 +31,7 @@ export class FileUploadInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.onCreate.emit(this.imageId);
     this.httpService.upload(this.imagePath, this.file)
       .subscribe((progress) => {
         this.percentDone = (progress.loaded * 100.0 / progress.total);

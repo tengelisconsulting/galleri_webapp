@@ -51,6 +51,9 @@ export class CreateCollectionComponent {
   }
 
   public async submit(): Promise<void> {
+    if (!this.collectionForm.valid) {
+      return;
+    }
     const res = await this.httpService.postReq({
       path: "/db/rpc/init_collection",
       data: {

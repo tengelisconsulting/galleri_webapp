@@ -32,4 +32,36 @@ export namespace OpenAPI2 {
     href?: string;
     description?: string;
   }
+  export interface user_collection_thumb {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    collection_id?: string;
+    collection_name?: string;
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    image_id?: string;
+    thumb?: string;
+  }
+  export interface user_collection_images {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    collection_id?: string;
+    collection_name?: string;
+    collection_created?: string;
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    image_id?: string;
+    image_created?: string;
+    href?: string;
+    description?: string;
+    thumb?: string;
+  }
 }

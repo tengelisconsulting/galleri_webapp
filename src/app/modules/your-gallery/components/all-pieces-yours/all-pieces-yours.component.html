@@ -1,8 +1,8 @@
 <div class="flex">
-  <div *ngFor="let id of collectionIds"
+  <div *ngFor="let c of collections"
        class="mr4">
     <app-collection-thumb
-      [id]="id">
+      [id]="c.collection_id">
     </app-collection-thumb>
   </div>
 </div>

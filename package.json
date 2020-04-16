@@ -4,6 +4,7 @@
   "scripts": {
     "build": "ng build",
     "lint": "ng lint",
+    "generate-types": "curl localhost:5000 > ./schema.json && swagger-to-ts ./schema.json --output ./src/app/types/auto/db.d.ts && rm ./schema.json",
     "ng": "ng",
     "prod": "ng build --prod",
     "serve": "ng serve",
@@ -30,6 +31,7 @@
     "@angular/cli": "^8.3.25",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
+    "@manifoldco/swagger-to-ts": "^1.7.1",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",

@@ -7,6 +7,7 @@ import { CreateCollectionComponent } from './create-collection/create-collection
 import { CreateCollectionModalComponent } from './create-collection-modal/create-collection-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FileUploadInfoComponent } from './file-upload-info/file-upload-info.component';
+import { DynamicLoadedImageComponent } from './dynamic-loaded-image/dynamic-loaded-image.component';
 
 
 
@@ -18,6 +19,7 @@ import { FileUploadInfoComponent } from './file-upload-info/file-upload-info.com
     CreateCollectionComponent,
     CreateCollectionModalComponent,
     FileUploadInfoComponent,
+    DynamicLoadedImageComponent,
   ],
   imports: [
     CommonModule,

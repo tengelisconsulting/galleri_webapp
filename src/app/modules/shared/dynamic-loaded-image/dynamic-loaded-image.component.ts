@@ -12,6 +12,9 @@ export class DynamicLoadedImageComponent implements AfterViewInit {
   @Input()
   private url: string;
 
+  @Input()
+  private imageType: string;
+
   @ViewChild("imageElement", {static: true})
   private imageElmt: any;
 
@@ -26,11 +29,15 @@ export class DynamicLoadedImageComponent implements AfterViewInit {
 
   public async loadThumb(): Promise<void> {
     const res = await this.httpService.getReq({
+      headers: {
+        "Accept": "text/plain",
+      },
       path: this.url,
     });
-    const resData = await res.json();
+    const imageB64 = await res.text();
     const elem = this.imageElmt.nativeElement;
-    elem.src = "data:image/jpeg;base64, " + resData[0].thumb_b64;
+    elem.src = `data:image/${this.imageType.toLowerCase()};base64, `
+      + imageB64;
     this.cdr.detectChanges();
   }
 

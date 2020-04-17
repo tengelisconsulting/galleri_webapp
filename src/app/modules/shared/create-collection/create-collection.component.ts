@@ -54,6 +54,9 @@ export class CreateCollectionComponent {
     if (!this.collectionForm.valid) {
       return;
     }
+    if (!this.files.length) {
+      return;
+    }
     const res = await this.httpService.postReq({
       path: "/db/rpc/init_collection",
       data: {

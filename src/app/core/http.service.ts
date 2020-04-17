@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { never, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { shallowMerge } from '../lib/fn';
 import { RunTimeEnvService } from './run-time-env.service';
 import { SessionService } from './session.service';
+import { AppRoutePath } from './routing/AppRoutePath';
 
 
 interface AppHttpRequest {
@@ -35,6 +37,7 @@ export class HttpService {
   constructor(
     private runtimeEnvService: RunTimeEnvService,
     private sessionService: SessionService,
+    private router: Router,
   ) {
     this.runtimeEnvService.getEnv$(never())
       .subscribe((env) => this.API_HOST = env.apiHost);
@@ -147,7 +150,7 @@ export class HttpService {
     });
   }
 
-  private doRequest(req: AppHttpRequest): Promise<Response> {
+  private async doRequest(req: AppHttpRequest): Promise<Response> {
     const reqParams = shallowMerge<RequestInit>({
       method: req.method,
       headers: new Headers(req.headers),
@@ -160,8 +163,12 @@ export class HttpService {
       mode: req.mode,
       credentials: req.credentials,
     };
-    return fetch(
-      request, requestInit
-    );
+    const response = await fetch(request, requestInit);
+    if (response.status === 401) {
+      // our session has expired
+      console.log("session expired");
+      this.router.navigate([AppRoutePath.LOGIN]);
+    }
+    return response;
   }
 }

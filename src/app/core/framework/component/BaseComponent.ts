@@ -5,11 +5,16 @@ import { take, filter } from 'rxjs/operators';
 
 export class BaseComponent implements OnInit, OnDestroy {
 
-  public onInit$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public onDestroy$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private onInit$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private onDestroy$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   public isDestroyed$: Observable<boolean> = this.onDestroy$.pipe(
-    filter((isDestroyed) => !!isDestroyed)
+    filter((isDestroyed) => !!isDestroyed),
+    take(1),
+  );
+  public isInited$: Observable<boolean> = this.onInit$.pipe(
+    filter((isInited) => !!isInited),
+    take(1),
   );
 
   public ngOnInit(): void {
@@ -23,19 +28,13 @@ export class BaseComponent implements OnInit, OnDestroy {
   public appOnInit(
     fn: () => void
   ): void {
-    this.onInit$.pipe(
-      filter((isInit) => isInit),
-      take(1)
-    ).subscribe(fn);
+    this.isInited$.subscribe(fn);
   }
 
   public appOnDestroy(
     fn: () => void
   ): void {
-    this.onDestroy$.pipe(
-      filter((isDestroyed) => isDestroyed),
-      take(1)
-    ).subscribe(fn);
+    this.isDestroyed$.subscribe(fn);
   }
 
 }

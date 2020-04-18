@@ -1,9 +1,10 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, HostListener } from '@angular/core';
 
 import { HttpService } from 'src/app/core/http.service';
 
 import * as db from "../../../types/auto/db";
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
+import { WindowService } from 'src/app/ui/window.service';
 type user_image = db.OpenAPI2.user_image;
 type user_image_collection = db.OpenAPI2.user_image_collection;
 
@@ -23,14 +24,24 @@ export class CollectionDisplayComponent extends BaseComponent {
 
   public collection: user_image_collection;
 
+  public windowHeight: number;
+  public windowWidth: number;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private httpService: HttpService,
+    private windowService: WindowService,
   ) {
     super();
     this.appOnInit(() => {
       this.loadImages();
       this.loadCollection();
+      this.windowService.getResizeStream(this.isDestroyed$, 1000)
+        .subscribe((size) => {
+          this.windowHeight = size.height;
+          this.windowWidth = size.width;
+          this.cdr.detectChanges();
+        })
     });
   }
 

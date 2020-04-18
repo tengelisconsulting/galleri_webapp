@@ -3,9 +3,19 @@
     {{ collection.collection_name }}
   </div>
 
-  <div *ngFor="let image of images">
-    <img
-      [src]="image.href"
-      />
+  <div *ngFor="let image of images"
+       class="flex justify-center">
+    <div>
+      <img [style.maxHeight.px]="windowHeight"
+           [src]="image.href" />
+
+      <div *ngIf="!image.description">
+        Add a description
+      </div>
+      <div *ngIf="image.description">
+        {{ image.description }}
+      </div>
+    </div>
+
   </div>
 </div>

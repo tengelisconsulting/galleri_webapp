@@ -20,7 +20,7 @@ export class AppComponent {
     // all initialization logic should be triggered in this method
     await this.appLoadService.startupAttemptOnAppLoad();
 
-    setTimeout(() => this.turnOnDebugCss(), 1000);
+    // setTimeout(() => this.turnOnDebugCss(), 1000);
   }
 
   public turnOnDebugCss(): void {

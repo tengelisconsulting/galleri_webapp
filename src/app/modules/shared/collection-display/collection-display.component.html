@@ -1,5 +1,7 @@
 <div>
-  Collection display for {{ collectionId }}
+  <div *ngIf="collection">
+    {{ collection.collection_name }}
+  </div>
 
   <div *ngFor="let image of images">
     <img

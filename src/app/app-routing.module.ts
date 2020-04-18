@@ -15,9 +15,13 @@ const routes: Routes = [
       {
         path: AppRoutePath.YOUR_GALLERY,
         loadChildren: () => import('./modules/your-gallery/your-gallery.module')
-          .then((m) => m.YourGalleryModule)
+          .then((m) => m.YourGalleryModule),
+      }, {
+        path: AppRoutePath.IMAGE_COLLECTION,
+        loadChildren: () => import("./modules/image-collection/image-collection.module")
+          .then((m) => m.ImageCollectionModule),
       },
-    ]
+    ],
   },
   {
     path: AppRoutePath.LOGIN,

@@ -1,9 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { ModalService } from 'src/app/ui/modal.service';
-import { CollectionDisplayModalComponent } from '../collection-display-modal/collection-display-modal.component';
-
-// import * as db from "../../../types/auto/db";
-// type user_collection_thumb = db.OpenAPI2.user_collection_thumb;
+import { Router } from '@angular/router';
+import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 
 
 @Component({
@@ -20,7 +17,7 @@ export class CollectionThumbComponent {
   public imageUrl: string;
 
   constructor(
-    private modalService: ModalService,
+    private router: Router,
   ) { }
 
   public ngOnInit(): void {
@@ -28,9 +25,12 @@ export class CollectionThumbComponent {
   }
 
   public onClick(): void {
-    this.modalService.showModal({
-      component: CollectionDisplayModalComponent,
-      init: (c) => c.init({id: this.id}),
+    this.router.navigate([
+      AppRoutePath.APP_PREFIX, AppRoutePath.IMAGE_COLLECTION
+    ], {
+      queryParams: {
+        collectionId: this.id,
+      }
     });
   }
 

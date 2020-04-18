@@ -23,15 +23,19 @@ export class BaseComponent implements OnInit, OnDestroy {
   public appOnInit(
     fn: () => void
   ): void {
-    this.onInit$.pipe(take(1))
-      .subscribe(fn);
+    this.onInit$.pipe(
+      filter((isInit) => isInit),
+      take(1)
+    ).subscribe(fn);
   }
 
   public appOnDestroy(
     fn: () => void
   ): void {
-    this.onDestroy$.pipe(take(1))
-      .subscribe(fn);
+    this.onDestroy$.pipe(
+      filter((isDestroyed) => isDestroyed),
+      take(1)
+    ).subscribe(fn);
   }
 
 }

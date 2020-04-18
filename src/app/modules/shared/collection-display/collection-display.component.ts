@@ -1,9 +1,10 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { HttpService } from 'src/app/core/http.service';
 
 import * as db from "../../../types/auto/db";
-type user_collection_images = db.OpenAPI2.user_collection_images;
+import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
+type user_image = db.OpenAPI2.user_image;
 
 
 @Component({
@@ -12,24 +13,28 @@ type user_collection_images = db.OpenAPI2.user_collection_images;
   styleUrls: ['./collection-display.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CollectionDisplayComponent {
+export class CollectionDisplayComponent extends BaseComponent {
 
   @Input()
-  public id: string;
+  public collectionId: string;
 
-  public images: user_collection_images[] = [];
+  public images: user_image[] = [];
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private httpService: HttpService,
   ) {
-    this.loadCollection();
+    super();
+    this.appOnInit(() => {
+      this.loadCollection();
+    });
   }
 
   public async loadCollection(): Promise<void> {
-    const res = await this.httpService.getReq({
-      path: "/db/user_collection_images",
-    });
+    const url = `/db/user_image?collection_id=eq.${this.collectionId}`;
+    const res = await this.httpService.getReq({path: url});
     this.images = await res.json();
+    this.cdr.detectChanges();
   }
 
 }

@@ -23,6 +23,12 @@ export namespace OpenAPI2 {
      * This is a Primary Key.<pk/>
      */
     image_id?: string;
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     * This is a Foreign Key to `image_collection.collection_id`.<fk table='image_collection' column='collection_id'/>
+     */
+    collection_id?: string;
     created?: string;
     /**
      * Note:
@@ -44,24 +50,6 @@ export namespace OpenAPI2 {
      * This is a Primary Key.<pk/>
      */
     image_id?: string;
-    thumb?: string;
-  }
-  export interface user_collection_images {
-    /**
-     * Note:
-     * This is a Primary Key.<pk/>
-     */
-    collection_id?: string;
-    collection_name?: string;
-    collection_created?: string;
-    /**
-     * Note:
-     * This is a Primary Key.<pk/>
-     */
-    image_id?: string;
-    image_created?: string;
-    href?: string;
-    description?: string;
     thumb?: string;
   }
 }

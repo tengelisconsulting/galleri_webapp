@@ -1,8 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
-import { takeUntil } from 'rxjs/operators';
-import { HttpService } from 'src/app/core/http.service';
+import { takeUntil, take } from 'rxjs/operators';
 
 
 @Component({
@@ -13,29 +12,18 @@ import { HttpService } from 'src/app/core/http.service';
 })
 export class ImageCollectionRouteComponent extends BaseComponent {
 
-  public images = [];
+  public collectionId: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private httpService: HttpService,
+    private cdr: ChangeDetectorRef,
   ) {
     super();
-    this.appOnInit(() => {
-      this.activatedRoute.queryParams.pipe(
-        takeUntil(this.isDestroyed$)
-      ).subscribe((params) => {
-        this.loadImages(params.collectionId)
-      })
+    this.activatedRoute.queryParams.pipe(
+      takeUntil(this.isDestroyed$)
+    ).subscribe((params) => {
+      this.collectionId = params.collectionId;
     });
-  }
-
-  private async loadImages(collectionId: string): Promise<void> {
-    const url = `/db/user_image?collection_id=eq.${collectionId}`;
-    const res = await this.httpService.getReq({
-      path: url,
-    });
-    this.images = await res.json();
-    console.log("images", this.images);
   }
 
 }

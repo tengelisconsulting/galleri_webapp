@@ -1,7 +1,9 @@
 <div>
-  Collection display for {{ id }}
+  Collection display for {{ collectionId }}
 
   <div *ngFor="let image of images">
-    <!-- put an image component here.  Try to href the image right from amazon -->
+    <img
+      [src]="image.href"
+      />
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { HttpService } from 'src/app/core/http.service';
 
 @Component({
@@ -7,38 +7,42 @@ import { HttpService } from 'src/app/core/http.service';
   styleUrls: ['./dynamic-loaded-image.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicLoadedImageComponent implements AfterViewInit {
+export class DynamicLoadedImageComponent implements AfterViewInit, OnDestroy {
 
   @Input()
   private url: string;
 
-  @Input()
-  private imageType: string;
-
   @ViewChild("imageElement", {static: true})
   private imageElmt: any;
 
+  public imageURL: string;
+
   constructor(
     private httpService: HttpService,
-    private cdr: ChangeDetectorRef,
   ) { }
 
   public ngAfterViewInit(): void {
     this.loadThumb();
   }
 
+  public ngOnDestroy(): void {
+    if (this.imageURL) {
+      URL.revokeObjectURL(this.imageURL);
+      this.imageURL = null;
+    }
+  }
+
   public async loadThumb(): Promise<void> {
     const res = await this.httpService.getReq({
       headers: {
-        "Accept": "text/plain",
+        "Accept": "application/octet-stream",
       },
       path: this.url,
     });
-    const imageB64 = await res.text();
     const elem = this.imageElmt.nativeElement;
-    elem.src = `data:image/${this.imageType.toLowerCase()};base64, `
-      + imageB64;
-    this.cdr.detectChanges();
+    const imBytes = await res.blob();
+    this.imageURL = URL.createObjectURL(imBytes);
+    elem.src = this.imageURL;
   }
 
 }

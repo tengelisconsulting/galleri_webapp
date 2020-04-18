@@ -21,7 +21,7 @@ export class CollectionThumbComponent {
   ) { }
 
   public ngOnInit(): void {
-    this.imageUrl = `/db/user_collection_thumb?collection_id=eq.${this.id}&select=thumb_b64`;
+    this.imageUrl = `/db/user_collection_thumb?collection_id=eq.${this.id}&select=thumb`;
   }
 
   public onClick(): void {

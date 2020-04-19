@@ -1,13 +1,13 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, HostListener } from '@angular/core';
-
-import { HttpService } from 'src/app/core/http.service';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import * as db from "../../../types/auto/db";
+type user_image = db.OpenAPI2.user_image;
+type user_image_collection = db.OpenAPI2.user_image_collection;
+
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { WindowService } from 'src/app/ui/window.service';
 import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
-type user_image = db.OpenAPI2.user_image;
-type user_image_collection = db.OpenAPI2.user_image_collection;
+import { ImageDataService } from 'src/app/core/data/image-data.service';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class CollectionDisplayComponent extends BaseComponent {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private httpService: HttpService,
+    private imageDataService: ImageDataService,
     private windowService: WindowService,
   ) {
     super();
@@ -53,17 +53,14 @@ export class CollectionDisplayComponent extends BaseComponent {
     // but put them into the DOM in a staggered fashion,
     // so that you don't try to load all of them from s3
     // at the same time
-    const url = `/db/user_image?collection_id=eq.${this.collectionId}`;
-    const res = await this.httpService.getReq({path: url});
-    this.images = await res.json();
+    this.images = await this.imageDataService
+      .getImagesForCollection(this.collectionId);
     this.cdr.detectChanges();
   }
 
   public async loadCollection(): Promise<void> {
-    const url = `/db/user_image_collection?collection_id=eq.${this.collectionId}`;
-    const res = await this.httpService.getReq({path: url});
-    const data = await res.json();
-    this.collection = data[0];
+    this.collection = await this.imageDataService
+      .getCollection(this.collectionId);
     this.cdr.detectChanges();
   }
 

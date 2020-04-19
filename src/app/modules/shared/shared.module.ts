@@ -8,6 +8,7 @@ import { CreateCollectionModalComponent } from './create-collection-modal/create
 import { ReactiveFormsModule } from '@angular/forms';
 import { FileUploadInfoComponent } from './file-upload-info/file-upload-info.component';
 import { DynamicLoadedImageComponent } from './dynamic-loaded-image/dynamic-loaded-image.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -24,6 +25,7 @@ import { DynamicLoadedImageComponent } from './dynamic-loaded-image/dynamic-load
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   exports: [
     CollectionDisplayComponent,

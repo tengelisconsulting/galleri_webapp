@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { SessionService } from './session.service';
 import { AuthService } from './auth.service';
+import { AppRoutePath } from './routing/AppRoutePath';
 
 
 @Injectable({
@@ -9,8 +11,14 @@ import { AuthService } from './auth.service';
 })
 export class AppLoadService {
 
+  private readonly DEFAULT_ROUTE_PATH = [
+    AppRoutePath.APP_PREFIX,
+    AppRoutePath.YOUR_GALLERY,
+  ];
+
   constructor(
     private authService: AuthService,
+    private router: Router,
     private sessionService: SessionService,
   ) {}
 
@@ -22,6 +30,9 @@ export class AppLoadService {
       return false;
     }
     this.startup(sessionToken);
+    if (window.location.pathname === `/${AppRoutePath.LOGIN}`) {
+      this.router.navigate(this.DEFAULT_ROUTE_PATH);
+    }
     return true;
   }
 
@@ -37,6 +48,7 @@ export class AppLoadService {
       return false;
     }
     this.startup(sessionToken);
+    this.router.navigate(this.DEFAULT_ROUTE_PATH);
     return true;
   }
 
@@ -45,7 +57,6 @@ export class AppLoadService {
   ): void {
     // load permissions, anything else that goes in the state session
     this.sessionService.enterSession(sessionToken, []);
-    // I believe this is where we should apply the 'route before unauthed'
   }
 
 }

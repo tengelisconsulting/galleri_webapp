@@ -1,6 +1,11 @@
-<div>
-  <div *ngIf="collection">
-    {{ collection.collection_name }}
+<div *ngIf="collection">
+  <div class="flex justify-between">
+    <div>{{ collection.collection_name }}</div>
+    <div class="clickable"
+         [routerLink]="EDIT_ROUTE_LINK"
+         [queryParams]="{collectionId: collectionId}">
+      EDIT
+    </div>
   </div>
 
   <div *ngFor="let image of images"
@@ -9,10 +14,7 @@
       <img [style.maxHeight.px]="windowHeight"
            [src]="image.href" />
 
-      <div *ngIf="!image.description">
-        Add a description
-      </div>
-      <div *ngIf="image.description">
+      <div>
         {{ image.description }}
       </div>
     </div>

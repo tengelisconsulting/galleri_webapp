@@ -5,6 +5,7 @@ import { HttpService } from 'src/app/core/http.service';
 import * as db from "../../../types/auto/db";
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { WindowService } from 'src/app/ui/window.service';
+import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 type user_image = db.OpenAPI2.user_image;
 type user_image_collection = db.OpenAPI2.user_image_collection;
 
@@ -16,6 +17,8 @@ type user_image_collection = db.OpenAPI2.user_image_collection;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CollectionDisplayComponent extends BaseComponent {
+
+  public EDIT_ROUTE_LINK: string = `/${AppRoutePath.APP_PREFIX}/${AppRoutePath.EDIT_IMAGE_COLLECTION}` ;
 
   @Input()
   public collectionId: string;
@@ -46,6 +49,10 @@ export class CollectionDisplayComponent extends BaseComponent {
   }
 
   public async loadImages(): Promise<void> {
+    // you can load all the hrefs at once,
+    // but put them into the DOM in a staggered fashion,
+    // so that you don't try to load all of them from s3
+    // at the same time
     const url = `/db/user_image?collection_id=eq.${this.collectionId}`;
     const res = await this.httpService.getReq({path: url});
     this.images = await res.json();

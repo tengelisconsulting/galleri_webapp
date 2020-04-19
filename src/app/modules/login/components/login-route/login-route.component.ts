@@ -1,8 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppLoadService } from 'src/app/core/app-load.service';
-import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,14 +22,8 @@ export class LoginRouteComponent {
 
   public errorMsg: string;
 
-  private readonly DEFAULT_ROUTE_PATH = [
-    AppRoutePath.APP_PREFIX,
-    AppRoutePath.YOUR_GALLERY,
-  ];
-
   constructor(
     private appLoad: AppLoadService,
-    private router: Router,
   ) { }
 
   public async login(): Promise<void> {
@@ -47,8 +39,6 @@ export class LoginRouteComponent {
     this.loginForm.enable();
     if (!success) {
       this.errorMsg = "Invalid username or password";
-    } else {
-      this.router.navigate(this.DEFAULT_ROUTE_PATH);
     }
   }
 

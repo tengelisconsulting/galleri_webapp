@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FileUploadInfoComponent } from './file-upload-info/file-upload-info.component';
 import { DynamicLoadedImageComponent } from './dynamic-loaded-image/dynamic-loaded-image.component';
 import { RouterModule } from '@angular/router';
+import { ImageThumbComponent } from './image-thumb/image-thumb.component';
 
 
 
@@ -21,6 +22,7 @@ import { RouterModule } from '@angular/router';
     CreateCollectionModalComponent,
     FileUploadInfoComponent,
     DynamicLoadedImageComponent,
+    ImageThumbComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,9 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     CollectionDisplayComponent,
-    CollectionThumbComponent
+    CollectionThumbComponent,
+    DynamicLoadedImageComponent,
+    ImageThumbComponent,
   ],
   entryComponents: [
     CollectionDisplayModalComponent,

@@ -6,6 +6,7 @@ type user_image = db.OpenAPI2.user_image;
 type user_image_collection = db.OpenAPI2.user_image_collection;
 
 import { ImageDataService } from 'src/app/core/data/image-data.service';
+import { WindowService } from 'src/app/ui/window.service';
 
 
 @Component({
@@ -16,18 +17,27 @@ import { ImageDataService } from 'src/app/core/data/image-data.service';
 })
 export class EditImageCollectionComponent extends BaseComponent {
 
+
   @Input()
   private collectionId: string;
 
   public images: user_image[] = [];
 
   public collection: user_image_collection;
+  public thumbSizePx: number;
 
   constructor(
     private cdr: ChangeDetectorRef,
     private imageDataService: ImageDataService,
+    private windowService: WindowService,
   ) {
     super();
+    this.appOnInit(() => {
+      this.loadCollection();
+      this.loadImages();
+      this.windowService.getResizeStream(this.isDestroyed$, 500)
+        .subscribe((size) => this.setThumbSize(size.width));
+    });
   }
 
   public async loadImages(): Promise<void> {
@@ -39,6 +49,11 @@ export class EditImageCollectionComponent extends BaseComponent {
   public async loadCollection(): Promise<void> {
     this.collection = await this.imageDataService
       .getCollection(this.collectionId);
+    this.cdr.detectChanges();
+  }
+
+  private setThumbSize(windowWidth: number): void {
+    this.thumbSizePx = (windowWidth - 20) / 3 - 20;
     this.cdr.detectChanges();
   }
 

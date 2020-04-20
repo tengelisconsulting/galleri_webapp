@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { ImageDataService } from 'src/app/core/data/image-data.service';
-
+import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, ChangeDetectorRef, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+
+import { ImageDataService } from 'src/app/core/data/image-data.service';
 
 
 @Component({
@@ -15,7 +15,8 @@ export class EditImageDescComponent implements OnInit {
   @Input()
   public imageId: string;
 
-  public onComplete: EventEmitter<boolean> = new  EventEmitter();
+  @Output()
+  public onComplete: EventEmitter<boolean> = new EventEmitter();
 
   public imageForm: FormGroup = new FormGroup({
     description: new FormControl(""),
@@ -48,11 +49,8 @@ export class EditImageDescComponent implements OnInit {
   }
 
   private async loadImage(): Promise<void> {
-    console.log("my image id", this.imageId);
     const image = await this.imageDataService.getImage(this.imageId);
-    // also show the image...
     this.imageForm.controls["description"].setValue(image.description);
-    console.log("got image", image);
     this.cdr.detectChanges();
   }
 

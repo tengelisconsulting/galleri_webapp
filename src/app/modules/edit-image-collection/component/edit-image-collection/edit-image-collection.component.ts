@@ -26,6 +26,8 @@ export class EditImageCollectionComponent extends BaseComponent {
   public collection: user_image_collection;
   public thumbSizePx: number;
 
+  public toUpload: File[] = [];
+
   constructor(
     private cdr: ChangeDetectorRef,
     private imageDataService: ImageDataService,
@@ -50,6 +52,21 @@ export class EditImageCollectionComponent extends BaseComponent {
     this.collection = await this.imageDataService
       .getCollection(this.collectionId);
     this.cdr.detectChanges();
+  }
+
+  public onNewImage(f: File): void {
+    this.toUpload = this.toUpload.concat(f);
+    this.cdr.detectChanges();
+  }
+
+  public async imageAdded(imageId: string): Promise<void> {
+    const addSuccess = await this.imageDataService
+      .addImageToCollection(imageId, this.collectionId);
+    if (!addSuccess) {
+      console.error("failed to add image");
+      return;
+    }
+    console.log("now fetch image and add to list:", imageId);
   }
 
   private setThumbSize(windowWidth: number): void {

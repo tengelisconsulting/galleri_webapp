@@ -16,24 +16,20 @@
       <app-file-upload-info
         *ngFor="let f of files; index as i"
         [file]="f"
-        (onCreate)="imageAdded($event)"
+        (onId)="imageAdded($event)"
         (onDelete)="fileDeleted(i)">
       </app-file-upload-info>
 
-      <label for="file-input">
-        <div class="clickable pt4">
-          Add a file
-        </div>
-      </label>
-      <input id="file-input"
-             type="file"
-             style="position: fixed; top: -100em"
-             (change)="onFile($event)">
+      <app-file-upload-btn
+        class="pt4"
+        text="ADD AN IMAGE"
+        (onFile)="onFile($event)">
+      </app-file-upload-btn>
     </div>
   </div>
 
-    <div class="flex justify-end">
-      <div class="clickable"
-           (click)="submit()">SUBMIT</div>
-    </div>
+  <div class="flex justify-end">
+    <div class="clickable"
+         (click)="submit()">SUBMIT</div>
+  </div>
 </div>

@@ -15,6 +15,9 @@ export class FileUploadInfoComponent implements OnInit {
   public file: File;
 
   @Output()
+  public onId: EventEmitter<string> = new EventEmitter();
+
+  @Output()
   public onCreate: EventEmitter<string> = new EventEmitter();
 
   @Output()
@@ -31,12 +34,16 @@ export class FileUploadInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.onCreate.emit(this.imageId);
+    this.onId.emit(this.imageId);
     this.httpService.upload(this.imagePath, this.file)
-      .subscribe((progress) => {
-        this.percentDone = (progress.loaded * 100.0 / progress.total);
-        this.cdr.detectChanges();
-      });
+      .subscribe(
+        (progress) => {
+          this.percentDone = (progress.loaded * 100.0 / progress.total);
+          this.cdr.detectChanges();
+        },
+        null,
+        () => this.onCreate.emit(this.imageId)
+      );
   }
 
   public async deleteImage(): Promise<void> {

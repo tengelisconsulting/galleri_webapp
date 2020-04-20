@@ -1,0 +1,9 @@
+<label for="file-input">
+  <div class="clickable">
+    {{ text }}
+  </div>
+</label>
+<input id="file-input"
+       type="file"
+       style="position: fixed; top: -100em"
+       (change)="onInput($event)">

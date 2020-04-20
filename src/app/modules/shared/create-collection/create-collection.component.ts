@@ -29,12 +29,8 @@ export class CreateCollectionComponent {
     private httpService: HttpService,
   ) { }
 
-  public onFile(e: any): void {
-    if (!e || !e.target || !e.target.files || !e.target.files[0]) {
-      return;
-    }
-    const selectedFile: File = e.target.files[0];
-    this.files = this.files.concat(selectedFile);
+  public onFile(file: File): void {
+    this.files = this.files.concat(file);
   }
 
   public fileDeleted(index: number): void {

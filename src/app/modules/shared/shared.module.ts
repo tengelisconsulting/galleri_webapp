@@ -10,6 +10,7 @@ import { FileUploadInfoComponent } from './file-upload-info/file-upload-info.com
 import { DynamicLoadedImageComponent } from './dynamic-loaded-image/dynamic-loaded-image.component';
 import { RouterModule } from '@angular/router';
 import { ImageThumbComponent } from './image-thumb/image-thumb.component';
+import { FileUploadBtnComponent } from './file-upload-btn/file-upload-btn.component';
 
 
 
@@ -23,6 +24,7 @@ import { ImageThumbComponent } from './image-thumb/image-thumb.component';
     FileUploadInfoComponent,
     DynamicLoadedImageComponent,
     ImageThumbComponent,
+    FileUploadBtnComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,8 @@ import { ImageThumbComponent } from './image-thumb/image-thumb.component';
     CollectionDisplayComponent,
     CollectionThumbComponent,
     DynamicLoadedImageComponent,
+    FileUploadBtnComponent,
+    FileUploadInfoComponent,
     ImageThumbComponent,
   ],
   entryComponents: [

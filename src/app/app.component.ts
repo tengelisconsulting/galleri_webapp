@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Injector } from '@angular/core';
 import { AppLoadService } from './core/app-load.service';
 
 @Component({
@@ -9,6 +9,8 @@ import { AppLoadService } from './core/app-load.service';
 })
 export class AppComponent {
   public title = 'webapp';
+
+  public static injector: Injector;
 
   constructor(
     private appLoadService: AppLoadService,

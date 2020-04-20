@@ -3,6 +3,7 @@ import { ModalService } from 'src/app/ui/modal.service';
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { ModalInit } from 'src/app/types/ModalInit';
 import { filter } from 'rxjs/operators';
+import { ModalComponent } from 'src/app/types/ModalComponent';
 
 @Component({
   selector: 'app-modal-anchor-proto',
@@ -40,8 +41,9 @@ export class ModalAnchorProtoComponent extends BaseComponent {
       modalInit.component
     );
     this.componentRef = this.container.createComponent(factory);
-    if (modalInit.init) {
-      modalInit.init(this.componentRef.instance);
+    if (modalInit.initParams) {
+      const instance: ModalComponent<any> = this.componentRef.instance;
+      instance.modalInit(modalInit.initParams);
     }
     this.cdr.detectChanges();
   }

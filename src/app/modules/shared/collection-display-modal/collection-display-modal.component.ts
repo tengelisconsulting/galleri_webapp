@@ -12,17 +12,10 @@ interface InitParams {
   styleUrls: ['./collection-display-modal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CollectionDisplayModalComponent  implements ModalComponent<InitParams> {
+export class CollectionDisplayModalComponent extends ModalComponent<InitParams> {
 
-  public params: InitParams;
-
-  constructor(
-    private cdr: ChangeDetectorRef,
-  ) { }
-
-    public init(params: InitParams): void {
-      this.params = params;
-      this.cdr.detectChanges();
+  constructor() {
+    super();
   }
 
 }

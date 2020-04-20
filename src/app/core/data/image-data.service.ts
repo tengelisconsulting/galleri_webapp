@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../http.service';
 
 import * as db from "../../types/auto/db";
-import { getPGQueryUrl } from '../framework/postgrest-query-builder';
 type user_image = db.OpenAPI2.user_image;
 type user_image_collection = db.OpenAPI2.user_image_collection;
+
+import { HttpService } from '../http.service';
+import { getPGQueryUrl } from '../framework/postgrest-query-builder';
+import { shallowMerge } from 'src/app/lib/fn';
+
 
 @Injectable({
   providedIn: 'root'
@@ -53,13 +56,28 @@ export class ImageDataService {
     return res.ok;
   }
 
+  public async updateImage(
+    imageId: string,
+    update: Partial<user_image>
+  ): Promise<Response> {
+    const url = "/db/rpc/image_update";
+    const reqData = {
+      "p_obj_id": imageId,
+      "p_href": update.href,
+      "p_description": update.description,
+    }
+    const res = await this.httpService.postReq({
+      path: url,
+      data: reqData,
+    });
+    return res;
+  }
+
   public async getImage(
-    collectionId: string,
     imageId: string
   ): Promise<user_image> {
     const url = getPGQueryUrl("user_image", [
-      ["collection_id.eq." + collectionId,
-       "image_id.eq." + imageId]
+      ["image_id.eq." + imageId]
     ])
     const res = await this.httpService.getReq({path: url});
     const data = await res.json();

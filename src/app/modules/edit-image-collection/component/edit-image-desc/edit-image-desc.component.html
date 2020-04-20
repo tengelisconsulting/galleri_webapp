@@ -1,0 +1,23 @@
+<form
+  class="container"
+  [formGroup]="imageForm"
+  (ngSubmit)="update()">
+
+  <div>
+    <label for="description">Description:</label>
+  </div>
+  <div class="w-100 pt3 pb3">
+    <textarea id="description"
+              class="w-100"
+              matInput
+              formControlName="description">
+    </textarea>
+  </div>
+
+  <button
+    type="submit"
+    mat-flat-button>
+    SAVE
+  </button>
+
+</form>

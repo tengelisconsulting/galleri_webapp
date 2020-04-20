@@ -20,9 +20,9 @@ export function getPGQueryUrl(
   const contents = andsAsStr
     .reduce((acc, curr) => acc + "," + curr);
   if (!select) {
-    return `${base}?or(${contents})`;
+    return `${base}?or=(${contents})`;
   }
   const selectStr = select
     .reduce((acc, curr) => acc + "," + curr);
-  return `${base}?or(${contents})&select=${selectStr}`;
+  return `${base}?or=(${contents})&select=${selectStr}`;
 }

@@ -7,6 +7,8 @@ type user_image_collection = db.OpenAPI2.user_image_collection;
 
 import { ImageDataService } from 'src/app/core/data/image-data.service';
 import { WindowService } from 'src/app/ui/window.service';
+import { ModalService } from 'src/app/ui/modal.service';
+import { EditImageDescModalComponent } from '../edit-image-desc-modal/edit-image-desc-modal.component';
 
 
 @Component({
@@ -31,6 +33,7 @@ export class EditImageCollectionComponent extends BaseComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     private imageDataService: ImageDataService,
+    private modalService: ModalService,
     private windowService: WindowService,
   ) {
     super();
@@ -77,6 +80,13 @@ export class EditImageCollectionComponent extends BaseComponent {
     this.toUpload = Array.prototype.concat(
       this.toUpload.slice(0, index), this.toUpload.slice(index + 1),
     );
+  }
+
+  public editImageDesc(imageId: string): void {
+    this.modalService.showModal({
+      component: EditImageDescModalComponent,
+      initParams: { imageId: imageId },
+    });
   }
 
   private setThumbSize(windowWidth: number): void {

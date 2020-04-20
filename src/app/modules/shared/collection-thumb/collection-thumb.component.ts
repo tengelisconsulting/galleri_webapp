@@ -1,6 +1,10 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
+import { ImageDataService } from 'src/app/core/data/image-data.service';
+
+import * as db from "../../../types/auto/db";
+type user_image_collection = db.OpenAPI2.user_image_collection;
 
 
 @Component({
@@ -12,19 +16,24 @@ import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 export class CollectionThumbComponent {
 
   @Input()
-  public id: string;
+  private id: string;
 
   public imageUrl: string;
 
+  public collection: user_image_collection;
+
   constructor(
+    private cdr: ChangeDetectorRef,
+    private imageDataService: ImageDataService,
     private router: Router,
   ) { }
 
   public ngOnInit(): void {
     this.imageUrl = `/db/user_collection_thumb?collection_id=eq.${this.id}&select=thumb`;
+    this.loadCollection();
   }
 
-  public onClick(): void {
+  public navToCollection(): void {
     this.router.navigate([
       AppRoutePath.APP_PREFIX, AppRoutePath.IMAGE_COLLECTION
     ], {
@@ -32,6 +41,12 @@ export class CollectionThumbComponent {
         collectionId: this.id,
       }
     });
+  }
+
+  private async loadCollection(): Promise<void> {
+    this.collection = await this.imageDataService.getCollection(this.id);
+    console.log("collection", this.collection);
+    this.cdr.detectChanges();
   }
 
 }

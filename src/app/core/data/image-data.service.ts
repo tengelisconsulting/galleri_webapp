@@ -6,7 +6,6 @@ type user_image_collection = db.OpenAPI2.user_image_collection;
 
 import { HttpService } from '../http.service';
 import { getPGQueryUrl } from '../framework/postgrest-query-builder';
-import { shallowMerge } from 'src/app/lib/fn';
 
 
 @Injectable({

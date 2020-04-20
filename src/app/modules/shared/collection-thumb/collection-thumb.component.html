@@ -1,13 +1,14 @@
 <div
   class="clickable"
-  (click)="onClick()">
-  Collection thumb for {{ id }}
+  (click)="navToCollection()">
 
-  <div style="height: 20px; width: 20px;">
+  <div *ngIf="collection">
+    {{ collection.collection_name }}
+  </div>
+  <div class="h-100">
     <app-dynamic-loaded-image
       [url]="imageUrl">
     </app-dynamic-loaded-image>
   </div>
-
 
 </div>

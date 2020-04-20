@@ -1,14 +1,15 @@
 <div class="h-100 flex justify-between items-center">
-  <div class="w-50">
+  <div class="w-50 clickable ml3"
+       [routerLink]="['/app']">
     HOME
   </div>
-  <div class="w-50 flex justify-end">
+  <div class="w-50 flex justify-end mr3">
     <div class="ml3 clickable"
          (click)="openCreateCollectionModal()">
       ADD A COLLECTION
     </div>
-    <div class="ml3">
-      NAV
-    </div>
+    <!-- <div class="ml3"> -->
+    <!--   NAV -->
+    <!-- </div> -->
   </div>
 </div>

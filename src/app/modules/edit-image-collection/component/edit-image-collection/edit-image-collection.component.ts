@@ -59,14 +59,24 @@ export class EditImageCollectionComponent extends BaseComponent {
     this.cdr.detectChanges();
   }
 
-  public async imageAdded(imageId: string): Promise<void> {
+  public async imageAdded(
+    uploadIndex: number,
+    imageId: string
+  ): Promise<void> {
+    this.uploadFinished(uploadIndex);
     const addSuccess = await this.imageDataService
       .addImageToCollection(imageId, this.collectionId);
     if (!addSuccess) {
       console.error("failed to add image");
       return;
     }
-    console.log("now fetch image and add to list:", imageId);
+    this.loadImages();
+  }
+
+  public uploadFinished(index: number): void {
+    this.toUpload = Array.prototype.concat(
+      this.toUpload.slice(0, index), this.toUpload.slice(index + 1),
+    );
   }
 
   private setThumbSize(windowWidth: number): void {

@@ -5,7 +5,7 @@
 <div class="flex flex-wrap">
   <div *ngFor="let im of images"
        [style.width.px]="thumbSizePx"
-       class="pl2 pr2">
+       class="pl2 pr2 pb2 pt2">
     <app-image-thumb
       [imageId]="im.image_id">
     </app-image-thumb>
@@ -13,17 +13,17 @@
 
   <div *ngFor="let f of toUpload; index as i"
        [style.width.px]="thumbSizePx"
-       class="pl2 pr2 flex items-center justify-center">
+       class="pl2 pr2 pb2 pt2 flex items-center justify-center">
     <app-file-upload-info
       [file]="f"
-      (onCreate)="imageAdded($event)"
-      (onDelete)="fileDeletedi">
+      (onCreate)="imageAdded(i, $event)"
+      (onDelete)="uploadFinished(i)">
     </app-file-upload-info>
   </div>
 
   <div [style.width.px]="thumbSizePx"
        style="min-height: 250px;"
-       class="pl2 pr2 flex justify-center items-center clickable">
+       class="pl2 pr2 pb2 pt2 flex justify-center items-center clickable">
     <app-file-upload-btn
       text="ADD AN IMAGE"
       (onFile)="onNewImage($event)">

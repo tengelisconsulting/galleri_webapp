@@ -4,8 +4,13 @@ export function shallowMerge<T>(
 ): T {
   const newObj = {};
   const mergeIn = (obj: Partial<T>) => {
-    Object.keys(obj)
-      .forEach((key) => newObj[key] = obj[key]);
+    Object.keys(obj).forEach((key) => {
+      if (obj[key] === undefined) {
+        delete newObj[key];
+      } else {
+        newObj[key] = obj[key];
+      }
+    });
   };
   mergeIn(base);
   args.forEach((obj) => mergeIn(obj));

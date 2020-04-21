@@ -45,7 +45,6 @@ export class CollectionThumbComponent {
 
   private async loadCollection(): Promise<void> {
     this.collection = await this.imageDataService.getCollection(this.id);
-    console.log("collection", this.collection);
     this.cdr.detectChanges();
   }
 

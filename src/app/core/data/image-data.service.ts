@@ -90,6 +90,38 @@ export class ImageDataService {
     return res;
   }
 
+  public async deleteImage(
+    imageId: string
+  ): Promise<void> {
+    const urlRes = await this.httpService.getReq({
+      path: `/obj-access/${imageId}/delete`,
+    });
+    if (!urlRes.ok) {
+      throw new Error("failed to acquire storage delete URL");
+    }
+    const deleteUrl = await urlRes.json();
+    console.log("delete url", deleteUrl);
+    const deleteRes = await this.httpService.deleteReq({
+      path: deleteUrl,
+      isExternal: true,
+      headers: {
+        "Authorization": undefined,
+      }
+    });
+    if (!deleteRes.ok) {
+      throw new Error("failed to delete object from storage");
+    }
+    const dbDeleteRes = await this.httpService.postReq({
+      path: "/db/rpc/user_image_delete",
+      data: {
+        "p_obj_id": imageId,
+      },
+    });
+    if (!dbDeleteRes.ok) {
+      throw new Error("failed to delete object record");
+    }
+  }
+
   public async getImage(
     imageId: string
   ): Promise<user_image> {

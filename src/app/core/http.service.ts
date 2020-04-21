@@ -19,6 +19,7 @@ interface AppHttpRequest {
   mode?: RequestMode,
   credentials?: RequestCredentials,
   isRawData?: boolean;
+  isExternal?: boolean;
 }
 
 
@@ -45,7 +46,7 @@ export class HttpService {
 
   public postReq(req: Partial<AppHttpRequest>): Promise<Response> {
     const reqHeaders = shallowMerge(
-      req.headers || {}, this.getDefaultAuthedHeaders()
+      this.getDefaultAuthedHeaders(), req.headers || {}
     );
     return this.doRequest(
       shallowMerge(
@@ -62,7 +63,7 @@ export class HttpService {
 
   public getReq(req: Partial<AppHttpRequest>): Promise<Response> {
     const reqHeaders = shallowMerge(
-      req.headers || {}, this.getDefaultAuthedHeaders()
+      this.getDefaultAuthedHeaders(), req.headers || {}
     );
     return this.doRequest(
       shallowMerge(
@@ -79,7 +80,7 @@ export class HttpService {
 
   public deleteReq(req: Partial<AppHttpRequest>): Promise<Response> {
     const reqHeaders = shallowMerge(
-      req.headers || {}, this.getDefaultAuthedHeaders()
+      this.getDefaultAuthedHeaders(), req.headers || {}
     );
     return this.doRequest(
       shallowMerge(
@@ -151,7 +152,9 @@ export class HttpService {
     }, req.data ? {
       body: req.isRawData ? req.data : JSON.stringify(req.data)
     } : {});
-    const request = new Request(`${this.API_HOST}${req.path}`, reqParams);
+    const url = req.isExternal ?
+      req.path : `${this.API_HOST}${req.path}`;
+    const request = new Request(url, reqParams);
     const requestInit: RequestInit = {
       cache: req.cache,
       mode: req.mode,

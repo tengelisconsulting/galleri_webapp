@@ -62,12 +62,7 @@ export class FileUploadInfoComponent implements OnInit {
 
   public async deleteImage(): Promise<void> {
     this.onDelete.emit(true);
-    const res = await this.httpService.deleteReq({
-      path: this.imagePath
-    });
-    if (!res.ok) {
-      console.error("failed to delete image");
-    }
+    return this.imageDataService.deleteImage(this.imageId);
   }
 
   private async upload(url: string, data: FormData): Promise<void> {

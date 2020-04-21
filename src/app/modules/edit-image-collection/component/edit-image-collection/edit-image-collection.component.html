@@ -1,5 +1,13 @@
-<div *ngIf="collection">
-  Collection {{ collection.collection_name }}
+<div *ngIf="collection"
+     class="flex justify-between pl3 pr3">
+  <div>
+    {{ collection.collection_name }}
+  </div>
+  <div class="clickable"
+       [routerLink]="origCollectionLink"
+       [queryParams]="{collectionId: collectionId}">
+    VIEW COLLECTION
+  </div>
 </div>
 
 <div class="flex flex-wrap">

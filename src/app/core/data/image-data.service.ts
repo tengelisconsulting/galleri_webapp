@@ -100,7 +100,6 @@ export class ImageDataService {
       throw new Error("failed to acquire storage delete URL");
     }
     const deleteUrl = await urlRes.json();
-    console.log("delete url", deleteUrl);
     const deleteRes = await this.httpService.deleteReq({
       path: deleteUrl,
       isExternal: true,

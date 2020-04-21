@@ -9,6 +9,7 @@ import { ImageDataService } from 'src/app/core/data/image-data.service';
 import { WindowService } from 'src/app/ui/window.service';
 import { ModalService } from 'src/app/ui/modal.service';
 import { EditImageDescModalComponent } from '../edit-image-desc-modal/edit-image-desc-modal.component';
+import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 
 
 @Component({
@@ -22,6 +23,10 @@ export class EditImageCollectionComponent extends BaseComponent {
 
   @Input()
   private collectionId: string;
+
+  public readonly origCollectionLink = [
+    `/${AppRoutePath.APP_PREFIX}/${AppRoutePath.IMAGE_COLLECTION}`
+  ];
 
   public images: user_image[] = [];
 

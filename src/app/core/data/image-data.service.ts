@@ -83,4 +83,15 @@ export class ImageDataService {
     return data[0];
   }
 
+  public async getFullImageUrl(
+    imageId: string
+  ): Promise<string> {
+    const url = `/obj-access/${imageId}/read`;
+    const res = await this.httpService.getReq({
+      path: url,
+    });
+    const data = await res.json();
+    return atob(data["url_b64"]);
+  }
+
 }

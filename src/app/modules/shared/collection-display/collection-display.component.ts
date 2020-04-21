@@ -8,7 +8,11 @@ import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { WindowService } from 'src/app/ui/window.service';
 import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 import { ImageDataService } from 'src/app/core/data/image-data.service';
+import { shallowMerge } from 'src/app/lib/fn';
 
+interface FullImage extends user_image {
+  full_url: string;
+}
 
 @Component({
   selector: 'app-collection-display',
@@ -23,7 +27,7 @@ export class CollectionDisplayComponent extends BaseComponent {
   @Input()
   public collectionId: string;
 
-  public images: user_image[] = [];
+  public images: FullImage[] = [];
 
   public collection: user_image_collection;
 
@@ -53,8 +57,14 @@ export class CollectionDisplayComponent extends BaseComponent {
     // but put them into the DOM in a staggered fashion,
     // so that you don't try to load all of them from s3
     // at the same time
-    this.images = await this.imageDataService
+    const images = await this.imageDataService
       .getImagesForCollection(this.collectionId);
+    const fullUrls = await Promise.all(
+      images.map((im) => this.imageDataService.getFullImageUrl(im.image_id))
+    );
+    this.images = images.map((im, index) => shallowMerge(im as FullImage, {
+      full_url: fullUrls[index],
+    }));
     this.cdr.detectChanges();
   }
 

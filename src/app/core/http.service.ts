@@ -105,22 +105,16 @@ export class HttpService {
   }
 
   public upload(
-    path: string,
-    file: File,
+    url: string,
+    data: any
   ): Observable<{
     loaded: number,
     total: number,
   }> {
     // 'fetch' API can't give upload progress
     return new Observable((o) => {
-      const url = `${this.API_HOST}${path}`;
       const xhr = new XMLHttpRequest();
-      xhr.open("PUT", url);
-      const headers = this.getDefaultAuthedHeaders();
-      Object.keys(headers).forEach((header) => {
-        xhr.setRequestHeader(header, headers[header]);
-      });
-      xhr.setRequestHeader("Content-Type", file.type);
+      xhr.open("POST", url);
       const onProgress = (e: ProgressEvent) => o.next({
         loaded: e.loaded,
         total: e.total,
@@ -134,7 +128,7 @@ export class HttpService {
       xhr.upload.addEventListener("progress", onProgress , false);
       xhr.upload.addEventListener("load", onComplete, false);
       xhr.upload.addEventListener("error", onError, false);
-      xhr.send(file);
+      xhr.send(data);
     });
   }
 

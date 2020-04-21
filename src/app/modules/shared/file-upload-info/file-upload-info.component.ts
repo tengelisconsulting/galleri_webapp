@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 import { v4 as uuidv4 } from "uuid";
 
 import { HttpService } from 'src/app/core/http.service';
+import { ImageDataService } from 'src/app/core/data/image-data.service';
 
 @Component({
   selector: 'app-file-upload-info',
@@ -30,19 +31,31 @@ export class FileUploadInfoComponent implements OnInit {
 
   constructor(
     private httpService: HttpService,
+    private imageDataService: ImageDataService,
     private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
     this.onId.emit(this.imageId);
-    this.httpService.upload(this.imagePath, this.file)
+    this.uploadImage();
+  }
+
+  public async uploadImage(): Promise<void> {
+    const uploadInfo = await this.imageDataService.getCreateImageUrl(
+      this.imageId
+    );
+    const formData = new FormData();
+    Object.keys(uploadInfo.fields).forEach((key) => {
+      formData.append(key, uploadInfo.fields[key])
+    });
+    formData.append("file", this.file);
+    this.httpService.upload(
+      uploadInfo.url, formData
+    )
       .subscribe(
-        (progress) => {
-          this.percentDone = (progress.loaded * 100.0 / progress.total);
-          this.cdr.detectChanges();
-        },
+        (progress) => this.onProgress(progress),
         null,
-        () => this.onCreate.emit(this.imageId)
+        () => this.onUploadComplete(uploadInfo)
       );
   }
 
@@ -54,6 +67,18 @@ export class FileUploadInfoComponent implements OnInit {
     if (!res.ok) {
       console.error("failed to delete image");
     }
+  }
+
+  private onProgress(progress: {loaded: number, total: number}): void {
+    this.percentDone = (progress.loaded * 100.0 / progress.total);
+    this.cdr.detectChanges();
+  }
+
+  private async onUploadComplete(uploadInfo): Promise<void> {
+    const res = this.imageDataService.createImage(
+      this.imageId, uploadInfo.url + uploadInfo.fields.key
+    )
+    this.onCreate.emit(this.imageId);
   }
 
 }

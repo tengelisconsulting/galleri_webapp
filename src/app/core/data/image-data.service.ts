@@ -55,6 +55,22 @@ export class ImageDataService {
     return res.ok;
   }
 
+  public async createImage(
+    imageId: string,
+    href: string
+  ): Promise<Response> {
+    const url = "/db/rpc/user_image_create";
+    const reqData = {
+      "p_obj_id": imageId,
+      "p_href": href,
+    }
+    const res = await this.httpService.postReq({
+      path: url,
+      data: reqData,
+    });
+    return res;
+  }
+
   public async updateImage(
     imageId: string,
     update: Partial<user_image>
@@ -91,7 +107,18 @@ export class ImageDataService {
       path: url,
     });
     const data = await res.json();
-    return atob(data["url_b64"]);
+    return data["url_b64"];
+  }
+
+  public async getCreateImageUrl(
+    imageId: string
+  ): Promise<{url: string, fields: any}> {
+    const url = `/obj-access/${imageId}/create`;
+    const res = await this.httpService.getReq({
+      path: url,
+    });
+    const data = await res.json();
+    return data;
   }
 
 }

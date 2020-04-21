@@ -57,12 +57,14 @@ export class ImageDataService {
 
   public async createImage(
     imageId: string,
-    href: string
+    href: string,
+    thumbB64: string,
   ): Promise<Response> {
     const url = "/db/rpc/user_image_create";
     const reqData = {
       "p_obj_id": imageId,
       "p_href": href,
+      "p_thumb_b64": thumbB64,
     }
     const res = await this.httpService.postReq({
       path: url,

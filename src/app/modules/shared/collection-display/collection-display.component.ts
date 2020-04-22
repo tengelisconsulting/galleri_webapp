@@ -49,6 +49,7 @@ export class CollectionDisplayComponent extends BaseComponent {
       this.loadImages();
       this.loadCollection();
       this.windowService.getResizeStream(this.isDestroyed$, 1000)
+        .pipe(take(1))
         .subscribe((size) => {
           this.windowHeight = size.height;
           this.windowWidth = size.width;

@@ -32,7 +32,8 @@ export class RunTimeEnvService {
 
   private getDevEnv(): Env {
     return {
-      apiHost: "http://localhost",
+      apiHost: "https://galleri.fun",
+      // apiHost: "http://localhost",
     };
   }
 

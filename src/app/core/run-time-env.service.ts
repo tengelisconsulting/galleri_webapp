@@ -10,7 +10,7 @@ import { State } from './state/state';
 
 
 interface RuntimeState {
-  mode: "prod" | "dev";
+  mode: "prod" | "dev" | "staging";
 }
 
 @Injectable({
@@ -24,6 +24,12 @@ export class RunTimeEnvService {
     };
   }
 
+  private getStagingEnv(): Env {
+    return {
+      apiHost: "http://64.225.27.133",
+    };
+  }
+
   private getDevEnv(): Env {
     return {
       apiHost: "http://localhost",
@@ -33,8 +39,8 @@ export class RunTimeEnvService {
 
   private runtimeState: State<RuntimeState> = new State(
     never(), {
-      mode: environment.production ? "prod" : "dev",
-    }
+      mode: environment.mode,
+    } as RuntimeState
   );
 
   private env$: BehaviorSubject<Env> = new BehaviorSubject(
@@ -59,12 +65,13 @@ export class RunTimeEnvService {
   }
 
   public setRuntimeMode(mode: any): void {
-    if (mode === "prod" || mode === "dev") {
+    if (mode === "prod" || mode === "dev"
+        || mode === "staging") {
       console.info("parsed mode: ", mode);
       this.runtimeState.update({ mode: mode });
     } else {
       console.error("can't apply runtime mode: ", mode);
-      console.error("use mode 'prod' or 'dev'");
+      console.error("use mode 'prod', 'staging' or 'dev'");
     }
   }
 
@@ -75,25 +82,37 @@ export class RunTimeEnvService {
   }
 
   private applyRuntimeState(): void {
-    this.runtimeState.value.mode === "prod" ?
-      this.applyProdMode() : this.applyDevMode();
+    switch (this.runtimeState.value.mode) {
+      case "prod":
+        this.applyProdLogging();
+        return;
+      default:
+        this.applyDevLogging();
+        return;
+    }
   }
 
-  private applyProdMode(): void {
+  private applyProdLogging(): void {
     Object.keys(this.consoleRefs).forEach((key) => {
       window['console'][key] = () => {};
     });
   }
 
-  private applyDevMode(): void {
+  private applyDevLogging(): void {
     Object.keys(this.consoleRefs).forEach((key) => {
       window['console'][key] = this.consoleRefs[key];
     });
   }
 
   private deriveEnv(): Env {
-    return this.runtimeState.value.mode === "prod" ?
-      this.getProdEnv() : this.getDevEnv();
+    switch (this.runtimeState.value.mode) {
+      case "prod":
+        return this.getProdEnv();
+      case "staging":
+        return this.getStagingEnv();
+      default:
+        return this.getDevEnv();
+    }
   }
 
 }

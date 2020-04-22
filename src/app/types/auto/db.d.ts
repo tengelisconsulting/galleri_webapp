@@ -4,12 +4,29 @@
  */
 
 export namespace OpenAPI2 {
+  export interface user_image_thumb {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    image_id?: string;
+    created?: string;
+    /**
+     * Note:
+     * This is a Foreign Key to `ac_user.user_id`.<fk table='ac_user' column='user_id'/>
+     */
+    user_id?: string;
+    href?: string;
+    description?: string;
+    thumb?: string;
+  }
   export interface user_image_collection {
     /**
      * Note:
      * This is a Primary Key.<pk/>
      */
     collection_id?: string;
+    collection_name?: string;
     created?: string;
     /**
      * Note:

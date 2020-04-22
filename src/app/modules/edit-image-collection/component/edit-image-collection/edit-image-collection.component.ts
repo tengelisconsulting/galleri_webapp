@@ -22,7 +22,7 @@ export class EditImageCollectionComponent extends BaseComponent {
 
 
   @Input()
-  private collectionId: string;
+  public collectionId: string;
 
   public readonly origCollectionLink = [
     `/${AppRoutePath.APP_PREFIX}/${AppRoutePath.IMAGE_COLLECTION}`

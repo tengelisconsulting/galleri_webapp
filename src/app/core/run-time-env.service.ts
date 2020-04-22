@@ -26,7 +26,7 @@ export class RunTimeEnvService {
 
   private getStagingEnv(): Env {
     return {
-      apiHost: "http://64.225.27.133",
+      apiHost: "https://galleri.fun",
     };
   }
 

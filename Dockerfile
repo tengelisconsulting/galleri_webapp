@@ -12,7 +12,9 @@ COPY ./tsconfig.app.json ./tsconfig.app.json
 COPY ./tsconfig.json ./tsconfig.json
 COPY ./tslint.json ./tslint.json
 
-RUN npm run prod
+ARG CONFIGURATION="production"
+ENV CONFIGURATION=${CONFIGURATION}
+RUN npx ng build --configuration ${CONFIGURATION}
 
 FROM nginx:1.17-alpine
 WORKDIR /app

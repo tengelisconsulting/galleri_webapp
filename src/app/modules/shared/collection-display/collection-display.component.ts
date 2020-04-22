@@ -37,7 +37,7 @@ export class CollectionDisplayComponent extends BaseComponent {
   public windowHeight: number;
   public windowWidth: number;
 
-  private loaded$: BehaviorSubject<{[index: string]: boolean}> = new BehaviorSubject({});
+  public loaded$: BehaviorSubject<{[index: string]: boolean}> = new BehaviorSubject({});
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -106,11 +106,8 @@ export class CollectionDisplayComponent extends BaseComponent {
       takeUntil(this.isDestroyed$)
     ));
     waitStreams.forEach((wait$, index) => {
-      wait$
-        .pipe(take(1))
-        .subscribe(() => {
-          loadUrl(index)
-        });
+      wait$.pipe(take(1))
+        .subscribe(() => loadUrl(index));
     });
   }
 

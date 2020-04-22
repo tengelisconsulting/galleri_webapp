@@ -11,6 +11,9 @@
   <div *ngFor="let image of images; index as i"
        class="flex justify-center">
     <div>
+      <div *ngIf="!image.full_url">
+        LOADING...
+      </div>
       <img [style.maxHeight.px]="windowHeight"
            [src]="image.full_url"
            (load)="imageLoaded(i)"/>

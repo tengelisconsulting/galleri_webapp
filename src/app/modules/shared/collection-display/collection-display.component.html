@@ -8,11 +8,12 @@
     </div>
   </div>
 
-  <div *ngFor="let image of images"
+  <div *ngFor="let image of images; index as i"
        class="flex justify-center">
     <div>
       <img [style.maxHeight.px]="windowHeight"
-           [src]="image.full_url" />
+           [src]="image.full_url"
+           (load)="imageLoaded(i)"/>
 
       <div class="mb6">
         {{ image.description }}

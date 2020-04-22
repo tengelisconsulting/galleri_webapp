@@ -8,7 +8,9 @@ import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { WindowService } from 'src/app/ui/window.service';
 import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 import { ImageDataService } from 'src/app/core/data/image-data.service';
-import { shallowMerge } from 'src/app/lib/fn';
+import { BehaviorSubject, Observable, merge, timer } from 'rxjs';
+import { take, filter, map, takeUntil } from 'rxjs/operators';
+
 
 interface FullImage extends user_image {
   full_url: string;
@@ -22,7 +24,8 @@ interface FullImage extends user_image {
 })
 export class CollectionDisplayComponent extends BaseComponent {
 
-  public EDIT_ROUTE_LINK: string = `/${AppRoutePath.APP_PREFIX}/${AppRoutePath.EDIT_IMAGE_COLLECTION}` ;
+  public readonly EDIT_ROUTE_LINK: string = `/${AppRoutePath.APP_PREFIX}/${AppRoutePath.EDIT_IMAGE_COLLECTION}` ;
+  private readonly IMAGE_LOAD_DELAY_MS: number = 500;
 
   @Input()
   public collectionId: string;
@@ -33,6 +36,8 @@ export class CollectionDisplayComponent extends BaseComponent {
 
   public windowHeight: number;
   public windowWidth: number;
+
+  private loaded$: BehaviorSubject<{[index: string]: boolean}> = new BehaviorSubject({});
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -53,25 +58,54 @@ export class CollectionDisplayComponent extends BaseComponent {
   }
 
   public async loadImages(): Promise<void> {
-    // you can load all the hrefs at once,
-    // but put them into the DOM in a staggered fashion,
-    // so that you don't try to load all of them from s3
-    // at the same time
     const images = await this.imageDataService
       .getImagesForCollection(this.collectionId);
+    this.images = images.map((im: any) => {
+      im.full_url = "";
+      return im as FullImage;
+    });
     const fullUrls = await Promise.all(
       images.map((im) => this.imageDataService.getFullImageUrl(im.image_id))
     );
-    this.images = images.map((im, index) => shallowMerge(im as FullImage, {
-      full_url: fullUrls[index],
-    }));
-    this.cdr.detectChanges();
+    this.loadFullUrls(fullUrls);
+  }
+
+  public imageLoaded(index: number): void {
+    const newState = {};
+    Object.assign(newState, this.loaded$.value);
+    newState[index.toString()] = true;
+    this.loaded$.next(newState);
   }
 
   public async loadCollection(): Promise<void> {
     this.collection = await this.imageDataService
       .getCollection(this.collectionId);
     this.cdr.detectChanges();
+  }
+
+  private loadFullUrls(fullUrls: string[]): void {
+    // we wait for the sooner of:
+    // 1) IMAGE_LOAD_DELAY_MS * index of the photo
+    // 2) the previous image to load
+    const loadUrl = (index: number) => {
+      this.images[index].full_url = fullUrls[index];
+      this.cdr.detectChanges();
+    }
+    const waitStreams: Observable<boolean>[] = [
+      ...Array(fullUrls.length - 1).keys()
+    ].map((index) => merge(
+      this.loaded$.pipe(
+        filter((state) => state[(index - 1).toString()]),
+      ),
+      timer(this.IMAGE_LOAD_DELAY_MS * index),
+    ).pipe(
+      take(1),
+      map((_) => true),
+      takeUntil(this.isDestroyed$)
+    ));
+    waitStreams.forEach((wait$, index) => wait$.subscribe(() => {
+      loadUrl(index)
+    }));
   }
 
 }

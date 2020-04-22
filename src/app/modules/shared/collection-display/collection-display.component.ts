@@ -88,11 +88,13 @@ export class CollectionDisplayComponent extends BaseComponent {
     // 1) IMAGE_LOAD_DELAY_MS * index of the photo
     // 2) the previous image to load
     const loadUrl = (index: number) => {
+      console.log("loading image:", index);
       this.images[index].full_url = fullUrls[index];
       this.cdr.detectChanges();
     }
+    loadUrl(0);
     const waitStreams: Observable<boolean>[] = [
-      ...Array(fullUrls.length - 1).keys()
+      ...Array(fullUrls.length).keys()
     ].map((index) => merge(
       this.loaded$.pipe(
         filter((state) => state[(index - 1).toString()]),
@@ -103,9 +105,13 @@ export class CollectionDisplayComponent extends BaseComponent {
       map((_) => true),
       takeUntil(this.isDestroyed$)
     ));
-    waitStreams.forEach((wait$, index) => wait$.subscribe(() => {
-      loadUrl(index)
-    }));
+    waitStreams.forEach((wait$, index) => {
+      wait$
+        .pipe(take(1))
+        .subscribe(() => {
+          loadUrl(index)
+        });
+    });
   }
 
 }

@@ -139,8 +139,7 @@ export class ImageDataService {
     const res = await this.httpService.getReq({
       path: url,
     });
-    const data = await res.json();
-    return data["url_b64"];
+    return await res.json();
   }
 
   public async getCreateImageUrl(

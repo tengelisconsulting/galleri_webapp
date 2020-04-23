@@ -8,6 +8,7 @@ import { TopbarComponent } from './layout/topbar/topbar.component';
 import { ModalAnchorProtoComponent } from './prototype/modal-anchor-proto/modal-anchor-proto.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { EditImageCollectionModule } from './modules/edit-image-collection/edit-image-collection.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { EditImageCollectionModule } from './modules/edit-image-collection/edit-
     AppRoutingModule,
     SharedModule,
     EditImageCollectionModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

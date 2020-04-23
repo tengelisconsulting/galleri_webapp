@@ -56,7 +56,7 @@ export class CreateCollectionComponent {
     const res = await this.httpService.postReq({
       path: "/db/rpc/init_collection",
       data: {
-        "p_obj_id": uuidv4(),
+        "p_collection_id": uuidv4(),
         "p_collection_name": this.collectionForm.value.collectionName,
         "p_image_ids": this.imageIds,
       },

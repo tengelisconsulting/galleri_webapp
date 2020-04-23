@@ -10,12 +10,15 @@
   </div>
 </div>
 
-<div class="flex flex-wrap">
+<div class="flex flex-wrap"
+     cdkDropList
+     (cdkDropListDropped)="imageDrop($event)">
   <div *ngFor="let im of images"
+       cdkDrag
        [style.width.px]="thumbSizePx"
        class="pl2 pr2 pb2 pt2">
-    <div class="clickable"
-         (click)="editImageDesc(im.image_id)">
+    <!-- (click)="editImageDesc(im.image_id)" -->
+    <div class="movable">
       <app-image-thumb
         [imageId]="im.image_id">
       </app-image-thumb>
@@ -32,9 +35,8 @@
     </app-file-upload-info>
   </div>
 
-  <div [style.width.px]="thumbSizePx"
-       style="min-height: 250px;"
-       class="pl2 pr2 pb2 pt2 flex justify-center items-center clickable">
+  <div style="height: 25vh;"
+       class="w-100 flex justify-center items-center clickable">
     <app-file-upload-btn
       text="ADD AN IMAGE"
       (onFile)="onNewImage($event)">

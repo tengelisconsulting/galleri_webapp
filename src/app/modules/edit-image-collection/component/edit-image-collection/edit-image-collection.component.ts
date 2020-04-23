@@ -10,6 +10,7 @@ import { WindowService } from 'src/app/ui/window.service';
 import { ModalService } from 'src/app/ui/modal.service';
 import { EditImageDescModalComponent } from '../edit-image-desc-modal/edit-image-desc-modal.component';
 import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -92,6 +93,12 @@ export class EditImageCollectionComponent extends BaseComponent {
       component: EditImageDescModalComponent,
       initParams: { imageId: imageId },
     });
+  }
+
+  public imageDrop(event: CdkDragDrop<string[]>): void {
+    console.log("event:", event);
+    moveItemInArray(this.images, event.previousIndex, event.currentIndex);
+    this.cdr.detectChanges();
   }
 
   private setThumbSize(windowWidth: number): void {

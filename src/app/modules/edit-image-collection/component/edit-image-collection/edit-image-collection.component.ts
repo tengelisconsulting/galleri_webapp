@@ -34,7 +34,6 @@ export class EditImageCollectionComponent extends BaseComponent {
   public images: user_image[] = [];
 
   public collection: user_image_collection;
-  public thumbSizePx: number;
 
   public toUpload: File[] = [];
   public orderingChanged: boolean = false;
@@ -51,8 +50,6 @@ export class EditImageCollectionComponent extends BaseComponent {
     this.appOnInit(() => {
       this.loadCollection();
       this.loadImages();
-      this.windowService.getResizeStream(this.isDestroyed$, 500)
-        .subscribe((size) => this.setThumbSize(size.width));
     });
   }
 
@@ -119,11 +116,6 @@ export class EditImageCollectionComponent extends BaseComponent {
     this.router.navigate([
       AppRoutePath.APP_PREFIX, AppRoutePath.IMAGE_COLLECTION
     ], { queryParams: { collectionId: this.collectionId, } });
-  }
-
-  private setThumbSize(windowWidth: number): void {
-    this.thumbSizePx = (windowWidth - 20) / 3 - 20;
-    this.cdr.detectChanges();
   }
 
 }

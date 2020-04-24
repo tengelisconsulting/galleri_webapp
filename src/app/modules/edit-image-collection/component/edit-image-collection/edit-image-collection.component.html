@@ -16,29 +16,38 @@
   </div>
 </div>
 
-<div class="flex flex-wrap image-list"
+<div class="flex flex-column items-center image-list w-100 pl2 pr2"
      cdkDropList
      (cdkDropListDropped)="imageDrop($event)">
   <div *ngFor="let im of images"
        cdkDrag
-       [style.width.px]="thumbSizePx"
-       class="pl2 pr2 pb2 pt2 image-container">
+       class="pl2 pr2 pb2 pt2 image-row flex movable w-100">
 
-    <div class="clickable edit-icon"
+
+    <div class="clickable control-icon delete-icon"
+         (click)="editImageDesc(im.image_id)">
+      <mat-icon [inline]="true">
+        clear
+      </mat-icon>
+    </div>
+    <div class="clickable control-icon edit-icon"
          (click)="editImageDesc(im.image_id)">
       <mat-icon [inline]="true">
         edit
       </mat-icon>
     </div>
-    <div class="movable">
+
+    <div class="image-container">
       <app-image-thumb
         [imageId]="im.image_id">
       </app-image-thumb>
     </div>
+    <div class="flex h-100">
+      {{ im.description }}
+    </div>
   </div>
 
   <div *ngFor="let f of toUpload; index as i"
-       [style.width.px]="thumbSizePx"
        class="pl2 pr2 pb2 pt2 flex items-center justify-center">
     <app-file-upload-info
       [file]="f"
@@ -47,8 +56,7 @@
     </app-file-upload-info>
   </div>
 
-  <div style="height: 25vh;"
-       class="w-100 flex justify-center items-center clickable">
+  <div class="w-100 flex justify-center items-center clickable image-row">
     <app-file-upload-btn
       text="ADD AN IMAGE"
       (onFile)="onNewImage($event)">

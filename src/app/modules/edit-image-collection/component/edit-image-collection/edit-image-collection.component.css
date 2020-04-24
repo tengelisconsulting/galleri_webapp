@@ -36,14 +36,18 @@
 }
 
 .image-container:hover .edit-icon {
-  display: block;
+  opacity: 1;
+  transition: opacity 1s;
 }
 
 .edit-icon {
-  display: none;
+  opacity: 0;
+  transition: opacity 0.75s;
   background: rgba(255, 255, 255, 0.7);
   position: absolute;
   bottom: 0px;
   right: 0px;
-  font-size: 30px;
+  font-size: 35px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
 }

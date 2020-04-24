@@ -39,22 +39,6 @@ export class ImageDataService {
     return data[0];
   }
 
-  public async addImageToCollection(
-    imageId: string,
-    collectionId: string,
-  ): Promise<boolean> {
-    const url = "/db/rpc/add_image_to_collection";
-    const data = {
-      "p_image_id": imageId,
-      "p_collection_id": collectionId,
-    };
-    const res = await this.httpService.postReq({
-      path: url,
-      data: data,
-    });
-    return res.ok;
-  }
-
   public async createImage(
     imageId: string,
     href: string,

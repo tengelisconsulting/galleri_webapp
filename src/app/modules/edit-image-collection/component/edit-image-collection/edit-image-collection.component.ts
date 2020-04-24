@@ -78,7 +78,7 @@ export class EditImageCollectionComponent extends BaseComponent {
     imageId: string
   ): Promise<void> {
     this.uploadFinished(uploadIndex);
-    const addSuccess = await this.imageDataService
+    const addSuccess = await this.collectionService
       .addImageToCollection(imageId, this.collectionId);
     if (!addSuccess) {
       console.error("failed to add image");

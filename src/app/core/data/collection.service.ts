@@ -25,11 +25,26 @@ export class CollectionService {
         "p_images": update.images,
       }
     );
-    console.log("data is:", data);
     const res = await this.httpService.postReq({
       path: "/db/rpc/collection_update",
       data: data,
     });
     return res;
+  }
+
+  public async addImageToCollection(
+    imageId: string,
+    collectionId: string,
+  ): Promise<boolean> {
+    const url = "/db/rpc/add_image_to_collection";
+    const data = {
+      "p_image_id": imageId,
+      "p_collection_id": collectionId,
+    };
+    const res = await this.httpService.postReq({
+      path: url,
+      data: data,
+    });
+    return res.ok;
   }
 }

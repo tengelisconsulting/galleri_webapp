@@ -4,22 +4,30 @@ import { AppComponent } from '../app.component';
 import { ModalService } from '../ui/modal.service';
 
 
-export class ModalComponent<T> extends BaseComponent {
+export class ModalComponent<T, R> extends BaseComponent {
 
   public params: T;
 
+  private resolver: (result: R) => void;
+
   constructor(
-    protected cdr?: ChangeDetectorRef,
+    protected cdr: ChangeDetectorRef,
   ) {
     super();
   }
 
-  public modalInit(params: T): void {
+  public modalInit(
+    params: T,
+    resolver: (result: R) => void
+  ): void {
     this.params = params;
+    this.resolver = resolver;
     this.cdr.detectChanges();
   }
 
-  public closeModal(): void {
+  public closeModal(result: R): void {
+    console.log("closed with", result);
     AppComponent.injector.get(ModalService).hideModal();
+    this.resolver(result);
   }
 }

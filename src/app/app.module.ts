@@ -5,10 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './layout/layout/layout.component';
 import { TopbarComponent } from './layout/topbar/topbar.component';
-import { ModalAnchorProtoComponent } from './prototype/modal-anchor-proto/modal-anchor-proto.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { EditImageCollectionModule } from './modules/edit-image-collection/edit-image-collection.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material';
+import { BaseModalComponent } from './ui/components/base-modal/base-modal.component';
 
 
 @NgModule({
@@ -16,14 +17,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     LayoutComponent,
     TopbarComponent,
-    ModalAnchorProtoComponent,
+    BaseModalComponent,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    SharedModule,
-    EditImageCollectionModule,
     BrowserAnimationsModule,
+    BrowserModule,
+    EditImageCollectionModule,
+    MatDialogModule,
+    SharedModule,
+  ],
+  entryComponents: [
+        BaseModalComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

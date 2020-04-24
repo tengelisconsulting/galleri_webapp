@@ -6,13 +6,13 @@ type user_image = db.OpenAPI2.user_image;
 type user_image_collection = db.OpenAPI2.user_image_collection;
 
 import { ImageDataService } from 'src/app/core/data/image-data.service';
-import { WindowService } from 'src/app/ui/window.service';
 import { ModalService } from 'src/app/ui/modal.service';
 import { EditImageDescModalComponent } from '../edit-image-desc-modal/edit-image-desc-modal.component';
 import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Router } from '@angular/router';
 import { CollectionService } from 'src/app/core/data/collection.service';
+import { ImageDeleteModalComponent } from '../image-delete-modal/image-delete-modal.component';
 
 
 @Component({
@@ -44,7 +44,6 @@ export class EditImageCollectionComponent extends BaseComponent {
     private imageDataService: ImageDataService,
     private modalService: ModalService,
     private router: Router,
-    private windowService: WindowService,
   ) {
     super();
     this.appOnInit(() => {
@@ -116,6 +115,16 @@ export class EditImageCollectionComponent extends BaseComponent {
     this.router.navigate([
       AppRoutePath.APP_PREFIX, AppRoutePath.IMAGE_COLLECTION
     ], { queryParams: { collectionId: this.collectionId, } });
+  }
+
+  public promptDelete(imageId: string): void {
+    this.modalService.showModal({
+      component: ImageDeleteModalComponent,
+      initParams: {
+        collectionId: this.collectionId,
+        imageId: imageId,
+      },
+    });
   }
 
 }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { MatDialog } from '@angular/material';
+
 import { ModalInit } from '../types/ModalInit';
-import { takeUntil } from 'rxjs/operators';
+import { BaseModalComponent } from './components/base-modal/base-modal.component';
 
 
 @Injectable({
@@ -9,31 +10,30 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ModalService {
 
-  private modalInit$: BehaviorSubject<ModalInit> =
-    new BehaviorSubject(null);
+  private dialogRef: any;
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog,
+  ) { }
 
   public showModal(
     init: ModalInit,
-  ): void {
-    this.modalInit$.next(init);
-    const elem: any = document.getElementById("modal-prototype")
-    elem.showModal();
+  ): Promise<any> {
+    return new Promise((resolve, _reject) => {
+      this.dialogRef = this.dialog.open(BaseModalComponent, {
+        width: "50%",
+        data: {
+          modalInit: init,
+          resolver: (res: any) => resolve(res),
+        },
+      });
+    });
   }
 
   public hideModal(): void {
-    this.modalInit$.next(null);
-    const elem: any = document.getElementById("modal-prototype")
-    elem.close();
-  }
-
-  public getActiveModal$(
-    until: Observable<any>
-  ): Observable<ModalInit> {
-    return this.modalInit$.pipe(
-      takeUntil(until)
-    );
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
   }
 
 }

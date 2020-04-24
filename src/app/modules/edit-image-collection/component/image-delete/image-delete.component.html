@@ -1,0 +1,17 @@
+<app-image-thumb
+  [imageId]="imageId">
+</app-image-thumb>
+<div>
+  Delete this image?
+</div>
+<div class="flex justify-end w-100 pt3">
+  <button mat-raised-button
+          (click)="cancel()">
+    CANCEL
+  </button>
+  <button mat-raised-button
+          color="primary"
+          (click)="confirm()">
+    CONFIRM
+  </button>
+</div>

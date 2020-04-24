@@ -6,6 +6,7 @@ type user_image_collection = db.OpenAPI2.user_image_collection;
 
 import { HttpService } from '../http.service';
 import { getPGQueryUrl } from '../framework/postgrest-query-builder';
+import { shallowMerge } from 'src/app/lib/fn';
 
 
 @Injectable({
@@ -74,7 +75,7 @@ export class ImageDataService {
     return res;
   }
 
-  public async deleteImage(
+  public async deleteImageFromStorage(
     imageId: string
   ): Promise<void> {
     const urlRes = await this.httpService.getReq({
@@ -94,10 +95,33 @@ export class ImageDataService {
     if (!deleteRes.ok) {
       throw new Error("failed to delete object from storage");
     }
+  }
+
+  public async deleteOrphanImage(
+    imageId: string
+  ): Promise<void> {
+    const storageRes = await this.deleteImageFromStorage(imageId);
+    const dbDeleteRes = await this.httpService.postReq({
+      path: "/db/rpc/user_orphan_image_delete",
+      data: {
+        "p_image_id": imageId,
+      },
+    });
+    if (!dbDeleteRes.ok) {
+      throw new Error("failed to delete object record");
+    }
+  }
+
+  public async deleteImage(
+    collectionId: string,
+    imageId: string
+  ): Promise<void> {
+    const storageRes = await this.deleteImageFromStorage(imageId);
     const dbDeleteRes = await this.httpService.postReq({
       path: "/db/rpc/user_image_delete",
       data: {
-        "p_obj_id": imageId,
+        "p_collection_id": collectionId,
+        "p_image_id": imageId,
       },
     });
     if (!dbDeleteRes.ok) {

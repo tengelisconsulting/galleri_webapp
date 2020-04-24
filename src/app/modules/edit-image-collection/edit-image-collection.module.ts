@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { MatIconModule } from "@angular/material";
+import { MatIconModule, MatButtonModule } from "@angular/material";
 
 import { EditImageCollectionRouteComponent } from './component/edit-image-collection-route/edit-image-collection-route.component';
 import { SharedModule } from '../shared/shared.module';
@@ -10,6 +10,8 @@ import { EditImageCollectionComponent } from './component/edit-image-collection/
 import { EditImageDescComponent } from './component/edit-image-desc/edit-image-desc.component';
 import { EditImageDescModalComponent } from './component/edit-image-desc-modal/edit-image-desc-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ImageDeleteComponent } from './component/image-delete/image-delete.component';
+import { ImageDeleteModalComponent } from './component/image-delete-modal/image-delete-modal.component';
 
 
 
@@ -19,17 +21,21 @@ import { ReactiveFormsModule } from '@angular/forms';
     EditImageCollectionComponent,
     EditImageDescComponent,
     EditImageDescModalComponent,
+    ImageDeleteComponent,
+    ImageDeleteModalComponent,
   ],
   imports: [
     CommonModule,
     DragDropModule,
     EditImageCollectionRoutingModule,
+    MatButtonModule,
     MatIconModule,
     ReactiveFormsModule,
     SharedModule,
   ],
   entryComponents: [
     EditImageDescModalComponent,
+    ImageDeleteModalComponent,
   ],
 })
 export class EditImageCollectionModule { }

@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<div class="flex flex-column items-center image-list w-100 pl2 pr2"
+<div class="flex flex-column items-center image-list w-100 pt4 pl2 pr2"
      cdkDropList
      (cdkDropListDropped)="imageDrop($event)">
   <div *ngFor="let im of images"
@@ -58,6 +58,7 @@
 
   <div class="w-100 flex justify-center items-center image-row">
     <app-file-upload-btn
+      class="w-100 h-100"
       text="ADD AN IMAGE"
       (onFile)="onNewImage($event)">
     </app-file-upload-btn>

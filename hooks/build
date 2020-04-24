@@ -11,3 +11,5 @@ docker build \
        .
 
 docker push galleri/webapp:${TAG}
+docker tag galleri/webapp:${TAG} galleri/webapp:staging-latest
+docker push galleri/webapp:staging-latest

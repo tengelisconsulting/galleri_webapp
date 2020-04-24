@@ -1,0 +1,16 @@
+.image-container {
+  position: relative;
+}
+
+.image-container:hover .edit-icon {
+  display: block;
+}
+
+.edit-icon {
+  display: none;
+  background: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 30px;
+}

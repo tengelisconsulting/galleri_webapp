@@ -16,8 +16,6 @@ export namespace OpenAPI2 {
      * This is a Foreign Key to `ac_user.user_id`.<fk table='ac_user' column='user_id'/>
      */
     user_id?: string;
-    href?: string;
-    description?: string;
     thumb?: string;
   }
   export interface user_image_collection {
@@ -40,10 +38,10 @@ export namespace OpenAPI2 {
      * This is a Primary Key.<pk/>
      */
     image_id?: string;
+    ordinal?: number;
     /**
      * Note:
      * This is a Primary Key.<pk/>
-     * This is a Foreign Key to `image_collection.collection_id`.<fk table='image_collection' column='collection_id'/>
      */
     collection_id?: string;
     created?: string;

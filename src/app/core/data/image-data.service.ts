@@ -24,8 +24,8 @@ export class ImageDataService {
       ["collection_id.eq." + collectionId]
     ]);
     const res = await this.httpService.getReq({path: url});
-    const data = await res.json();
-    return data;
+    const data: user_image[] = await res.json();
+    return data.sort((im1, im2) => im1.ordinal - im2.ordinal);
   }
 
   public async getCollection(

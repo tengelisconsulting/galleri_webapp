@@ -11,6 +11,8 @@ import { ModalService } from 'src/app/ui/modal.service';
 import { EditImageDescModalComponent } from '../edit-image-desc-modal/edit-image-desc-modal.component';
 import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Router } from '@angular/router';
+import { CollectionService } from 'src/app/core/data/collection.service';
 
 
 @Component({
@@ -35,11 +37,14 @@ export class EditImageCollectionComponent extends BaseComponent {
   public thumbSizePx: number;
 
   public toUpload: File[] = [];
+  public orderingChanged: boolean = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
+    private collectionService: CollectionService,
     private imageDataService: ImageDataService,
     private modalService: ModalService,
+    private router: Router,
     private windowService: WindowService,
   ) {
     super();
@@ -96,9 +101,24 @@ export class EditImageCollectionComponent extends BaseComponent {
   }
 
   public imageDrop(event: CdkDragDrop<string[]>): void {
-    console.log("event:", event);
     moveItemInArray(this.images, event.previousIndex, event.currentIndex);
+    this.orderingChanged = true;
     this.cdr.detectChanges();
+  }
+
+  public async saveOrderChange(): Promise<void> {
+    const updateRes = await this.collectionService.updateCollection(
+      this.collectionId, { images: this.images.map((im) => im.image_id) }
+    );
+    if (updateRes.ok) {
+      this.navToView();
+    }
+  }
+
+  public navToView(): void {
+    this.router.navigate([
+      AppRoutePath.APP_PREFIX, AppRoutePath.IMAGE_COLLECTION
+    ], { queryParams: { collectionId: this.collectionId, } });
   }
 
   private setThumbSize(windowWidth: number): void {

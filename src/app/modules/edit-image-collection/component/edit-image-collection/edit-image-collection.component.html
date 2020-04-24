@@ -3,10 +3,16 @@
   <div>
     {{ collection.collection_name }}
   </div>
-  <div class="clickable"
-       [routerLink]="origCollectionLink"
-       [queryParams]="{collectionId: collectionId}">
-    VIEW COLLECTION
+  <div class="flex">
+    <div class="clickable"
+         (click)="navToView()">
+      BACK TO VIEW
+    </div>
+    <div class="clickable pl4"
+         *ngIf="orderingChanged"
+         (click)="saveOrderChange()">
+      SAVE CHANGES TO ORDER
+    </div>
   </div>
 </div>
 
@@ -17,8 +23,14 @@
        cdkDrag
        [style.width.px]="thumbSizePx"
        class="pl2 pr2 pb2 pt2">
-    <!-- (click)="editImageDesc(im.image_id)" -->
-    <div class="movable">
+
+    <div class="movable image-container">
+      <div class="clickable edit-icon"
+           (click)="editImageDesc(im.image_id)">
+        <mat-icon [inline]="true">
+          edit
+        </mat-icon>
+      </div>
       <app-image-thumb
         [imageId]="im.image_id">
       </app-image-thumb>

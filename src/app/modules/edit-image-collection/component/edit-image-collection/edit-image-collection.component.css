@@ -51,18 +51,21 @@
   transition: opacity 0.5s;
   background: rgba(255, 255, 255, 0.7);
   position: absolute;
-  right: 5px;
-  font-size: 30px;
+  right: 0;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.7);
 }
 
+.control-icon .mat-icon {
+  font-size: 30px;
+}
+
 .edit-icon {
-  bottom: 0px;
+  bottom: 0;
 }
 
 .delete-icon {
-  top: 2px;
+  top: 0;
 }
 
 .image-container {

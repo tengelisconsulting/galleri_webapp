@@ -89,11 +89,14 @@ export class EditImageCollectionComponent extends BaseComponent {
     );
   }
 
-  public editImageDesc(imageId: string): void {
-    this.modalService.showModal({
+  public async editImageDesc(imageId: string): Promise<void> {
+    const reload = await this.modalService.showModal({
       component: EditImageDescModalComponent,
       initParams: { imageId: imageId },
     });
+    if (reload) {
+      await this.loadImages();
+    }
   }
 
   public imageDrop(event: CdkDragDrop<string[]>): void {
@@ -117,14 +120,17 @@ export class EditImageCollectionComponent extends BaseComponent {
     ], { queryParams: { collectionId: this.collectionId, } });
   }
 
-  public promptDelete(imageId: string): void {
-    this.modalService.showModal({
+  public async promptDelete(imageId: string): Promise<void> {
+    const change = await this.modalService.showModal({
       component: ImageDeleteModalComponent,
       initParams: {
         collectionId: this.collectionId,
         imageId: imageId,
       },
     });
+    if (change) {
+      await this.loadImages();
+    }
   }
 
 }

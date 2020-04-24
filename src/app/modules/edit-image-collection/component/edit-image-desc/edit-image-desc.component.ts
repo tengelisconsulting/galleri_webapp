@@ -48,6 +48,10 @@ export class EditImageDescComponent implements OnInit {
     this.onComplete.emit(true);
   }
 
+  public cancel(): void {
+    this.onComplete.emit(false);
+  }
+
   private async loadImage(): Promise<void> {
     const image = await this.imageDataService.getImage(this.imageId);
     this.imageForm.controls["description"].setValue(image.description);

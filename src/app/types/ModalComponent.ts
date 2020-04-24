@@ -26,7 +26,6 @@ export class ModalComponent<T, R> extends BaseComponent {
   }
 
   public closeModal(result: R): void {
-    console.log("closed with", result);
     AppComponent.injector.get(ModalService).hideModal();
     this.resolver(result);
   }

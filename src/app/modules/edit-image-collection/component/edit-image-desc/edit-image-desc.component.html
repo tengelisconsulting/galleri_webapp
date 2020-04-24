@@ -6,8 +6,7 @@
 
 <form
   class="container"
-  [formGroup]="imageForm"
-  (ngSubmit)="update()">
+  [formGroup]="imageForm">
 
   <div>
     <label for="description">Description:</label>
@@ -20,10 +19,16 @@
     </textarea>
   </div>
 
-  <button
-    type="submit"
-    mat-flat-button>
-    SAVE
-  </button>
+  <div class="flex justify-end">
+    <button (click)="cancel()"
+            mat-stroked-button>
+      CANCEL
+    </button>
+    <button (click)="update()"
+            color="primary"
+            mat-stroked-button>
+      SAVE
+    </button>
+  </div>
 
 </form>

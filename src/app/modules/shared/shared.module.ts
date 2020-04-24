@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { ImageThumbComponent } from './image-thumb/image-thumb.component';
 import { FileUploadBtnComponent } from './file-upload-btn/file-upload-btn.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { MatButtonModule } from '@angular/material';
 
 
 
@@ -28,6 +29,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
   ],
   imports: [
     CommonModule,
+    MatButtonModule,
     ReactiveFormsModule,
     RouterModule,
   ],

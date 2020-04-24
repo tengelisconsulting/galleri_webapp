@@ -8,7 +8,7 @@ import { TopbarComponent } from './layout/topbar/topbar.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { EditImageCollectionModule } from './modules/edit-image-collection/edit-image-collection.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatButtonModule } from '@angular/material';
 import { BaseModalComponent } from './ui/components/base-modal/base-modal.component';
 
 
@@ -24,6 +24,7 @@ import { BaseModalComponent } from './ui/components/base-modal/base-modal.compon
     BrowserAnimationsModule,
     BrowserModule,
     EditImageCollectionModule,
+    MatButtonModule,
     MatDialogModule,
     SharedModule,
   ],

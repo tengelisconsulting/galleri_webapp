@@ -4,15 +4,16 @@
     {{ collection.collection_name }}
   </div>
   <div class="flex">
-    <div class="clickable"
-         (click)="navToView()">
-      BACK TO VIEW
-    </div>
-    <div class="clickable pl4"
-         *ngIf="orderingChanged"
-         (click)="saveOrderChange()">
-      SAVE CHANGES TO ORDER
-    </div>
+    <button mat-button
+            (click)="navToView()">
+      RETURN TO VIEW
+    </button>
+    <button mat-button
+            class="pl4"
+            *ngIf="orderingChanged"
+            (click)="saveOrderChange()">
+      SAVE IMAGE ORDER
+    </button>
   </div>
 </div>
 

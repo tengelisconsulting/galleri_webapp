@@ -7,4 +7,5 @@ TAG=${DATE_TAG}--${GIT_TAG}
 docker build \
        --build-arg CONFIGURATION=${CONFIGURATION} \
        -t galleri/webapp:${TAG} \
-       -f ${DOCKERFILE_PATH}
+       -f ${DOCKERFILE_PATH} \
+       .

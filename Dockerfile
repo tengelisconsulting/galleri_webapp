@@ -12,7 +12,7 @@ COPY ./tsconfig.app.json ./tsconfig.app.json
 COPY ./tsconfig.json ./tsconfig.json
 COPY ./tslint.json ./tslint.json
 
-ARG CONFIGURATION="production"
+ARG CONFIGURATION="staging"
 ENV CONFIGURATION=${CONFIGURATION}
 RUN npx ng build --configuration ${CONFIGURATION}
 

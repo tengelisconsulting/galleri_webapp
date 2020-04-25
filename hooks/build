@@ -1,18 +1,23 @@
 #!/bin/bash
 
 
-python --version
-python3 --version
-# DATE_TAG=$(date -u +%Y-%m-%d-%H%M)
-# GIT_TAG=$(git rev-parse --short --verify HEAD)
-# TAG=${DATE_TAG}--${GIT_TAG}
+DATE_TAG=$(date -u +%Y-%m-%d-%H%M)
+GIT_TAG=$(git rev-parse --short --verify HEAD)
+TAG=${DATE_TAG}--${GIT_TAG}
 
-# docker build \
-#        --build-arg CONFIGURATION=${CONFIGURATION} \
-#        -t galleri/webapp:${TAG} \
-#        -f ${DOCKERFILE_PATH} \
-#        .
+docker build \
+       --build-arg CONFIGURATION=${CONFIGURATION} \
+       -t galleri/webapp:${TAG} \
+       -f ${DOCKERFILE_PATH} \
+       .
 
-# docker push galleri/webapp:${TAG}
-# docker tag galleri/webapp:${TAG} galleri/webapp:staging-latest
-# docker push galleri/webapp:staging-latest
+docker push galleri/webapp:${TAG}
+docker tag galleri/webapp:${TAG} galleri/webapp:staging-latest
+docker push galleri/webapp:staging-latest
+
+# docker run -it \
+#        --rm \
+#        --net=host \
+#        -e TARGET_URL=http://64.227.20.38:10000/build-success/galleri_webapp \
+#        -e HOOK_HEY=${HOOK_KEY} \
+#        tengelisconsulting/docker-hub-hooks:latest

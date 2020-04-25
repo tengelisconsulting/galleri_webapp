@@ -1,15 +1,18 @@
 #!/bin/bash
 
-DATE_TAG=$(date -u +%Y-%m-%d-%H%M)
-GIT_TAG=$(git rev-parse --short --verify HEAD)
-TAG=${DATE_TAG}--${GIT_TAG}
 
-docker build \
-       --build-arg CONFIGURATION=${CONFIGURATION} \
-       -t galleri/webapp:${TAG} \
-       -f ${DOCKERFILE_PATH} \
-       .
+python --version
+python3 --version
+# DATE_TAG=$(date -u +%Y-%m-%d-%H%M)
+# GIT_TAG=$(git rev-parse --short --verify HEAD)
+# TAG=${DATE_TAG}--${GIT_TAG}
 
-docker push galleri/webapp:${TAG}
-docker tag galleri/webapp:${TAG} galleri/webapp:staging-latest
-docker push galleri/webapp:staging-latest
+# docker build \
+#        --build-arg CONFIGURATION=${CONFIGURATION} \
+#        -t galleri/webapp:${TAG} \
+#        -f ${DOCKERFILE_PATH} \
+#        .
+
+# docker push galleri/webapp:${TAG}
+# docker tag galleri/webapp:${TAG} galleri/webapp:staging-latest
+# docker push galleri/webapp:staging-latest

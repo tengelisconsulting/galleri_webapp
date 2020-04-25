@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run -it --rm --net=host -e TARGET_URL=${BUILD_HOOK_ENDPOINT}/build-success/galleri_webapp -e HOOK_KEY=${HOOK_KEY} -e ACTION=restart_webapp tengelisconsulting/docker-hub-hooks
+docker run --rm --net=host -e TARGET_URL=${BUILD_HOOK_ENDPOINT}/build-success/galleri_webapp -e HOOK_KEY=${HOOK_KEY} -e ACTION=restart_webapp tengelisconsulting/docker-hub-hooks

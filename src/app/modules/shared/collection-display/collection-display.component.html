@@ -1,6 +1,8 @@
 <div *ngIf="collection">
-  <div class="flex justify-between">
-    <div>{{ collection.collection_name }}</div>
+  <div class="f2 pl3">
+    {{ collection.collection_name }}
+  </div>
+  <div class="flex justify-end">
     <button mat-button
             [routerLink]="EDIT_ROUTE_LINK"
             [queryParams]="{collectionId: collectionId}">

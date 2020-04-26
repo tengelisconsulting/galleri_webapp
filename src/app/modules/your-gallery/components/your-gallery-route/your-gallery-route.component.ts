@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { RouteComponent } from 'src/app/core/routing/RouteComponent';
 
 
 @Component({
@@ -7,9 +8,12 @@ import { Component, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angu
   styleUrls: ['./your-gallery-route.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class YourGalleryRouteComponent {
+export class YourGalleryRouteComponent extends RouteComponent<void> {
 
   constructor(
-  ) { }
+    cdr: ChangeDetectorRef,
+  ) {
+    super(cdr);
+  }
 
 }

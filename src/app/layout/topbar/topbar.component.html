@@ -1,20 +1,17 @@
 <div class="h-100 flex justify-between items-center">
-  <div class="w-50 clickable ml3"
-       [routerLink]="['/app']">
-    HOME
-  </div>
-  <div class="w-50 flex justify-end mr3">
+  <div class="w-50 ml3">
     <button mat-button
-            (click)="openCreateCollectionModal()">
-      ADD A COLLECTION
+            [routerLink]="['/app']">
+      HOME
+    </button>
+  </div>
+  <div class="w-50 flex mr3 button-container">
+
+    <button *ngFor="let btn of extraButtons"
+            (click)="btn.onClick()"
+            mat-button>
+      {{ btn.text }}
     </button>
 
-    <button mat-button
-            (click)="editCollection()">
-      EDIT COLLECTION
-    </button>
-    <div class="ml3">
-      NAV
-    </div>
   </div>
 </div>

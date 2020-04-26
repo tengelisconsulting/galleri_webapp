@@ -12,6 +12,7 @@ import { ImageThumbComponent } from './image-thumb/image-thumb.component';
 import { FileUploadBtnComponent } from './file-upload-btn/file-upload-btn.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { MatButtonModule } from '@angular/material';
+import { TopbarButtonComponent } from './topbar/topbar-button/topbar-button.component';
 
 
 
@@ -26,6 +27,7 @@ import { MatButtonModule } from '@angular/material';
     ImageThumbComponent,
     FileUploadBtnComponent,
     SpinnerComponent,
+    TopbarButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +43,7 @@ import { MatButtonModule } from '@angular/material';
     FileUploadInfoComponent,
     ImageThumbComponent,
     SpinnerComponent,
+    TopbarButtonComponent,
   ],
   entryComponents: [
     CreateCollectionModalComponent,

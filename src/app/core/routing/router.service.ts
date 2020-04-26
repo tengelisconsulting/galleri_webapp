@@ -26,8 +26,11 @@ export class RouterService {
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      const url: string = event.url;
-      const path = url.match(/\/app\/([^\?]*).*/)[1];
+      const urlMatch = event.url.match(/\/app\/([^\?]+).*/);
+      if (!urlMatch) {
+        throw new Error(`failed to parse url: ${event.url}`);
+      }
+      const path = urlMatch[1];
       this.state.update({
         activePath: AppRoutePath[path],
       });

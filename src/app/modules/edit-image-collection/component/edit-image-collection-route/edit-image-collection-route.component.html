@@ -1,3 +1,4 @@
 <app-edit-image-collection
-  [collectionId]="collectionId">
+  *ngIf="params"
+  [collectionId]="params.collectionId">
 </app-edit-image-collection>

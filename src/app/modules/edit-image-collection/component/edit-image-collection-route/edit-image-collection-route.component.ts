@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { takeUntil } from 'rxjs/operators';
+import { RouteComponent } from 'src/app/core/routing/RouteComponent';
 
 
 @Component({
@@ -11,15 +11,17 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./edit-image-collection-route.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditImageCollectionRouteComponent extends BaseComponent {
+export class EditImageCollectionRouteComponent extends RouteComponent<{
+  collectionId: string;
+}> {
 
   public collectionId: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
+    cdr: ChangeDetectorRef,
   ) {
-    super();
+    super(cdr);
     this.appOnInit(() => {
       this.activatedRoute.queryParams.pipe(
         takeUntil(this.isDestroyed$)

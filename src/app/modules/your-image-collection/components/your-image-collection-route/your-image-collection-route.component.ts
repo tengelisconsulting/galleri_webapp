@@ -1,4 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { RouteComponent } from 'src/app/core/routing/RouteComponent';
+import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-your-image-collection-route',
@@ -6,11 +9,25 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./your-image-collection-route.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class YourImageCollectionRouteComponent implements OnInit {
+export class YourImageCollectionRouteComponent extends RouteComponent<{
+  collectionId: string;
+}> {
 
-  constructor() { }
+  constructor(
+    cdr: ChangeDetectorRef,
+    private router: Router,
+  ) {
+    super(cdr);
+  }
 
-  ngOnInit() {
+  public editCollection(): void {
+    this.router.navigate([
+      AppRoutePath.APP_PREFIX, AppRoutePath.EDIT_IMAGE_COLLECTION
+    ], {
+      queryParams: {
+        collectionId: this.params.collectionId,
+      }
+    });
   }
 
 }

@@ -1,1 +1,10 @@
-<p>your-image-collection-route works!</p>
+<ng-container *ngIf="params">
+  <app-collection-display
+    [collectionId]="params.collectionId">
+  </app-collection-display>
+</ng-container>
+
+<app-topbar-button
+  text="EDIT COLLECTION"
+  (clicked)="editCollection()">
+</app-topbar-button>

@@ -2,13 +2,6 @@
   <div class="f2 pl3">
     {{ collection.collection_name }}
   </div>
-  <div class="flex justify-end">
-    <button mat-button
-            [routerLink]="EDIT_ROUTE_LINK"
-            [queryParams]="{collectionId: collectionId}">
-      EDIT
-    </button>
-  </div>
 
   <div *ngFor="let image of images; index as i"
        class="flex justify-center">

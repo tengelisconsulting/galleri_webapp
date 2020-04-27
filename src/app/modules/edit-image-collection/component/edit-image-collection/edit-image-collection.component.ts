@@ -27,10 +27,6 @@ export class EditImageCollectionComponent extends BaseComponent {
   @Input()
   public collectionId: string;
 
-  public readonly origCollectionLink = [
-    `/${AppRoutePath.APP_PREFIX}/${AppRoutePath.IMAGE_COLLECTION}`
-  ];
-
   public images: user_image[] = [];
 
   public collection: user_image_collection;
@@ -116,7 +112,7 @@ export class EditImageCollectionComponent extends BaseComponent {
 
   public navToView(): void {
     this.router.navigate([
-      AppRoutePath.APP_PREFIX, AppRoutePath.IMAGE_COLLECTION
+      AppRoutePath.APP_PREFIX, AppRoutePath.YOUR_IMAGE_COLLECTION
     ], { queryParams: { collectionId: this.collectionId, } });
   }
 

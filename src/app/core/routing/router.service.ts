@@ -9,6 +9,7 @@ import { AppRoutePath } from './AppRoutePath';
 
 interface RouterState {
   activePath: AppRoutePath,
+  activeUrl: string,
 }
 
 @Injectable({
@@ -17,6 +18,7 @@ interface RouterState {
 export class RouterService {
 
   private state: State<RouterState> = new State(never(), {
+    activeUrl: undefined,
     activePath: undefined,
   });
 
@@ -26,14 +28,19 @@ export class RouterService {
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
+      this.state.update({
+        activeUrl: event.url,
+      });
       const urlMatch = event.url.match(/\/app\/([^\?]+).*/);
       if (!urlMatch) {
         throw new Error(`failed to parse url: ${event.url}`);
       }
       const path = urlMatch[1];
-      this.state.update({
-        activePath: AppRoutePath[path],
-      });
+      if (path !== this.state.value.activePath) {
+        this.state.update({
+          activePath: AppRoutePath[path],
+        });
+      }
     });
   }
 

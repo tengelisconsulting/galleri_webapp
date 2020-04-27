@@ -10,6 +10,9 @@ export class TopbarButtonComponent {
   @Input()
   public text: string;
 
+  @Input()
+  public color: string;
+
   @Output()
   public clicked: EventEmitter<boolean> = new EventEmitter();
 

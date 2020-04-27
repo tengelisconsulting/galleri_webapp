@@ -9,6 +9,7 @@
 
     <button *ngFor="let btn of extraButtons"
             (click)="btn.onClick()"
+            [color]="btn.color"
             mat-button>
       {{ btn.text }}
     </button>

@@ -1,11 +1,11 @@
 <div class="h-100 flex justify-between items-center">
-  <div class="w-60 ml3">
+  <div class="w-two-thirds ml3">
     <button mat-button
             [routerLink]="['/app']">
       HOME
     </button>
   </div>
-  <div class="w-33 flex mr3 button-container">
+  <div class="w-third flex mr3 button-container">
     <button *ngFor="let btn of extraButtons"
             (click)="btn.onClick()"
             [color]="btn.color"

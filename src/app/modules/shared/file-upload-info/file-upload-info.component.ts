@@ -62,7 +62,7 @@ export class FileUploadInfoComponent implements OnInit {
 
   public async deleteImage(): Promise<void> {
     this.onDelete.emit(true);
-    return this.imageDataService.deleteImage(undefined, this.imageId);
+    return this.imageDataService.deleteOrphanImage(this.imageId);
   }
 
   private async upload(url: string, data: FormData): Promise<void> {

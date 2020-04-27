@@ -1,8 +1,11 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { takeUntil } from 'rxjs/operators';
 import { RouteComponent } from 'src/app/core/routing/RouteComponent';
+import { ModalService } from 'src/app/ui/modal.service';
+import { CollectionDeleteModalComponent } from '../collection-delete/collection-delete-modal/collection-delete-modal.component';
+import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 
 
 @Component({
@@ -19,6 +22,8 @@ export class EditImageCollectionRouteComponent extends RouteComponent<{
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private modalService: ModalService,
+    private router: Router,
     cdr: ChangeDetectorRef,
   ) {
     super(cdr);
@@ -30,6 +35,20 @@ export class EditImageCollectionRouteComponent extends RouteComponent<{
         this.cdr.detectChanges();
       });
     });
+  }
+
+  public async confirmDeleteCollection(): Promise<void> {
+    const wasDeleted = await this.modalService.showModal({
+      component: CollectionDeleteModalComponent,
+      initParams: {
+        collectionId: this.params.collectionId,
+      },
+    });
+    if (wasDeleted) {
+      this.router.navigate([
+        AppRoutePath.APP_PREFIX, AppRoutePath.YOUR_GALLERY
+      ]);
+    }
   }
 
 }

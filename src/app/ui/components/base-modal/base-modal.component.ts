@@ -9,8 +9,6 @@ interface InputParams {
   resolver: (result: any) => void;
 }
 
-
-
 @Component({
   selector: 'app-base-modal',
   templateUrl: './base-modal.component.html',
@@ -49,10 +47,8 @@ export class BaseModalComponent implements AfterViewInit {
       input.modalInit.component
     );
     this.componentRef = this.container.createComponent(factory);
-    if (input.modalInit.initParams) {
-      const instance: ModalComponent<any, any> = this.componentRef.instance;
-      instance.modalInit(input.modalInit.initParams, input.resolver);
-    }
+    const instance: ModalComponent<any, any> = this.componentRef.instance;
+    instance.modalInit(input.modalInit.initParams, input.resolver);
     this.cdr.detectChanges();
   }
 }

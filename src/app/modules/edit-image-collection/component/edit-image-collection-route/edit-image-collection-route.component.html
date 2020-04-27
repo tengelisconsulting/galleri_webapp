@@ -2,3 +2,10 @@
   *ngIf="params"
   [collectionId]="params.collectionId">
 </app-edit-image-collection>
+
+
+<app-topbar-button
+  text="DELETE COLLECTION"
+  color="warn"
+  (clicked)="confirmDeleteCollection()">
+</app-topbar-button>

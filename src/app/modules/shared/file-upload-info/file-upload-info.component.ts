@@ -57,8 +57,8 @@ export class FileUploadInfoComponent implements OnInit {
       this.setImageB64(),
     ]);
     await this.createImageRecord(uploadInfo.url + uploadInfo.fields.key);
-    this.isLoaded = true;
-    this.cdr.detectChanges();
+      this.isLoaded = true;
+      this.cdr.detectChanges();
   }
 
   public async deleteImage(): Promise<void> {

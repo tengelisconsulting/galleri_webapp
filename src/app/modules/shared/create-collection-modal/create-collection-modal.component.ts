@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ModalService } from 'src/app/ui/modal.service';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { ModalComponent } from 'src/app/types/ModalComponent';
 
 @Component({
   selector: 'app-create-collection-modal',
@@ -7,17 +7,12 @@ import { ModalService } from 'src/app/ui/modal.service';
   styleUrls: ['./create-collection-modal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateCollectionModalComponent implements OnInit {
+export class CreateCollectionModalComponent extends ModalComponent<void, boolean> {
 
   constructor(
-    private modalService: ModalService,
-  ) { }
-
-  ngOnInit() {
-  }
-
-  public onComplete(isSuccess: boolean): void {
-    this.modalService.hideModal();
+    cdr: ChangeDetectorRef,
+  ) {
+    super(cdr);
   }
 
 }

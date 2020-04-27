@@ -2,8 +2,7 @@ import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from 
 
 @Component({
   selector: 'app-topbar-button',
-  templateUrl: './topbar-button.component.html',
-  styleUrls: ['./topbar-button.component.css'],
+  template: '',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TopbarButtonComponent {

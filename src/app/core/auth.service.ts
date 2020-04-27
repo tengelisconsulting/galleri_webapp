@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { HttpService } from './http.service';
+import { SessionData } from '../types/SessionData';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService {
   public async authenticate(
     username: string,
     password: string
-  ): Promise<string> {
+  ): Promise<SessionData> {
     const authRes = await this.httpService.postNoAuth({
       path: "/auth/authenticate/username-password",
       data: {
@@ -25,13 +26,12 @@ export class AuthService {
     if (!authRes.ok) {
       return null;
     }
-    const tokenRes = await authRes.json();
-    const token = tokenRes["session_token"];
-    console.log("authentication success, session token: ", token);
-    return token;
+    const authBody = await authRes.json();
+    console.log("authentication success, auth response: ", authBody);
+    return authBody;
   }
 
-  public async attemptRenewSession(): Promise<string> {
+  public async attemptRenewSession(): Promise<SessionData> {
     const res = await this.httpService.postNoAuth({
       path: "/auth/renew-session",
     });
@@ -39,9 +39,8 @@ export class AuthService {
       return null;
     }
     const data = await res.json();
-    const token = data.session_token;
-    console.log("session renew success, received token: ", token);
-    return token;
+    console.log("session renew success, auth response: ", data);
+    return data
   }
 
 }

@@ -6,8 +6,8 @@ import { State } from './state/state';
 import { takeUntil, filter, map, startWith } from 'rxjs/operators';
 
 interface InternalState {
+  userId: string;
   isStarted: boolean;
-  permissions: string[];
   sessionToken: string;
   urlBeforeSessionExpire: string;
 }
@@ -20,8 +20,8 @@ export class SessionService {
 
   private get EMPTY_STATE(): InternalState {
     return {
+      userId: null,
       isStarted: false,
-      permissions: [],
       sessionToken: null,
       urlBeforeSessionExpire: null,
     };
@@ -36,12 +36,12 @@ export class SessionService {
   constructor() { }
 
   public enterSession(
+    userId: string,
     sessionToken: string,
-    permissions: string[]
   ): void {
     this.internalState.update({
+      userId: userId,
       sessionToken: sessionToken,
-      permissions: permissions,
       isStarted: true,
     });
   }
@@ -75,5 +75,9 @@ export class SessionService {
 
   public getSessionToken(): string {
     return this.internalState.value.sessionToken;
+  }
+
+  public getUserId(): string {
+    return this.internalState.value.userId;
   }
 }

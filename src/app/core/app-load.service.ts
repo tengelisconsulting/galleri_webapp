@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SessionService } from './session.service';
 import { AuthService } from './auth.service';
 import { AppRoutePath } from './routing/AppRoutePath';
+import { SessionData } from '../types/SessionData';
 
 
 @Injectable({
@@ -23,13 +24,13 @@ export class AppLoadService {
   ) {}
 
   public async startupAttemptOnAppLoad(): Promise<boolean> {
-    const sessionToken = await this.authService.attemptRenewSession();
-    if (!sessionToken) {
+    const sessionData = await this.authService.attemptRenewSession();
+    if (!sessionData) {
       console.log("failed to renew session");
       this.sessionService.exitSession();
       return false;
     }
-    this.startup(sessionToken);
+    this.startup(sessionData);
     if (window.location.pathname === `/${AppRoutePath.LOGIN}`) {
       this.router.navigate(this.DEFAULT_ROUTE_PATH);
     }
@@ -40,23 +41,23 @@ export class AppLoadService {
     username: string,
     password: string
   ): Promise<boolean> {
-    const sessionToken = await this.authService.authenticate(
+    const sessionData = await this.authService.authenticate(
       username,
       password
     );
-    if (!sessionToken) {
+    if (!sessionData) {
       return false;
     }
-    this.startup(sessionToken);
+    this.startup(sessionData);
     this.router.navigate(this.DEFAULT_ROUTE_PATH);
     return true;
   }
 
-  private startup(
-    sessionToken: string
-  ): void {
+  private startup(sessionData: SessionData): void {
     // load permissions, anything else that goes in the state session
-    this.sessionService.enterSession(sessionToken, []);
+    this.sessionService.enterSession(
+      sessionData.user_id, sessionData.session_token
+    );
   }
 
 }

@@ -4,6 +4,7 @@ import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 import { ImageDataService } from 'src/app/core/data/image-data.service';
 
 import * as db from "../../../types/auto/db";
+import { SessionService } from 'src/app/core/session.service';
 type user_image_collection = db.OpenAPI2.user_image_collection;
 
 
@@ -26,6 +27,7 @@ export class CollectionThumbComponent {
     private cdr: ChangeDetectorRef,
     private imageDataService: ImageDataService,
     private router: Router,
+    private sessionService: SessionService,
   ) { }
 
   public ngOnInit(): void {
@@ -34,8 +36,14 @@ export class CollectionThumbComponent {
   }
 
   public navToCollection(): void {
+    const getAppRoute = () => {
+      if (this.sessionService.getUserId() === this.collection.user_id) {
+        return AppRoutePath.YOUR_IMAGE_COLLECTION;
+      }
+      return AppRoutePath.IMAGE_COLLECTION;
+    }
     this.router.navigate([
-      AppRoutePath.APP_PREFIX, AppRoutePath.IMAGE_COLLECTION
+      AppRoutePath.APP_PREFIX, getAppRoute()
     ], {
       queryParams: {
         collectionId: this.id,

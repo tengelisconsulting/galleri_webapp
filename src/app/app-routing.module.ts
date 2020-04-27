@@ -24,7 +24,11 @@ const routes: Routes = [
         path: AppRoutePath.IMAGE_COLLECTION,
         loadChildren: () => import("./modules/image-collection/image-collection.module")
           .then((m) => m.ImageCollectionModule),
-      },
+      }, {
+        path: AppRoutePath.YOUR_IMAGE_COLLECTION,
+        loadChildren: () => import("./modules/your-image-collection/your-image-collection.module")
+          .then((m) => m.YourImageCollectionModule),
+      }
     ],
   },
   {

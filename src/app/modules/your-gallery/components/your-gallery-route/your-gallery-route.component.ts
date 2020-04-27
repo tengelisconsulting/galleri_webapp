@@ -12,6 +12,8 @@ import { CreateCollectionModalComponent } from 'src/app/modules/shared/create-co
 })
 export class YourGalleryRouteComponent extends RouteComponent<void> {
 
+  public showAllPieces: boolean = true;
+
   constructor(
     cdr: ChangeDetectorRef,
     private modalService: ModalService,
@@ -19,9 +21,15 @@ export class YourGalleryRouteComponent extends RouteComponent<void> {
     super(cdr);
   }
 
-  public openCreateCollectionModal(): void {
-    this.modalService.showModal({
+  public async openCreateCollectionModal(): Promise<void> {
+    const newCollection = await this.modalService.showModal({
       component: CreateCollectionModalComponent,
     });
+    if (newCollection) {
+      this.showAllPieces = false;
+      this.cdr.detectChanges();
+      this.showAllPieces = true;
+      this.cdr.detectChanges();
+    }
   }
 }

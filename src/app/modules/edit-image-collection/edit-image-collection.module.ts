@@ -12,6 +12,8 @@ import { EditImageDescModalComponent } from './component/edit-image-desc-modal/e
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImageDeleteComponent } from './component/image-delete/image-delete.component';
 import { ImageDeleteModalComponent } from './component/image-delete-modal/image-delete-modal.component';
+import { CollectionDeleteComponent } from './component/collection-delete/collection-delete.component';
+import { CollectionDeleteModalComponent } from './component/collection-delete/collection-delete-modal/collection-delete-modal.component';
 
 
 
@@ -23,6 +25,8 @@ import { ImageDeleteModalComponent } from './component/image-delete-modal/image-
     EditImageDescModalComponent,
     ImageDeleteComponent,
     ImageDeleteModalComponent,
+    CollectionDeleteComponent,
+    CollectionDeleteModalComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +38,7 @@ import { ImageDeleteModalComponent } from './component/image-delete-modal/image-
     SharedModule,
   ],
   entryComponents: [
+    CollectionDeleteModalComponent,
     EditImageDescModalComponent,
     ImageDeleteModalComponent,
   ],

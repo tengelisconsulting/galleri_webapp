@@ -3,7 +3,12 @@
     {{ file.name }}
   </div>
 
-  <div>
+  <app-image-thumb
+    *ngIf="isLoaded"
+    [imageId]="imageId">
+  </app-image-thumb>
+
+  <div *ngIf="!isLoaded">
     {{ percentDone }}%
   </div>
 

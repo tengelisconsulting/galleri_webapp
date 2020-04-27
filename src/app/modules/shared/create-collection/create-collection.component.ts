@@ -1,8 +1,9 @@
-import { Component, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { v4 as uuidv4 } from "uuid";
 import { HttpService } from 'src/app/core/http.service';
+import { ImageDataService } from 'src/app/core/data/image-data.service';
 
 @Component({
   selector: 'app-create-collection',
@@ -10,7 +11,7 @@ import { HttpService } from 'src/app/core/http.service';
   styleUrls: ['./create-collection.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateCollectionComponent {
+export class CreateCollectionComponent implements OnDestroy {
 
   @Output()
   public onComplete: EventEmitter<boolean> = new EventEmitter(); // true on success
@@ -24,10 +25,19 @@ export class CreateCollectionComponent {
   public files: File[] = [];
 
   private imageIds: string[] = [];
+  private isCreated: boolean = false;
 
   constructor(
     private httpService: HttpService,
+    private imageDataService: ImageDataService,
   ) { }
+
+  public ngOnDestroy(): void {
+    if (!this.isCreated && this.imageIds.length) {
+      this.imageIds.forEach((imageId) => this.imageDataService
+                            .deleteOrphanImage(imageId));
+    }
+  }
 
   public onFile(file: File): void {
     this.files = this.files.concat(file);
@@ -62,6 +72,7 @@ export class CreateCollectionComponent {
       },
     });
     if (res.ok) {
+      this.isCreated = true;
       this.onComplete.emit(true);
     }
   }

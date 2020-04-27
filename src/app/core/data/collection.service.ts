@@ -47,4 +47,18 @@ export class CollectionService {
     });
     return res.ok;
   }
+
+  public async deleteCollection(
+    collectionId: string
+  ): Promise<Response> {
+    const url = "/db/rpc/collection_delete";
+    const data = {
+      "p_collection_id": collectionId,
+    };
+    const res = await this.httpService.postReq({
+      path: url,
+      data: data,
+    });
+    return res;
+  }
 }

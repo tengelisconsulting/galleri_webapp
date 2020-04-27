@@ -27,9 +27,9 @@ export class FileUploadInfoComponent implements OnInit {
   public onDelete: EventEmitter<boolean> = new EventEmitter();
 
   public percentDone: number = 0;
+  public isLoaded: boolean = false;
 
-  private imageId: string =  uuidv4();
-  private imagePath: string = `/obj/image/${this.imageId}`;
+  public imageId: string =  uuidv4();
   private imageB64: string;
 
   constructor(
@@ -39,7 +39,7 @@ export class FileUploadInfoComponent implements OnInit {
     private cdr: ChangeDetectorRef,
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.onId.emit(this.imageId);
     this.uploadImage();
   }
@@ -52,12 +52,13 @@ export class FileUploadInfoComponent implements OnInit {
       formData.append(key, uploadInfo.fields[key])
     });
     formData.append("file", this.file);
-    Promise.all([
+    await Promise.all([
       this.upload(uploadInfo.url, formData),
       this.setImageB64(),
-    ]).then(() => this.createImageRecord(
-      uploadInfo.url + uploadInfo.fields.key
-    ));
+    ]);
+    await this.createImageRecord(uploadInfo.url + uploadInfo.fields.key);
+    this.isLoaded = true;
+    this.cdr.detectChanges();
   }
 
   public async deleteImage(): Promise<void> {

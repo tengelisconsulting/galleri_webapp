@@ -9,8 +9,8 @@ import { ModalComponent } from 'src/app/types/ModalComponent';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageDeleteModalComponent extends ModalComponent<{
-  collectionId: string,
-  imageId: string,
+  collectionId: string;
+  imageId: string;
 }, boolean> {
 
   constructor(

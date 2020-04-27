@@ -11,6 +11,7 @@ import { BaseModalComponent } from './components/base-modal/base-modal.component
 export class ModalService {
 
   private dialogRef: any;
+  private DEFAULT_WIDTH_PERCENT: number = 75;
 
   constructor(
     private dialog: MatDialog,
@@ -21,7 +22,7 @@ export class ModalService {
   ): Promise<any> {
     return new Promise((resolve, _reject) => {
       this.dialogRef = this.dialog.open(BaseModalComponent, {
-        width: "50%",
+        width: `${this.DEFAULT_WIDTH_PERCENT}%`,
         data: {
           modalInit: init,
           resolver: (res: any) => resolve(res),

@@ -14,10 +14,3 @@ docker build \
 docker push galleri/webapp:${TAG}
 docker tag galleri/webapp:${TAG} galleri/webapp:staging-latest
 docker push galleri/webapp:staging-latest
-
-# docker run -it \
-#        --rm \
-#        --net=host \
-#        -e TARGET_URL=http://64.227.20.38:10000/build-success/galleri_webapp \
-#        -e HOOK_HEY=${HOOK_KEY} \
-#        tengelisconsulting/docker-hub-hooks:latest

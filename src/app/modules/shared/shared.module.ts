@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 import { ImageThumbComponent } from './image-thumb/image-thumb.component';
 import { FileUploadBtnComponent } from './file-upload-btn/file-upload-btn.component';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { TopbarButtonComponent } from './topbar/topbar-button/topbar-button.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { NewUserModalComponent } from './create-user/new-user-modal/new-user-modal.component';
@@ -36,6 +36,8 @@ import { NewUserModalComponent } from './create-user/new-user-modal/new-user-mod
   imports: [
     CommonModule,
     MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
     ReactiveFormsModule,
     RouterModule,
   ],

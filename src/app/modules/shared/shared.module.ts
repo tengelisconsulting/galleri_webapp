@@ -13,6 +13,8 @@ import { FileUploadBtnComponent } from './file-upload-btn/file-upload-btn.compon
 import { SpinnerComponent } from './spinner/spinner.component';
 import { MatButtonModule } from '@angular/material';
 import { TopbarButtonComponent } from './topbar/topbar-button/topbar-button.component';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { NewUserModalComponent } from './create-user/new-user-modal/new-user-modal.component';
 
 
 
@@ -28,6 +30,8 @@ import { TopbarButtonComponent } from './topbar/topbar-button/topbar-button.comp
     FileUploadBtnComponent,
     SpinnerComponent,
     TopbarButtonComponent,
+    CreateUserComponent,
+    NewUserModalComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +51,7 @@ import { TopbarButtonComponent } from './topbar/topbar-button/topbar-button.comp
   ],
   entryComponents: [
     CreateCollectionModalComponent,
+    NewUserModalComponent,
   ],
 })
 export class SharedModule { }

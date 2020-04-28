@@ -23,3 +23,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .movable {
   cursor: move;
 }
+
+/* scale */
+.scale-110 {
+  transform: scale(1.1);
+}
+
+.scale-150 {
+  transform: scale(1.5);
+}
+
+.scale-200 {
+  transform: scale(2);
+}

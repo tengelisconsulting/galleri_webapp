@@ -5,13 +5,30 @@
       <span class="f3">HOME</span>
     </button>
   </div>
-  <div class="w-third flex mr3 button-container">
-    <button *ngFor="let btn of extraButtons"
-            (click)="btn.onClick()"
-            [color]="btn.color"
-            mat-button>
-      {{ btn.text }}
-    </button>
+  <div class="w-third flex justify-between mr3 button-container">
 
+    <div class="flex">
+      <button *ngFor="let btn of extraButtons"
+              (click)="btn.onClick()"
+              [color]="btn.color"
+              mat-button>
+        {{ btn.text }}
+      </button>
+    </div>
+    <div class="flex">
+      <button mat-icon-button
+              [matMenuTriggerFor]="userMenu">
+        <mat-icon class="scale-150">
+          account_circle
+        </mat-icon>
+      </button>
+    </div>
   </div>
 </div>
+
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item
+          (click)="logout()">
+    Logout
+  </button>
+</mat-menu>

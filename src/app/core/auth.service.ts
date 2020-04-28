@@ -31,6 +31,12 @@ export class AuthService {
     return authBody;
   }
 
+  public async logout(): Promise<Response> {
+    return this.httpService.postReq({
+      path: "/auth/end-session",
+    });
+  }
+
   public async attemptRenewSession(): Promise<SessionData> {
     const res = await this.httpService.postNoAuth({
       path: "/auth/renew-session",

@@ -53,6 +53,15 @@ export class AppLoadService {
     return true;
   }
 
+  public async unload(): Promise<void> {
+    const logoutRes = await this.authService.logout();
+    if (!logoutRes.ok) {
+      throw new Error("failed to logout");
+    }
+    this.sessionService.exitSession();
+    this.router.navigate([AppRoutePath.LOGIN]);
+  }
+
   private startup(sessionData: SessionData): void {
     // load permissions, anything else that goes in the state session
     this.sessionService.enterSession(

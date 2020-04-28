@@ -3,6 +3,7 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { TopbarService } from './topbar.service';
 import { TopbarButtonComponent } from 'src/app/modules/shared/topbar/topbar-button/topbar-button.component';
+import { AppLoadService } from 'src/app/core/app-load.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class TopbarComponent extends BaseComponent {
   public extraButtons: TopbarButtonComponent[] = [];
 
   constructor(
+    private apploadService: AppLoadService,
     private cdr: ChangeDetectorRef,
     private topbarService: TopbarService,
   ) {
@@ -25,6 +27,10 @@ export class TopbarComponent extends BaseComponent {
         this.extraButtons = buttons;
         this.cdr.detectChanges();
       });
+  }
+
+  public async logout(): Promise<void> {
+    this.apploadService.unload();
   }
 
 }

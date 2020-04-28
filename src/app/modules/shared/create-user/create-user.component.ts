@@ -21,9 +21,15 @@ export class CreateUserComponent implements OnInit {
     ]),
   });
 
+  public errorMsg: string;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public async createUser(): Promise<void> {
+    
   }
 
 }

@@ -33,4 +33,8 @@ export class TopbarComponent extends BaseComponent {
     this.apploadService.unload();
   }
 
+  public async newUserModal(): Promise<void> {
+    console.log("create new user");
+  }
+
 }

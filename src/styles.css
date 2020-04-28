@@ -60,3 +60,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .pl-25 {
   padding-left: 25%;
 }
+.pt-5 {
+  padding-top: 5%;
+}
+.pt-10 {
+  padding-top: 10%;
+}
+.pt-15 {
+  padding-top: 15%;
+}
+.pt-25 {
+  padding-top: 25%;
+}

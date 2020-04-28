@@ -1,7 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { takeUntil } from 'rxjs/operators';
+import { UserService } from 'src/app/core/data/user.service';
 
 @Component({
   selector: 'app-create-user',
@@ -14,6 +15,7 @@ export class CreateUserComponent extends BaseComponent {
   public userForm: FormGroup = new FormGroup({
     username: new FormControl("", [
       Validators.required,
+      this.validateUsername.bind(this),
     ]),
     password: new FormControl("", [
       Validators.required,
@@ -23,24 +25,45 @@ export class CreateUserComponent extends BaseComponent {
     ]),
   });
 
-  public errorMsg: string;
+  public errors: string[] = [];
 
-  constructor() {
+  private allUsernames: string[] = [];
+
+  constructor(
+    private userService: UserService,
+  ) {
     super();
-    this.appOnInit(() => {
-      this.userForm.valueChanges.pipe(takeUntil(this.isDestroyed$))
-        .subscribe((changes) => {
-          console.log("changes", changes);
-        });
+    this.userForm.disable();
+    this.appOnInit(async () => {
+      await this.loadUsernames();
+      this.userForm.enable();
     });
   }
 
   public async createUser(): Promise<void> {
-
+    const res = await this.userService.createUser(
+      this.userForm.controls["username"].value,
+      this.userForm.controls["password"].value
+    );
+    if (!res.ok) {
+      console.error("failed to create user");
+    }
+    console.log("success!");
   }
 
-  private async checkUsernameValid(username: string): Promise<void> {
-
+  private validateUsername(
+    control: AbstractControl
+  ): {[key: string]: string[]}  {
+    const allUsernames = this.allUsernames || [];
+    if (allUsernames.includes(control.value.toUpperCase())) {
+      return { errorMsg: ["Username is not unique"] };
+    }
+    return null;
   }
+
+  private async loadUsernames(): Promise<void> {
+    this.allUsernames = await this.userService.getAllUsernames();
+  }
+
 
 }

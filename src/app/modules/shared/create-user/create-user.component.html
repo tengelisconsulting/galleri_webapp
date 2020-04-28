@@ -5,9 +5,9 @@
     [formGroup]="userForm"
     (ngSubmit)="createUser()">
 
-    <div *ngIf="errorMsg"
+    <div *ngIf="userForm.controls['username'].errors"
          class="error-msg">
-      {{ errorMsg }}
+      {{ userForm.controls['username'].errors.errorMsg }}
     </div>
 
     <mat-form-field class="w-100">

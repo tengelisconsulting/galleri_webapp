@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../http.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +15,8 @@ export class UserService {
     const res = await this.httpService.getReq({
       path: "/public/db/logon_names",
     });
-    return res.json();
+    const data = await res.json();
+    return data.map((row) => row.username_upper);
   }
 
   public async createUser(

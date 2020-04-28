@@ -48,7 +48,7 @@ export class CreateUserComponent extends BaseComponent {
     if (!res.ok) {
       console.error("failed to create user");
     }
-    console.log("success!");
+    // now do an authenticate as per usual
   }
 
   private validateUsername(

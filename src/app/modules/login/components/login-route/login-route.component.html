@@ -1,33 +1,15 @@
-<div>
-
-  <form
-    class="container"
-    [formGroup]="loginForm"
-    (ngSubmit)="login()">
-
-    <div *ngIf="errorMsg"
-         class="error-msg">
-      {{ errorMsg }}
-    </div>
-
-    <label>Username</label>
-    <input
-      matInput
-      type="text"
-      formControlName="username" />
-
-    <label>Password</label>
-    <input
-      matInput
-      type="password"
-      formControlName="password"/>
-
-    <button
-      type="submit"
-      mat-flat-button>
+<div class="h-100 flex flex-column">
+  <div class="h-50 w-100">
+  </div>
+  <div class="h-50 w-100 flex flex-column">
+    <div class="pl-15 f2">
       Login
-    </button>
-  </form>
+    </div>
+    <div class="w-100 h-100 flex justify-center">
+      <app-login class="w-50">
+      </app-login>
+    </div>
+  </div>
 
 
 </div>

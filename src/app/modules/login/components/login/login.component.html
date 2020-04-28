@@ -1,0 +1,49 @@
+<div class="flex flex-column w-100 h-100">
+
+  <form
+    class="flex flex-column items-center w-100"
+    [formGroup]="loginForm"
+    (ngSubmit)="login()">
+
+    <div *ngIf="errorMsg"
+         class="error-msg">
+      {{ errorMsg }}
+    </div>
+
+    <mat-form-field class="w-100">
+      <label matLabel
+             for="username">
+        Username
+      </label>
+      <input
+        id="username"
+        matInput
+        matNativeControl
+        type="text"
+        formControlName="username" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+      <label matLabel
+             for="password">
+        Password
+      </label>
+      <input
+        id="password"
+        matInput
+        type="password"
+        formControlName="password"/>
+    </mat-form-field>
+
+    <div class="w-100 flex justify-end">
+      <button
+        type="submit"
+        mat-button>
+        LOGIN
+      </button>
+    </div>
+
+  </form>
+
+
+</div>

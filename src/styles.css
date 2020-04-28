@@ -24,15 +24,39 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   cursor: move;
 }
 
+
+/* framework */
 /* scale */
 .scale-110 {
   transform: scale(1.1);
 }
-
 .scale-150 {
   transform: scale(1.5);
 }
-
 .scale-200 {
   transform: scale(2);
+}
+
+/* heights */
+.h-one-third {
+  height: 33.333333%;
+}
+.h-two-thirds {
+  height: 66.666666%;
+}
+.h-10 {
+  height: 10%;
+}
+.h-20 {
+  height: 20%;
+}
+/* padding */
+.pl-10 {
+  padding-left: 10%;
+}
+.pl-15 {
+  padding-left: 15%;
+}
+.pl-25 {
+  padding-left: 25%;
 }

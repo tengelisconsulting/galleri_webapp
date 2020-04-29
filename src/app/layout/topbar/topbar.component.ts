@@ -4,6 +4,7 @@ import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { TopbarService } from './topbar.service';
 import { TopbarButtonComponent } from 'src/app/modules/shared/topbar/topbar-button/topbar-button.component';
 import { AppLoadService } from 'src/app/core/app-load.service';
+import { UserService } from 'src/app/core/data/user.service';
 
 
 @Component({
@@ -16,12 +17,16 @@ export class TopbarComponent extends BaseComponent {
 
   public extraButtons: TopbarButtonComponent[] = [];
 
+  private user;
+
   constructor(
     private apploadService: AppLoadService,
     private cdr: ChangeDetectorRef,
+    private userService: UserService,
     private topbarService: TopbarService,
   ) {
     super();
+    this.loadUser();
     this.topbarService.getButton$(this.isDestroyed$)
       .subscribe((buttons) => {
         this.extraButtons = buttons;
@@ -31,6 +36,10 @@ export class TopbarComponent extends BaseComponent {
 
   public async logout(): Promise<void> {
     this.apploadService.unload();
+  }
+
+  private async loadUser(): Promise<void> {
+    this.user = await this.userService.getUser();
   }
 
 }

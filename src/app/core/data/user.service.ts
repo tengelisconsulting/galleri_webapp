@@ -19,6 +19,14 @@ export class UserService {
     return data.map((row) => row.username_upper);
   }
 
+  public async getUser(): Promise<any> {
+    const res = await this.httpService.getReq({
+      path: "/db/user_account",
+    });
+    const data = await res.json();
+    return data[0];
+  }
+
   public async createUser(
     username: string,
     password: string

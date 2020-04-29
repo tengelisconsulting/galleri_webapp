@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../http.service';
 
+import * as db from "../../types/auto/db";
+type user_account = db.OpenAPI2.user_account;
 
 @Injectable({
   providedIn: 'root'

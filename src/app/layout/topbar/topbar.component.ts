@@ -1,5 +1,8 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
+import * as db from "../../types/auto/db";
+type user_account = db.OpenAPI2.user_account;
+
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { TopbarService } from './topbar.service';
 import { TopbarButtonComponent } from 'src/app/modules/shared/topbar/topbar-button/topbar-button.component';
@@ -17,7 +20,7 @@ export class TopbarComponent extends BaseComponent {
 
   public extraButtons: TopbarButtonComponent[] = [];
 
-  private user;
+  private user: user_account;
 
   constructor(
     private apploadService: AppLoadService,

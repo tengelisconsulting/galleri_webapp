@@ -67,4 +67,17 @@ export namespace OpenAPI2 {
     image_id?: string;
     thumb?: string;
   }
+  export interface user_account {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    user_id?: string;
+    username?: string;
+    created?: string;
+    updated?: string;
+  }
+  export interface logon_names {
+    username_upper?: string;
+  }
 }

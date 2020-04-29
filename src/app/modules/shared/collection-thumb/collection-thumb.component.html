@@ -1,8 +1,8 @@
-<div
-  class="clickable"
-  (click)="navToCollection()">
+<div *ngIf="collection"
+     class="clickable"
+     (click)="navToCollection()">
 
-  <div *ngIf="collection">
+  <div>
     {{ collection.collection_name }}
   </div>
   <div class="h-100">

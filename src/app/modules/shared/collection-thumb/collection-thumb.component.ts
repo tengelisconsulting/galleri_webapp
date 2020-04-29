@@ -5,7 +5,7 @@ import { ImageDataService } from 'src/app/core/data/image-data.service';
 
 import * as db from "../../../types/auto/db";
 import { SessionService } from 'src/app/core/session.service';
-type user_image_collection = db.OpenAPI2.user_image_collection;
+type image_collection = db.OpenAPI2.image_collection;
 
 
 @Component({
@@ -21,7 +21,7 @@ export class CollectionThumbComponent {
 
   public imageUrl: string;
 
-  public collection: user_image_collection;
+  public collection: image_collection;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -31,8 +31,7 @@ export class CollectionThumbComponent {
   ) { }
 
   public ngOnInit(): void {
-    this.imageUrl = `/db/user_collection_thumb?collection_id=eq.${this.id}&select=thumb`;
-    this.loadCollection();
+    this.init();
   }
 
   public navToCollection(): void {
@@ -51,8 +50,11 @@ export class CollectionThumbComponent {
     });
   }
 
-  private async loadCollection(): Promise<void> {
+  private async init(): Promise<void> {
     this.collection = await this.imageDataService.getCollection(this.id);
+    this.imageUrl = this.imageDataService.getImageThumbUrl(
+      this.collection.images[0]
+    );
     this.cdr.detectChanges();
   }
 

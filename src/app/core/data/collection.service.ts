@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
+
+import * as db from "../../types/auto/db";
+type image = db.OpenAPI2.image;
+type image_collection = db.OpenAPI2.image_collection;
+
 import { HttpService } from '../http.service';
 import { shallowMerge } from 'src/app/lib/fn';
+import { SessionService } from '../session.service';
+import { getPGQueryUrl } from '../framework/postgrest-query-builder';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +16,23 @@ export class CollectionService {
 
   constructor(
     private httpService: HttpService,
+    private sessionService: SessionService,
   ) { }
+
+  public async getAllCollectionsCurrentUser(
+  ): Promise<image_collection[]> {
+    return this.getAllCollections(this.sessionService.getUserId());
+  }
+
+  public async getAllCollections(
+    userId: string
+  ): Promise<image_collection[]> {
+    const url = getPGQueryUrl("image_collection", [
+      ["user_id.eq." + userId],
+    ]);
+    const res = await this.httpService.getReq({path: url});
+    return res.json();
+  }
 
   public async updateCollection(
     collectionId: string,

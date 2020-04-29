@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ImageDataService } from 'src/app/core/data/image-data.service';
 
 @Component({
   selector: 'app-image-thumb',
@@ -13,10 +14,12 @@ export class ImageThumbComponent implements OnInit {
 
   public url: string;
 
-  constructor() { }
+  constructor(
+    private imageDataService: ImageDataService,
+  ) { }
 
   ngOnInit() {
-    this.url = `/db/user_image_thumb?image_id=eq.${this.imageId}&select=thumb`;
+    this.url = this.imageDataService.getImageThumbUrl(this.imageId);
   }
 
 }

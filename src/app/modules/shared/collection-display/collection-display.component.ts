@@ -1,8 +1,8 @@
 import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import * as db from "../../../types/auto/db";
-type user_image = db.OpenAPI2.user_image;
-type user_image_collection = db.OpenAPI2.user_image_collection;
+type image = db.OpenAPI2.image;
+type image_collection = db.OpenAPI2.image_collection;
 
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 import { WindowService } from 'src/app/ui/window.service';
@@ -12,7 +12,7 @@ import { BehaviorSubject, Observable, merge, timer } from 'rxjs';
 import { take, filter, map, takeUntil } from 'rxjs/operators';
 
 
-interface FullImage extends user_image {
+interface FullImage extends image {
   full_url: string;
 }
 
@@ -32,7 +32,7 @@ export class CollectionDisplayComponent extends BaseComponent {
 
   public images: FullImage[] = [];
 
-  public collection: user_image_collection;
+  public collection: image_collection;
 
   public windowHeight: number;
   public windowWidth: number;

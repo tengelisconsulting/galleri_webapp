@@ -2,8 +2,8 @@ import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@a
 import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
 
 import * as db from "../../../../types/auto/db";
-type user_image = db.OpenAPI2.user_image;
-type user_image_collection = db.OpenAPI2.user_image_collection;
+type image = db.OpenAPI2.image;
+type image_collection = db.OpenAPI2.image_collection;
 
 import { ImageDataService } from 'src/app/core/data/image-data.service';
 import { ModalService } from 'src/app/ui/modal.service';
@@ -27,9 +27,9 @@ export class EditImageCollectionComponent extends BaseComponent {
   @Input()
   public collectionId: string;
 
-  public images: user_image[] = [];
+  public images: image[] = [];
 
-  public collection: user_image_collection;
+  public collection: image_collection;
 
   public toUpload: File[] = [];
   public orderingChanged: boolean = false;

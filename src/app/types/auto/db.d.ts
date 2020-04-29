@@ -4,69 +4,6 @@
  */
 
 export namespace OpenAPI2 {
-  export interface user_image_thumb {
-    /**
-     * Note:
-     * This is a Primary Key.<pk/>
-     */
-    image_id?: string;
-    created?: string;
-    /**
-     * Note:
-     * This is a Foreign Key to `ac_user.user_id`.<fk table='ac_user' column='user_id'/>
-     */
-    user_id?: string;
-    thumb?: string;
-  }
-  export interface user_image_collection {
-    /**
-     * Note:
-     * This is a Primary Key.<pk/>
-     */
-    collection_id?: string;
-    collection_name?: string;
-    created?: string;
-    /**
-     * Note:
-     * This is a Foreign Key to `ac_user.user_id`.<fk table='ac_user' column='user_id'/>
-     */
-    user_id?: string;
-  }
-  export interface user_image {
-    /**
-     * Note:
-     * This is a Primary Key.<pk/>
-     */
-    image_id?: string;
-    ordinal?: number;
-    /**
-     * Note:
-     * This is a Primary Key.<pk/>
-     */
-    collection_id?: string;
-    created?: string;
-    /**
-     * Note:
-     * This is a Foreign Key to `ac_user.user_id`.<fk table='ac_user' column='user_id'/>
-     */
-    user_id?: string;
-    href?: string;
-    description?: string;
-  }
-  export interface user_collection_thumb {
-    /**
-     * Note:
-     * This is a Primary Key.<pk/>
-     */
-    collection_id?: string;
-    collection_name?: string;
-    /**
-     * Note:
-     * This is a Primary Key.<pk/>
-     */
-    image_id?: string;
-    thumb?: string;
-  }
   export interface user_account {
     /**
      * Note:
@@ -78,6 +15,53 @@ export namespace OpenAPI2 {
     updated?: string;
   }
   export interface logon_names {
+    username_upper?: string;
+  }
+  export interface image_thumb {
+    /**
+     * Note:
+     * This is a Foreign Key to `ac_user.user_id`.<fk table='ac_user' column='user_id'/>
+     */
+    user_id?: string;
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    image_id?: string;
+    thumb?: string;
+  }
+  export interface image_collection {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    collection_id?: string;
+    /**
+     * Note:
+     * This is a Foreign Key to `ac_user.user_id`.<fk table='ac_user' column='user_id'/>
+     */
+    user_id?: string;
+    collection_name?: string;
+    created?: string;
+    images?: string;
+    username_upper?: string;
+  }
+  export interface image {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    collection_id?: string;
+    image_id?: string;
+    ordinal?: number;
+    created?: string;
+    href?: string;
+    description?: string;
+    /**
+     * Note:
+     * This is a Foreign Key to `ac_user.user_id`.<fk table='ac_user' column='user_id'/>
+     */
+    user_id?: string;
     username_upper?: string;
   }
 }

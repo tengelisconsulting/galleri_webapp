@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { HttpService } from 'src/app/core/http.service';
 
 import * as db from "../../../../types/auto/db";
-type user_image_collection = db.OpenAPI2.user_image_collection
+import { CollectionService } from 'src/app/core/data/collection.service';
+type image_collection = db.OpenAPI2.image_collection
+
 
 @Component({
   selector: 'app-all-pieces-yours',
@@ -12,11 +13,11 @@ type user_image_collection = db.OpenAPI2.user_image_collection
 })
 export class AllPiecesYoursComponent implements OnInit {
 
-  public collections: user_image_collection[] = [];
+  public collections: image_collection[] = [];
 
   constructor(
-    private httpService: HttpService,
     private cdr: ChangeDetectorRef,
+    private collectionService: CollectionService,
   ) { }
 
   ngOnInit() {
@@ -24,10 +25,8 @@ export class AllPiecesYoursComponent implements OnInit {
   }
 
   private async loadCollections(): Promise<void> {
-    const res = await this.httpService.getReq({
-      path: "/db/user_image_collection",
-    });
-    this.collections = await res.json();
+    this.collections = await this.collectionService
+      .getAllCollectionsCurrentUser();
     this.cdr.detectChanges();
   }
 

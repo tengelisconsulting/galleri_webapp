@@ -5,3 +5,6 @@
 
 
 A cookie associated with a cross-site resource at http://64.225.27.133/ was set without the `SameSite` attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with `SameSite=None` and `Secure`. You can review cookies in developer tools under Application>Storage>Cookies and see more details at https://www.chromestatus.com/feature/5088147346030592 and https://www.chromestatus.com/feature/5633521622188032.
+
+
+- search for other user names, see their galleries

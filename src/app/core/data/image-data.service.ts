@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import * as db from "../../types/auto/db";
-type user_image = db.OpenAPI2.user_image;
-type user_image_collection = db.OpenAPI2.user_image_collection;
+type image = db.OpenAPI2.image;
+type image_collection = db.OpenAPI2.image_collection;
 
 import { HttpService } from '../http.service';
 import { getPGQueryUrl } from '../framework/postgrest-query-builder';
 import { shallowMerge } from 'src/app/lib/fn';
+import { SessionService } from '../session.service';
 
 
 @Injectable({
@@ -16,24 +17,25 @@ export class ImageDataService {
 
   constructor(
     private httpService: HttpService,
+    private sessionService: SessionService,
   ) { }
 
   public async getImagesForCollection(
     collectionId: string
-  ): Promise<user_image[]> {
-    const url = getPGQueryUrl("user_image", [
-      ["collection_id.eq." + collectionId]
+  ): Promise<image[]> {
+    const url = getPGQueryUrl("image", [
+      ["collection_id.eq." + collectionId],
     ]);
     const res = await this.httpService.getReq({path: url});
-    const data: user_image[] = await res.json();
+    const data: image[] = await res.json();
     return data.sort((im1, im2) => im1.ordinal - im2.ordinal);
   }
 
   public async getCollection(
     collectionId: string
-  ): Promise<user_image_collection> {
-    const url = getPGQueryUrl("user_image_collection", [
-      ["collection_id.eq." + collectionId]
+  ): Promise<image_collection> {
+    const url = getPGQueryUrl("image_collection", [
+      ["collection_id.eq." + collectionId],
     ]);
     const res = await this.httpService.getReq({path: url});
     const data = await res.json();
@@ -47,7 +49,7 @@ export class ImageDataService {
   ): Promise<Response> {
     const url = "/db/rpc/user_image_create";
     const reqData = {
-      "p_obj_id": imageId,
+      "p_image_id": imageId,
       "p_href": href,
       "p_thumb_b64": thumbB64,
     }
@@ -60,7 +62,7 @@ export class ImageDataService {
 
   public async updateImage(
     imageId: string,
-    update: Partial<user_image>
+    update: Partial<image>
   ): Promise<Response> {
     const url = "/db/rpc/image_update";
     const reqData = {
@@ -131,8 +133,8 @@ export class ImageDataService {
 
   public async getImage(
     imageId: string
-  ): Promise<user_image> {
-    const url = getPGQueryUrl("user_image", [
+  ): Promise<image> {
+    const url = getPGQueryUrl("image", [
       ["image_id.eq." + imageId]
     ])
     const res = await this.httpService.getReq({path: url});
@@ -159,6 +161,14 @@ export class ImageDataService {
     });
     const data = await res.json();
     return data;
+  }
+
+  public getImageThumbUrl(
+    imageId: string
+  ): string {
+    return getPGQueryUrl("image_thumb", [
+      ["image_id.eq." + imageId]
+    ], ["thumb"]);
   }
 
 }

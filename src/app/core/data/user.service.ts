@@ -4,6 +4,7 @@ import { HttpService } from '../http.service';
 import * as db from "../../types/auto/db";
 type user_account = db.OpenAPI2.user_account;
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +22,7 @@ export class UserService {
     return data.map((row) => row.username_upper);
   }
 
-  public async getUser(): Promise<any> {
+  public async getUser(): Promise<user_account> {
     const res = await this.httpService.getReq({
       path: "/db/user_account",
     });

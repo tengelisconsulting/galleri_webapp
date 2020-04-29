@@ -20,7 +20,7 @@ export class TopbarComponent extends BaseComponent {
 
   public extraButtons: TopbarButtonComponent[] = [];
 
-  private user: user_account;
+  public user: user_account;
 
   constructor(
     private apploadService: AppLoadService,

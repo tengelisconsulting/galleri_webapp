@@ -19,6 +19,18 @@ export class CollectionService {
     private sessionService: SessionService,
   ) { }
 
+  public async getCollection(
+    collectionId: string
+  ): Promise<image_collection> {
+    const url = getPGQueryUrl("image_collection_public", [
+      ["collection_id.eq." + collectionId],
+    ]);
+    const res = await this.httpService.getReq({path: url});
+    const data = await res.json();
+    return data[0];
+  }
+
+
   public async getAllCollectionsCurrentUser(
   ): Promise<image_collection[]> {
     return this.getAllCollections(this.sessionService.getUserId());
@@ -27,7 +39,7 @@ export class CollectionService {
   public async getAllCollections(
     userId: string
   ): Promise<image_collection[]> {
-    const url = getPGQueryUrl("image_collection", [
+    const url = getPGQueryUrl("image_collection_public", [
       ["user_id.eq." + userId],
     ]);
     const res = await this.httpService.getReq({path: url});

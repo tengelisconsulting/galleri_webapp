@@ -55,7 +55,7 @@ export class EditImageCollectionComponent extends BaseComponent {
   }
 
   public async loadCollection(): Promise<void> {
-    this.collection = await this.imageDataService
+    this.collection = await this.collectionService
       .getCollection(this.collectionId);
     this.cdr.detectChanges();
   }

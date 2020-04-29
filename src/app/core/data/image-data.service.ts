@@ -31,17 +31,6 @@ export class ImageDataService {
     return data.sort((im1, im2) => im1.ordinal - im2.ordinal);
   }
 
-  public async getCollection(
-    collectionId: string
-  ): Promise<image_collection> {
-    const url = getPGQueryUrl("image_collection", [
-      ["collection_id.eq." + collectionId],
-    ]);
-    const res = await this.httpService.getReq({path: url});
-    const data = await res.json();
-    return data[0];
-  }
-
   public async createImage(
     imageId: string,
     href: string,

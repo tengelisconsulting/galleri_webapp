@@ -10,6 +10,7 @@ import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 import { ImageDataService } from 'src/app/core/data/image-data.service';
 import { BehaviorSubject, Observable, merge, timer } from 'rxjs';
 import { take, filter, map, takeUntil } from 'rxjs/operators';
+import { CollectionService } from 'src/app/core/data/collection.service';
 
 
 interface FullImage extends image {
@@ -41,6 +42,7 @@ export class CollectionDisplayComponent extends BaseComponent {
 
   constructor(
     private cdr: ChangeDetectorRef,
+    private collectionService: CollectionService,
     private imageDataService: ImageDataService,
     private windowService: WindowService,
   ) {
@@ -79,7 +81,7 @@ export class CollectionDisplayComponent extends BaseComponent {
   }
 
   public async loadCollection(): Promise<void> {
-    this.collection = await this.imageDataService
+    this.collection = await this.collectionService
       .getCollection(this.collectionId);
     this.cdr.detectChanges();
   }

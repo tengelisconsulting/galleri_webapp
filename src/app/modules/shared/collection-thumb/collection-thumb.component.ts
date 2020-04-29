@@ -5,6 +5,7 @@ import { ImageDataService } from 'src/app/core/data/image-data.service';
 
 import * as db from "../../../types/auto/db";
 import { SessionService } from 'src/app/core/session.service';
+import { CollectionService } from 'src/app/core/data/collection.service';
 type image_collection = db.OpenAPI2.image_collection;
 
 
@@ -25,6 +26,7 @@ export class CollectionThumbComponent {
 
   constructor(
     private cdr: ChangeDetectorRef,
+    private collectionService: CollectionService,
     private imageDataService: ImageDataService,
     private router: Router,
     private sessionService: SessionService,
@@ -51,7 +53,7 @@ export class CollectionThumbComponent {
   }
 
   private async init(): Promise<void> {
-    this.collection = await this.imageDataService.getCollection(this.id);
+    this.collection = await this.collectionService.getCollection(this.id);
     this.imageUrl = this.imageDataService.getImageThumbUrl(
       this.collection.images[0]
     );

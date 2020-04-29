@@ -23,7 +23,7 @@ export class ImageDataService {
   public async getImagesForCollection(
     collectionId: string
   ): Promise<image[]> {
-    const url = getPGQueryUrl("image", [
+    const url = getPGQueryUrl("image_public", [
       ["collection_id.eq." + collectionId],
     ]);
     const res = await this.httpService.getReq({path: url});
@@ -134,7 +134,7 @@ export class ImageDataService {
   public async getImage(
     imageId: string
   ): Promise<image> {
-    const url = getPGQueryUrl("image", [
+    const url = getPGQueryUrl("image_public", [
       ["image_id.eq." + imageId]
     ])
     const res = await this.httpService.getReq({path: url});

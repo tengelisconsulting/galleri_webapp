@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ModalService } from 'src/app/ui/modal.service';
 import { NewUserModalComponent } from 'src/app/modules/shared/create-user/new-user-modal/new-user-modal.component';
+import { AppLoadService } from 'src/app/core/app-load.service';
 
 
 @Component({
@@ -12,14 +13,19 @@ import { NewUserModalComponent } from 'src/app/modules/shared/create-user/new-us
 export class LoginRouteComponent {
 
   constructor(
+    private appLoad: AppLoadService,
     private modalService: ModalService,
   ) { }
 
   public async newUserModal(): Promise<void> {
-    const success = await this.modalService.showModal({
+    const createRes = await this.modalService.showModal({
       component: NewUserModalComponent,
     });
-    console.log("create success", success);
+    if (createRes) {
+      await this.appLoad.startupFromLogin(
+        createRes.username, createRes.password
+      );
+    }
   }
 
 }

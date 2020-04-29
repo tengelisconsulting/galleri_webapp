@@ -9,6 +9,10 @@
          class="error-msg">
       {{ userForm.controls['username'].errors.errorMsg }}
     </div>
+    <div *ngIf="userForm.controls['confirmPassword'].errors"
+         class="error-msg">
+      {{ userForm.controls['confirmPassword'].errors.errorMsg }}
+    </div>
 
     <mat-form-field class="w-100">
       <label matLabel
@@ -49,6 +53,7 @@
 
     <div class="w-100 flex justify-end">
       <button
+        [disabled]="userForm.status !== 'VALID'"
         type="submit"
         mat-button>
         SUBMIT

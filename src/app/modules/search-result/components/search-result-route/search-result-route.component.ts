@@ -16,7 +16,7 @@ export class SearchResultRouteComponent extends RouteComponent<{
   searchParams: string;
 }> {
 
-  private searchParams: SearchParams;
+  public searchParams: SearchParams;
 
   public users: string[] = [];
 

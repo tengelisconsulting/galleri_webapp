@@ -25,6 +25,10 @@ const routes: Routes = [
         loadChildren: () => import("./modules/image-collection/image-collection.module")
           .then((m) => m.ImageCollectionModule),
       }, {
+        path: AppRoutePath.SEARCH_RESULT,
+        loadChildren: () => import("./modules/search-result/search-result.module")
+          .then((m) => m.SearchResultModule),
+      }, {
         path: AppRoutePath.YOUR_IMAGE_COLLECTION,
         loadChildren: () => import("./modules/your-image-collection/your-image-collection.module")
           .then((m) => m.YourImageCollectionModule),

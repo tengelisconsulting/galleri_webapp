@@ -14,6 +14,7 @@
         </mat-icon>
       </button>
       <app-search-input
+        (onSubmit)="toggleSearchInput()"
         *ngIf="showSearchBar">
       </app-search-input>
     </div>

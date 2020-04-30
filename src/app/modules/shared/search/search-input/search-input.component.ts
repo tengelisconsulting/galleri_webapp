@@ -1,5 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 
 
 @Component({
@@ -12,11 +14,28 @@ export class SearchInputComponent {
   public searchForm = new FormGroup({
     searchTerm: new FormControl("")
   })
-  
-  constructor() { }
+
+  @Output()
+  public onSubmit: EventEmitter<boolean> = new EventEmitter();
+
+  constructor(
+    private router: Router,
+  ) { }
 
   public async search(): Promise<void> {
-    console.log("searching for input:", this.searchForm.value);
+    const paramsObj = {
+      searchTerm: this.searchForm.value,
+    };
+    const paramsS = JSON.stringify(paramsObj);
+    const encoded = btoa(paramsS);
+    this.router.navigate([
+      AppRoutePath.APP_PREFIX, AppRoutePath.SEARCH_RESULT
+    ], {
+      queryParams: {
+        searchParams: encoded,
+      },
+    });
+    this.onSubmit.emit(true);
   }
 
 }

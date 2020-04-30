@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, flatMap, map } from 'rxjs/operators';
 import { ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -22,10 +22,15 @@ export class RouteComponent<P> extends BaseComponent {
     protected cdr: ChangeDetectorRef,
   ) {
     super();
+    this.paramStream = AppComponent.injector.get(ActivatedRoute)
+      .queryParams
+      .pipe(
+        takeUntil(this.isDestroyed$),
+        flatMap((params) => this.isInited$.pipe(
+          map(() => params))),  // wait for component to init
+      ) as Observable<P>;
+
     this.appOnInit(() => {
-      this.paramStream = AppComponent.injector.get(ActivatedRoute)
-        .queryParams
-        .pipe(takeUntil(this.isDestroyed$)) as Observable<P>;
       this.paramStream.subscribe((params: P) => {
         this.params = params;
         this.cdr.detectChanges();

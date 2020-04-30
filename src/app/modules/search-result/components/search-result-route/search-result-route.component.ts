@@ -2,6 +2,8 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/
 import { RouteComponent } from 'src/app/core/routing/RouteComponent';
 import { UserService } from 'src/app/core/data/user.service';
 import { SearchParams } from 'src/app/types/SearchParams';
+import { Router } from '@angular/router';
+import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 
 
 @Component({
@@ -20,6 +22,7 @@ export class SearchResultRouteComponent extends RouteComponent<{
 
   constructor(
     cdr: ChangeDetectorRef,
+    private router: Router,
     private userService: UserService,
   ) {
     super(cdr);
@@ -33,9 +36,21 @@ export class SearchResultRouteComponent extends RouteComponent<{
     })
   }
 
+  public navToCollections(
+    username: string
+  ): void {
+    this.router.navigate([
+      AppRoutePath.APP_PREFIX, AppRoutePath.COLLECTIONS
+    ], {
+      queryParams: {
+        user: username.toUpperCase(),
+      },
+    });
+  }
+
   private async loadUserMatches(): Promise<void> {
     this.users = await this.userService.searchUserNames(
-      this.searchParams.searchTerm + "*"
+      this.searchParams.searchTerm.toUpperCase() + "*"
     );
     this.cdr.detectChanges();
   }

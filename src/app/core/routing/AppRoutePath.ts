@@ -2,6 +2,7 @@ export class AppRoutePath {
 
   public static readonly APP_PREFIX = "app";
 
+  public static readonly COLLECTIONS = "collections";
   public static readonly EDIT_IMAGE_COLLECTION = "edit-image-collection";
   public static readonly IMAGE_COLLECTION = "image-collection";
   public static readonly LOGIN = "login";

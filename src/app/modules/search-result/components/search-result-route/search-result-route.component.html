@@ -3,8 +3,10 @@
     Users matching '{{ searchParams.searchTerm }}':
   </div>
 
-  <div class="flex flex-column">
-    <div *ngFor="let user of users">
+  <div class="flex flex-column mt3">
+    <div *ngFor="let user of users"
+         class="clickable"
+         (click)="navToCollections(user)">
       {{ user }}
     </div>
   </div>

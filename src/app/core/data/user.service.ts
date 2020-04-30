@@ -23,6 +23,15 @@ export class UserService {
     return data.map((row) => row.username_upper);
   }
 
+  public async getUserId(usernameUpper: string): Promise<string> {
+    const path = getPGQueryUrl("logon_names", [
+      ["username_upper.eq." + usernameUpper]
+    ], ["user_id"]);
+    const res = await this.httpService.getReq({path: path});
+    const data = await res.json();
+    return data[0] && data[0].user_id;
+  }
+
   public async searchUserNames(text: string): Promise<string[]> {
     const path = getPGQueryUrl("logon_names", [
       ["username_upper.ilike." + text]

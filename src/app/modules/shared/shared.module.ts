@@ -15,6 +15,7 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/ma
 import { TopbarButtonComponent } from './topbar/topbar-button/topbar-button.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { NewUserModalComponent } from './create-user/new-user-modal/new-user-modal.component';
+import { SearchInputComponent } from './search/search-input/search-input.component';
 
 
 
@@ -32,6 +33,7 @@ import { NewUserModalComponent } from './create-user/new-user-modal/new-user-mod
     TopbarButtonComponent,
     CreateUserComponent,
     NewUserModalComponent,
+    SearchInputComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +50,7 @@ import { NewUserModalComponent } from './create-user/new-user-modal/new-user-mod
     FileUploadBtnComponent,
     FileUploadInfoComponent,
     ImageThumbComponent,
+    SearchInputComponent,
     SpinnerComponent,
     TopbarButtonComponent,
   ],

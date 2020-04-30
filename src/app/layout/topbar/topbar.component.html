@@ -1,12 +1,24 @@
 <div class="h-100 flex justify-between items-center">
-  <div class="w-two-thirds ml3">
-    <button mat-button
-            [routerLink]="['/app']">
-      <span class="f3">HOME</span>
-    </button>
+  <div class="w-two-thirds ml3 mr3 flex">
+    <div class="w-two-thirds">
+      <button mat-button
+              [routerLink]="['/app']">
+        <span class="f3">HOME</span>
+      </button>
+    </div>
+    <div class="w-third flex items-center justify-end">
+      <button mat-icon-button
+              (click)="toggleSearchInput()">
+        <mat-icon>
+          search
+        </mat-icon>
+      </button>
+      <app-search-input
+        *ngIf="showSearchBar">
+      </app-search-input>
+    </div>
   </div>
   <div class="w-third flex justify-between mr3 button-container">
-
     <div class="flex">
       <button *ngFor="let btn of extraButtons"
               (click)="btn.onClick()"

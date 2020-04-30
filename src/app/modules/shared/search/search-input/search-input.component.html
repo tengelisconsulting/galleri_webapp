@@ -1,0 +1,20 @@
+<form class="flex items-center h-100"
+      [formGroup]="searchForm"
+      (ngSubmit)="search()">
+  <mat-form-field
+    floatLabel="never">
+    <input matInput
+           placeholder="SEARCH USERS"
+           type="text"
+           class="h-100"
+           formControlName="searchTerm"
+           />
+  </mat-form-field>
+
+  <button mat-button
+          (click)="search()"
+          class="h-100">
+    GO
+  </button>
+
+</form>

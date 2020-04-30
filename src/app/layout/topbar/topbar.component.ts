@@ -21,6 +21,7 @@ export class TopbarComponent extends BaseComponent {
   public extraButtons: TopbarButtonComponent[] = [];
 
   public user: user_account;
+  public showSearchBar: boolean = false;
 
   constructor(
     private apploadService: AppLoadService,
@@ -39,6 +40,11 @@ export class TopbarComponent extends BaseComponent {
 
   public async logout(): Promise<void> {
     this.apploadService.unload();
+  }
+
+  public toggleSearchInput(): void {
+    this.showSearchBar = !this.showSearchBar;
+    this.cdr.detectChanges();
   }
 
   private async loadUser(): Promise<void> {

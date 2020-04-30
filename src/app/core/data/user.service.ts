@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '../http.service';
 
 import * as db from "../../types/auto/db";
+import { getPGQueryUrl } from '../framework/postgrest-query-builder';
 type user_account = db.OpenAPI2.user_account;
 
 
@@ -20,6 +21,17 @@ export class UserService {
     });
     const data = await res.json();
     return data.map((row) => row.username_upper);
+  }
+
+  public async searchUserNames(text: string): Promise<string[]> {
+    const path = getPGQueryUrl("logon_names", [
+      ["username_upper.ilike." + text]
+    ]);
+    const res = await this.httpService.getReq({
+      path: path,
+    });
+    const data = await res.json();
+    return data.map((row) => row.username);
   }
 
   public async getUser(): Promise<user_account> {

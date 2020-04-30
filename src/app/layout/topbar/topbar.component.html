@@ -1,6 +1,6 @@
 <div class="h-100 flex justify-between items-center">
   <div class="w-two-thirds ml3 mr3 flex">
-    <div class="w-two-thirds">
+    <div class="w-two-thirds flex items-center">
       <button mat-button
               [routerLink]="['/app']">
         <span class="f3">HOME</span>
@@ -14,8 +14,9 @@
         </mat-icon>
       </button>
       <app-search-input
+        [isFocused]="showSearchBar"
         (onSubmit)="toggleSearchInput()"
-        *ngIf="showSearchBar">
+        [ngClass]="{ 'display-none': !showSearchBar }">
       </app-search-input>
     </div>
   </div>

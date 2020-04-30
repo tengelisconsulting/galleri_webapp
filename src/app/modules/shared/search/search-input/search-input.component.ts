@@ -1,7 +1,9 @@
-import { Component, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, EventEmitter, Output, Input, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
+import { BaseComponent } from 'src/app/core/framework/component/BaseComponent';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -10,21 +12,34 @@ import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
   styleUrls: ['./search-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchInputComponent {
+export class SearchInputComponent extends BaseComponent {
   public searchForm = new FormGroup({
     searchTerm: new FormControl("")
   })
 
+  @Input()
+  public isFocused: boolean = false;
+
   @Output()
   public onSubmit: EventEmitter<boolean> = new EventEmitter();
 
+  @ViewChild("termInput", {static: true})
+  private termInput: ElementRef;
+
   constructor(
     private router: Router,
-  ) { }
+  ) {
+    super();
+    this.appOnInit(() => {
+      this.change$.pipe(
+        filter((change) => change["isFocused"].currentValue)
+      ).subscribe(() => this.focus())
+    });
+  }
 
   public async search(): Promise<void> {
     const paramsObj = {
-      searchTerm: this.searchForm.value,
+      searchTerm: this.searchForm.value.searchTerm,
     };
     const paramsS = JSON.stringify(paramsObj);
     const encoded = btoa(paramsS);
@@ -38,4 +53,7 @@ export class SearchInputComponent {
     this.onSubmit.emit(true);
   }
 
+  private focus(): void {
+    this.termInput.nativeElement.focus();
+  }
 }

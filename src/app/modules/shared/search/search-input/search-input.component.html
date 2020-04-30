@@ -3,16 +3,15 @@
       (ngSubmit)="search()">
   <mat-form-field
     floatLabel="never">
-    <input matInput
+    <input #termInput
+           matInput
            placeholder="SEARCH USERS"
            type="text"
            class="h-100"
-           formControlName="searchTerm"
-           />
+           formControlName="searchTerm" />
   </mat-form-field>
 
   <button mat-button
-          (click)="search()"
           class="h-100">
     GO
   </button>

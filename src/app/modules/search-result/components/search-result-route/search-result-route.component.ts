@@ -1,5 +1,7 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { RouteComponent } from 'src/app/core/routing/RouteComponent';
+import { UserService } from 'src/app/core/data/user.service';
+import { SearchParams } from 'src/app/types/SearchParams';
 
 
 @Component({
@@ -12,16 +14,30 @@ export class SearchResultRouteComponent extends RouteComponent<{
   searchParams: string;
 }> {
 
+  private searchParams: SearchParams;
+
+  public users: string[] = [];
+
   constructor(
     cdr: ChangeDetectorRef,
+    private userService: UserService,
   ) {
     super(cdr);
     this.appOnInit(() => {
-      const searchParams = JSON.parse(
-        atob(this.params.searchParams)
-      );
-      console.log("search params: ", searchParams);
-    });
+      this.paramStream.subscribe((params) => {
+        this.searchParams = JSON.parse(
+          atob(params.searchParams)
+        );
+        this.loadUserMatches();
+      });
+    })
+  }
+
+  private async loadUserMatches(): Promise<void> {
+    this.users = await this.userService.searchUserNames(
+      this.searchParams.searchTerm + "*"
+    );
+    this.cdr.detectChanges();
   }
 
 }

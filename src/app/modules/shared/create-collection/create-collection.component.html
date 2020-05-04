@@ -1,28 +1,31 @@
 <div class="flex flex-column justify-between items-between h-100 w-100">
-  <div class="pb2 w-100">
-    <form
-      class="pb2 w-100"
-      [formGroup]="collectionForm">
-      <mat-form-field
-        class="w-100">
-        <input
-          id="collection-name"
-          matInput
-          matNativeControl
-          type="text"
-          placeholder="Collection Name"
-          formControlName="collectionName"/>
-      </mat-form-field>
-    </form>
+  <form
+    class="pb2 w-100"
+    [formGroup]="collectionForm">
+    <mat-form-field
+      class="w-100">
+      <input
+        id="collection-name"
+        matInput
+        matNativeControl
+        type="text"
+        placeholder="Collection Name"
+        formControlName="collectionName"/>
+    </mat-form-field>
+  </form>
 
-    <div class="pt4">
+  <div class="pb2 w-100 h-90 flex flex-flow">
+    <div class="grid-cell"
+         *ngFor="let f of files; index as i">
       <app-file-upload-info
-        *ngFor="let f of files; index as i"
+        class="w-100"
         [file]="f"
         (onId)="imageAdded($event)"
         (onDelete)="fileDeleted(i)">
       </app-file-upload-info>
+    </div>
 
+    <div class="grid-cell">
       <app-file-upload-btn
         class="pt4"
         text="ADD AN IMAGE"

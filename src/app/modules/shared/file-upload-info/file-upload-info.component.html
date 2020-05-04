@@ -1,19 +1,28 @@
-<div class="flex justify-between" *ngIf="file">
-  <div>
-    {{ file.name }}
+<div class="flex flex-column justify-center h-100 w-100"
+     style="position: relative;"
+     *ngIf="file">
+
+  <div class="h-100"
+       *ngIf="isLoaded">
+    <app-image-thumb
+      [imageId]="imageId">
+    </app-image-thumb>
   </div>
 
-  <app-image-thumb
-    *ngIf="isLoaded"
-    [imageId]="imageId">
-  </app-image-thumb>
-
-  <div *ngIf="!isLoaded">
-    {{ percentDone }}%
+  <div class="w-100 flex items-center justify-center">
+    <mat-progress-spinner
+      *ngIf="!isLoaded"
+      mode="determinate"
+      [value]="percentDone">
+    </mat-progress-spinner>
   </div>
 
-  <div class="clickable"
+
+  <div class="control-icon clickable"
        (click)="deleteImage()">
-    DELETE
+    <mat-icon [inline]="true"
+              class="scale-150">
+      clear
+    </mat-icon>
   </div>
 </div>

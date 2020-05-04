@@ -1,0 +1,8 @@
+.control-icon {
+  background: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 5px;
+    border: 3px solid rgba(255, 255, 255, 0.6);
+}

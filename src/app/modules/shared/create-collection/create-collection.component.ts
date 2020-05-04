@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { v4 as uuidv4 } from "uuid";
 import { HttpService } from 'src/app/core/http.service';
 import { ImageDataService } from 'src/app/core/data/image-data.service';
+import { SpinnerService } from '../spinner/spinner.service';
 
 @Component({
   selector: 'app-create-collection',
@@ -30,6 +31,7 @@ export class CreateCollectionComponent implements OnDestroy {
   constructor(
     private httpService: HttpService,
     private imageDataService: ImageDataService,
+    private spinnerService: SpinnerService,
   ) {}
 
   public ngOnDestroy(): void {
@@ -63,6 +65,7 @@ export class CreateCollectionComponent implements OnDestroy {
     if (!this.files.length) {
       return;
     }
+    this.spinnerService.showSpinner();
     const res = await this.httpService.postReq({
       path: "/db/rpc/init_collection",
       data: {
@@ -71,6 +74,7 @@ export class CreateCollectionComponent implements OnDestroy {
         "p_image_ids": this.imageIds,
       },
     });
+    this.spinnerService.hideSpinner();
     if (res.ok) {
       this.isCreated = true;
       this.onComplete.emit(true);

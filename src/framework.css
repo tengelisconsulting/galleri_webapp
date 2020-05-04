@@ -22,6 +22,9 @@
 .h-20 {
   height: 20%;
 }
+.h-90 {
+  height: 90%;
+}
 /* padding */
 .pl-5 {
   padding-left: 5%;

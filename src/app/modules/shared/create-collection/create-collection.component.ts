@@ -30,7 +30,7 @@ export class CreateCollectionComponent implements OnDestroy {
   constructor(
     private httpService: HttpService,
     private imageDataService: ImageDataService,
-  ) { }
+  ) {}
 
   public ngOnDestroy(): void {
     if (!this.isCreated && this.imageIds.length) {

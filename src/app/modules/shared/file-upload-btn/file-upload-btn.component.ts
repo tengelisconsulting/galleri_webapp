@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, EventEmitter, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-file-upload-btn',
@@ -14,6 +14,9 @@ export class FileUploadBtnComponent {
   @Output()
   public onFile: EventEmitter<File> = new EventEmitter();
 
+  @ViewChild("fileInput", {static: true,})
+  private fileInput: ElementRef;
+
   constructor() { }
 
   public onInput(e: any): void {
@@ -22,6 +25,7 @@ export class FileUploadBtnComponent {
     }
     const selectedFile: File = e.target.files[0];
     this.onFile.emit(selectedFile);
+    this.fileInput.nativeElement.value = null;
   }
 
 }

@@ -3,7 +3,9 @@
     {{ text }}
   </div>
 </label>
-<input id="file-input"
-       type="file"
-       style="position: fixed; top: -100em"
-       (change)="onInput($event)">
+<input
+  #fileInput
+  id="file-input"
+  type="file"
+  style="position: fixed; top: -100em"
+  (change)="onInput($event)">

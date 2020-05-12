@@ -1,6 +1,4 @@
 TODO
-  - Give UI feedback when performing actions (ie. a spinner)
-  - 'Tiles' to upload when creating a new collection.  Revisit the whole UI of creating a collection.
   - theme colors
   - fix upload same file twice bug
   - links with custom expiry times

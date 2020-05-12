@@ -15,7 +15,7 @@ import { SpinnerService } from '../spinner/spinner.service';
 export class CreateCollectionComponent implements OnDestroy {
 
   @Output()
-  public onComplete: EventEmitter<boolean> = new EventEmitter(); // true on success
+  public onComplete: EventEmitter<string> = new EventEmitter();
 
   public collectionForm: FormGroup = new FormGroup({
     collectionName: new FormControl("", [
@@ -76,8 +76,9 @@ export class CreateCollectionComponent implements OnDestroy {
     });
     this.spinnerService.hideSpinner();
     if (res.ok) {
+      const resData = await res.json();
       this.isCreated = true;
-      this.onComplete.emit(true);
+      this.onComplete.emit(resData.collection_id);
     }
   }
 

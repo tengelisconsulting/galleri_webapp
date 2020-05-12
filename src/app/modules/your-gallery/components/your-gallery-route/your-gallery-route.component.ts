@@ -2,6 +2,8 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/
 import { RouteComponent } from 'src/app/core/routing/RouteComponent';
 import { ModalService } from 'src/app/ui/modal.service';
 import { CreateCollectionModalComponent } from 'src/app/modules/shared/create-collection-modal/create-collection-modal.component';
+import { Router } from '@angular/router';
+import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 
 
 @Component({
@@ -12,24 +14,26 @@ import { CreateCollectionModalComponent } from 'src/app/modules/shared/create-co
 })
 export class YourGalleryRouteComponent extends RouteComponent<void> {
 
-  public showAllPieces: boolean = true; // for redrawing
-
   constructor(
     cdr: ChangeDetectorRef,
     private modalService: ModalService,
+    private router: Router,
   ) {
     super(cdr);
   }
 
   public async openCreateCollectionModal(): Promise<void> {
-    const newCollection = await this.modalService.showModal({
+    const newCollectionId: string = await this.modalService.showModal({
       component: CreateCollectionModalComponent,
     });
-    if (newCollection) {
-      this.showAllPieces = false;
-      this.cdr.detectChanges();
-      this.showAllPieces = true;
-      this.cdr.detectChanges();
+    if (newCollectionId) {
+      this.router.navigate([
+        AppRoutePath.APP_PREFIX, AppRoutePath.YOUR_IMAGE_COLLECTION
+      ], {
+        queryParams: {
+          collectionId: newCollectionId,
+        }
+      })
     }
   }
 }

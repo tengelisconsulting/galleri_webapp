@@ -16,6 +16,7 @@ import { TopbarButtonComponent } from './topbar/topbar-button/topbar-button.comp
 import { CreateUserComponent } from './create-user/create-user.component';
 import { NewUserModalComponent } from './create-user/new-user-modal/new-user-modal.component';
 import { SearchInputComponent } from './search/search-input/search-input.component';
+import { CollectionListComponent } from './collection-list/collection-list.component';
 
 
 
@@ -34,6 +35,7 @@ import { SearchInputComponent } from './search/search-input/search-input.compone
     CreateUserComponent,
     NewUserModalComponent,
     SearchInputComponent,
+    CollectionListComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +50,7 @@ import { SearchInputComponent } from './search/search-input/search-input.compone
   ],
   exports: [
     CollectionDisplayComponent,
+    CollectionListComponent,
     CollectionThumbComponent,
     DynamicLoadedImageComponent,
     FileUploadBtnComponent,

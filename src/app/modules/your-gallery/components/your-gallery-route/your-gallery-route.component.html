@@ -1,6 +1,8 @@
 <div class="pane-height">
-  <app-all-pieces-yours *ngIf="showAllPieces">
-  </app-all-pieces-yours>
+  <app-collection-list
+    *ngIf="showAllPieces"
+    [forCurrentUser]="true">
+  </app-collection-list>
 </div>
 
 <app-topbar-button

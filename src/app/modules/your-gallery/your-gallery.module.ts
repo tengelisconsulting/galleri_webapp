@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { YourGalleryRouteComponent } from './components/your-gallery-route/your-gallery-route.component';
 import { YourGalleryRoutingModule } from './your-gallery-routing.module';
-import { AllPiecesYoursComponent } from './components/all-pieces-yours/all-pieces-yours.component';
 import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
-  declarations: [YourGalleryRouteComponent, AllPiecesYoursComponent],
+  declarations: [
+    YourGalleryRouteComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,

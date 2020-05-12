@@ -1,6 +1,4 @@
-<div *ngFor="let c of collections"
-     class="mr4">
-  <app-collection-thumb
-    [id]="c.collection_id">
-  </app-collection-thumb>
-</div>
+<app-collection-list
+  *ngIf="userId"
+  [userId]="userId">
+</app-collection-list>

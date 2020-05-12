@@ -12,7 +12,7 @@ import { CreateCollectionModalComponent } from 'src/app/modules/shared/create-co
 })
 export class YourGalleryRouteComponent extends RouteComponent<void> {
 
-  public showAllPieces: boolean = true;
+  public showAllPieces: boolean = true; // for redrawing
 
   constructor(
     cdr: ChangeDetectorRef,

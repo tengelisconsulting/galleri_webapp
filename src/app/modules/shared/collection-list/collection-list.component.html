@@ -1,6 +1,6 @@
-<div class="flex">
+<div class="flex flex-wrap w-100">
   <div *ngFor="let c of collections"
-       class="mr4">
+       [style.width.px]="windowWidth / 3">
     <app-collection-thumb
       [id]="c.collection_id">
     </app-collection-thumb>

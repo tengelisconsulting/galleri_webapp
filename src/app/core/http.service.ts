@@ -140,8 +140,11 @@ export class HttpService {
   }
 
   private getDefaultAuthedHeaders(): {[index: string]: string} {
+    const authHeader = this.sessionService.isAnonSession() ?
+      `Claims: ${this.sessionService.getSessionToken()}` :
+      `Bearer: ${this.sessionService.getSessionToken()}`;
     return shallowMerge(this.getDefaultHeaders(), {
-      'Authorization': `Bearer: ${this.sessionService.getSessionToken()}`
+      'Authorization': authHeader,
     });
   }
 

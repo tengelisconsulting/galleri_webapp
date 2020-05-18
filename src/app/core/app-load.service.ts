@@ -31,7 +31,8 @@ export class AppLoadService {
       return false;
     }
     this.startup(sessionData);
-    if (window.location.pathname === `/${AppRoutePath.LOGIN}`) {
+    if (window.location.pathname === `/${AppRoutePath.LOGIN}`
+      || window.location.pathname === `/`) {
       this.router.navigate(this.DEFAULT_ROUTE_PATH);
     }
     return true;

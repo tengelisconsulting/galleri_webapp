@@ -1,1 +1,5 @@
-<p>anon-gallery-view-route works!</p>
+<ng-container *ngIf="sessionLoaded">
+  <app-collection-display
+    [collectionId]="params.collectionId">
+  </app-collection-display>
+</ng-container>

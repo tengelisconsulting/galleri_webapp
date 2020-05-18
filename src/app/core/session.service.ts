@@ -73,6 +73,11 @@ export class SessionService {
     );
   }
 
+  public isAnonSession(): boolean {
+    return this.internalState.value.isStarted &&
+      this.internalState.value.userId === null;
+  }
+
   public getSessionToken(): string {
     return this.internalState.value.sessionToken;
   }

@@ -55,4 +55,8 @@ export class RouterService {
     );
   }
 
+  public getActivePath(): AppRoutePath {
+    return this.state.value.activePath;
+  }
+
 }

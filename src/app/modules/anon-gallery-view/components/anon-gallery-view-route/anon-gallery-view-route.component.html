@@ -1,3 +1,16 @@
+<div class="flex flex-column items-center pt5 pb5 f5">
+  <div class="b pb2">
+    You are browsing galleri with an anonymous link, which will expire at {{ expires | date:"short" }}.
+  </div>
+  <div class="b">
+    To access this album indefinitely, and to create collections of your own, please
+    <button mat-button
+              (click)="newUserModal()">
+        CREATE A USER
+      </button>
+  </div>
+
+</div>
 <ng-container *ngIf="sessionLoaded">
   <app-collection-display
     [collectionId]="params.collectionId">

@@ -40,6 +40,11 @@ const routes: Routes = [
     ],
   },
   {
+    path: AppRoutePath.ANON_GALLERY_VIEW,
+    loadChildren: () => import('./modules/anon-gallery-view/anon-gallery-view.module')
+      .then((m) => m.AnonGalleryViewModule)
+  },
+  {
     path: AppRoutePath.LOGIN,
     loadChildren: () => import('./modules/login/login.module')
       .then((m) => m.LoginModule)

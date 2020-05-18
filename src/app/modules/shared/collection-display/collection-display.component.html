@@ -15,7 +15,8 @@
         <img [style.maxHeight.px]="windowHeight"
              [src]="image.full_url"
              (load)="imageLoaded(i)"/>
-        <div class="mb6">
+        <div class="mb6"
+             style="white-space: pre-wrap;">
           {{ image.description }}
         </div>
 

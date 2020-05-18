@@ -1,0 +1,15 @@
+<div class="flex flex-column">
+  <div class="f6 b flex justify-center">
+    This link will expire in {{ DEFAULT_EXPIRE_DAYS }} days
+  </div>
+
+  <div #successTooltip="matTooltip"
+       matTooltip="Copied!">
+  </div>
+  <div class="f6 mt3 mb3 ml3 ws-nowrap clickable"
+       matTooltip="Click to copy"
+       [matTooltipPosition]="'above'"
+       (click)="copyLink()">
+    {{ link }}
+  </div>
+</div>

@@ -2,6 +2,9 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/
 import { RouteComponent } from 'src/app/core/routing/RouteComponent';
 import { AppRoutePath } from 'src/app/core/routing/AppRoutePath';
 import { Router } from '@angular/router';
+import { HttpService } from 'src/app/core/http.service';
+import { MatBottomSheet } from '@angular/material';
+import { LinkDisplayComponent } from '../link-display/link-display.component';
 
 
 @Component({
@@ -16,6 +19,8 @@ export class YourImageCollectionRouteComponent extends RouteComponent<{
 
   constructor(
     cdr: ChangeDetectorRef,
+    private bootomSheet: MatBottomSheet,
+    private httpService: HttpService,
     private router: Router,
   ) {
     super(cdr);
@@ -29,6 +34,14 @@ export class YourImageCollectionRouteComponent extends RouteComponent<{
         collectionId: this.params.collectionId,
       }
     });
+  }
+
+  public async generateAnonLink(): Promise<void> {
+    this.bootomSheet.open(LinkDisplayComponent, {
+      data: {
+        collectionId: this.params.collectionId,
+      }
+    })
   }
 
 }

@@ -3,13 +3,16 @@
     This link will expire in {{ DEFAULT_EXPIRE_DAYS }} days
   </div>
 
-  <div #successTooltip="matTooltip"
-       matTooltip="Copied!">
-  </div>
-  <div class="f6 mt3 mb3 ml3 ws-nowrap clickable"
+
+  <div class="f6 mt3 mb3 pl3 clickable w-100"
        matTooltip="Click to copy"
-       [matTooltipPosition]="'above'"
+       [matTooltipPosition]="'before'"
        (click)="copyLink()">
-    {{ link }}
+
+    <div #successTooltip="matTooltip"
+         matTooltip="Copied!">
+    </div>
+
+    <div class="ws-nowrap">{{ link }}</div>
   </div>
 </div>

@@ -22,7 +22,7 @@ export class LinkDisplayComponent implements OnInit {
   public expiresAt: Date;
   public link: string;
 
-  private readonly DEFAULT_EXPIRE_DAYS = 2;
+  public readonly DEFAULT_EXPIRE_DAYS = 2;
 
   constructor(
     private cdr: ChangeDetectorRef,

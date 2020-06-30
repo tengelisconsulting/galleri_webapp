@@ -20,20 +20,19 @@ export class RunTimeEnvService {
 
   private getProdEnv(): Env {
     return {
-      apiHost: "https://production-api-server",
+      apiHost: "/api/v0.1",
     };
   }
 
   private getStagingEnv(): Env {
     return {
-      apiHost: "https://galleri.fun",
+      apiHost: "/api/v0.1",
     };
   }
 
   private getDevEnv(): Env {
     return {
-      // apiHost: "https://galleri.fun",
-      apiHost: "http://localhost",
+      apiHost: "/api/v0.1",
     };
   }
 

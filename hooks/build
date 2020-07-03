@@ -17,7 +17,7 @@ set_latest_tag() {
 docker_hub_build() {
     echo "building deps..."
     docker build \
-           -t galleri/${DEPS_IMAGE}:${TAG} \
+           -t ${DEPS_IMAGE}:${TAG} \
            -f ./Dockerfile.deps \
            . \
         && set_latest_tag ${DEPS_IMAGE} \

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+GIT_BRANCH=$(git branch --show-current)
+GIT_TAG=$(git rev-parse --short --verify HEAD)
+TAG=${GIT_BRANCH}-${GIT_TAG}
+
+DEPS_IMAGE="galleri/webapp-deps"
+WEBAPP_IMAGE="galleri/webapp"
+
+do_push() {
+    docker push ${1}:${TAG}
+    docker push ${1}:latest
+}
+
+
+do_push ${DEPS_IMAGE}
+do_push ${WEBAPP_IMAGE}

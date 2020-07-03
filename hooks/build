@@ -1,16 +1,41 @@
 #!/bin/bash
 
 
-DATE_TAG=$(date -u +%Y-%m-%d-%H%M)
+GIT_BRANCH=$(git branch --show-current)
 GIT_TAG=$(git rev-parse --short --verify HEAD)
-TAG=${DATE_TAG}--${GIT_TAG}
+TAG=${GIT_BRANCH}-${GIT_TAG}
 
-docker build \
-       --build-arg CONFIGURATION=${CONFIGURATION} \
-       -t galleri/webapp:${TAG} \
-       -f ${DOCKERFILE_PATH} \
-       .
 
-docker push galleri/webapp:${TAG}
-docker tag galleri/webapp:${TAG} galleri/webapp:staging-latest
-docker push galleri/webapp:staging-latest
+DEPS_IMAGE="galleri/webapp-deps"
+WEBAPP_IMAGE="galleri/webapp"
+
+set_latest_tag() {
+    docker tag $1:${TAG} $1:latest
+}
+
+
+docker_hub_build() {
+    echo "building deps..."
+    docker build \
+           -t galleri/${DEPS_IMAGE}:${TAG} \
+           -f ./Dockerfile.deps \
+           . \
+        && set_latest_tag ${DEPS_IMAGE} \
+        && echo "building webapp..." \
+        && docker build \
+                  -t ${WEBAPP_IMAGE}:${TAG} \
+                  . \
+        && set_latest_tag ${WEBAPP_IMAGE}
+}
+
+local_build() {
+    echo "building webapp..."
+    docker build -t ${WEBAPP_IMAGE}:latest .
+}
+
+
+if [[ "${IS_DOCKER_HUB}" -eq "1" ]]; then
+    docker_hub_build
+else
+    local_build
+fi

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 GIT_TAG=$(git rev-parse --short --verify HEAD)
 TAG=${GIT_BRANCH}-${GIT_TAG}

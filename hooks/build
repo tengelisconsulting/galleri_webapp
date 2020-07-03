@@ -12,15 +12,18 @@ set_latest_tag() {
     docker tag $1:${TAG} $1:latest
 }
 
-
-docker_hub_build() {
+build_deps() {
     echo "building deps..."
     docker build \
            -t ${DEPS_IMAGE}:${TAG} \
            -f ./Dockerfile.deps \
            . \
-        && set_latest_tag ${DEPS_IMAGE} \
-        && echo "building webapp..." \
+        && set_latest_tag ${DEPS_IMAGE}
+}
+
+
+docker_hub_build() {
+    echo "building webapp..." \
         && docker build \
                   -t ${WEBAPP_IMAGE}:${TAG} \
                   . \
@@ -31,6 +34,10 @@ local_build() {
     echo "building webapp..."
     docker build -t ${WEBAPP_IMAGE}:latest .
 }
+
+if [[ "${BUILD_DEPS}" == "1" ]]; then
+    build_deps
+fi
 
 
 if [[ "${IS_DOCKER_HUB}" -eq "1" ]]; then

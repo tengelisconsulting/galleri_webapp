@@ -9,7 +9,7 @@ DEPS_IMAGE="galleri/webapp-deps"
 WEBAPP_IMAGE="galleri/webapp"
 
 set_latest_tag() {
-    docker tag $1:${TAG} $1:latest
+    docker tag $1:${TAG} $1:${GIT_BRANCH}-latest
 }
 
 build_deps() {

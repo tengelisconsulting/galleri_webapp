@@ -9,7 +9,7 @@ WEBAPP_IMAGE="galleri/webapp"
 
 do_push() {
     docker push ${1}:${TAG}
-    docker push ${1}:latest
+    docker push ${1}:${GIT_BRANCH}-latest
 }
 
 
